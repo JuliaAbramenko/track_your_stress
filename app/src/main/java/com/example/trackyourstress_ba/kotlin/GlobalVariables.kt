@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.Kotlin
+package com.example.trackyourstress_ba.kotlin
 
 class GlobalVariables  {
     companion object {

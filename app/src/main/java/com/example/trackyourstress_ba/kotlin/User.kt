@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.Kotlin
+package com.example.trackyourstress_ba.kotlin
 
 class User(_email: String, _password: String, _password_confirmation: String, _username: String) {
     val email = _email
