@@ -7,6 +7,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.R
+import com.example.trackyourstress_ba.kotlin.GlobalVariables
+import com.example.trackyourstress_ba.kotlin.loginUser
 
 class LoginActivity : AppCompatActivity() {
 
@@ -15,20 +17,22 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        val username = findViewById<EditText>(R.id.username).toString()
-        val password = findViewById<EditText>(R.id.password).toString()
-        val login = findViewById<Button>(R.id.login)
+        val edit_username = findViewById<EditText>(R.id.username)
+        val edit_password = findViewById<EditText>(R.id.password)
+        val login_button= findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
         val booltext = findViewById<TextView>(R.id.textView)
-
-        /*val response = loginUser(username, password)
-        val json = response.jsonObject
-        val token = json.getString("data.attributes.token")
-        if(token != null) {
-            GlobalVariables.localStorage.put("token", token)
-            booltext.setText("token aquired:" + token)
-        }*/
-
+        login_button.setOnClickListener {
+            if(edit_password.text.length > 7 && edit_username.text.contains("@")) {
+                val response = loginUser(edit_username.text.toString(), edit_password.text.toString())
+                val json = response.jsonObject
+                val token = json.getString("data.attributes.token")
+                if (token.toString().length > 1) {
+                    GlobalVariables.localStorage.put("token", token)
+                    booltext.setText("token aquired:" + token.toString())
+                }
+            }
+        }
 
     }
 }
