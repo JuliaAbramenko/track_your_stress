@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">TrackYourStress_BA</string>
+    <string name="welcome_text">Welcome to TrackYourStress! \\\\n Please login or register to get started.</string>
+    <string name="TrackYourStressLogo">the logo of TrackYourStress</string>
+    <string name="Login_text">Login</string>
+    <string name="Register_text">Register</string>
+    <string name="title_activity_login">Login</string>
+    <string name="Email">Email</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
