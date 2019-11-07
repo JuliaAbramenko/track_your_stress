@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TrackYourStress_BA</string>
-    <string name="welcome_text">Welcome to TrackYourStress! \\\\n Please login or register to get started.</string>
+    <string name="welcome_text">Welcome to TrackYourStress!
+        Please login or register to get started.</string>
     <string name="TrackYourStressLogo">the logo of TrackYourStress</string>
     <string name="Login_text">Login</string>
     <string name="Register_text">Register</string>
@@ -15,4 +16,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="Boolean_Test">ifworked</string>
+    <string name="password_confirm">Confirm Password</string>
+    <string name="username">Username</string>
 </resources>

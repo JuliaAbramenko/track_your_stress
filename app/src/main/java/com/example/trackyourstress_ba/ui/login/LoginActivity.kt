@@ -18,25 +18,25 @@ class LoginActivity : AppCompatActivity() {
     lateinit var  login_button : Button
     lateinit var loading : ProgressBar
     lateinit var booltext : TextView
-    lateinit var conUtils : ConnectionUtils
+    lateinit var con_utils : ConnectionUtils
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
 
-        edit_username = findViewById<EditText>(R.id.username)
-        edit_password = findViewById<EditText>(R.id.password)
-        login_button= findViewById<Button>(R.id.login)
-        loading = findViewById<ProgressBar>(R.id.loading)
-        booltext = findViewById<TextView>(R.id.textView)
-        conUtils = ConnectionUtils()
+        edit_username = findViewById(R.id.username)
+        edit_password = findViewById(R.id.password)
+        login_button= findViewById(R.id.login)
+        loading = findViewById(R.id.loading)
+        booltext = findViewById(R.id.textView)
+        con_utils = ConnectionUtils()
 
         login_button.setOnClickListener {
             if(edit_password.text.length > 7 && edit_username.text.contains("@")) {
-                val response = conUtils.loginUser(edit_username.text.toString(), edit_password.text.toString(), this)
+                con_utils.loginUser(edit_username.text.toString(), edit_password.text.toString(), this)
             }
             else {
-                val response = conUtils.logoutUser(edit_username.text.toString())
+                con_utils.logoutUser(this)
 
             }
         }
