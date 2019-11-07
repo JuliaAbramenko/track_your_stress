@@ -1,10 +1,12 @@
 package com.example.trackyourstress_ba.ui.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
@@ -17,6 +19,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var register_button: Button
     lateinit var con_utils : ConnectionUtils
     lateinit var test_text: TextView
+    lateinit var back_button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         register_button = findViewById(R.id.register_ok_button)
         test_text = findViewById(R.id.booltext_register)
         con_utils = ConnectionUtils()
+        back_button = findViewById(R.id.tohome_button_reg)
 
         register_button.setOnClickListener {
             /*if(edit_email.text.contains("@") &&
@@ -39,6 +43,11 @@ class RegisterActivity : AppCompatActivity() {
                     edit_password_confirmation.text.toString(), edit_username.text.toString(), this)
 
             //}
+        }
+
+        back_button.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+            startActivity(intent)
         }
 
 

@@ -18,4 +18,5 @@
     <string name="Boolean_Test">ifworked</string>
     <string name="password_confirm">Confirm Password</string>
     <string name="username">Username</string>
+    <string name="Back">Back</string>
 </resources>

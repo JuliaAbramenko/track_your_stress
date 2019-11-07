@@ -19,12 +19,12 @@ class MainActivity : AppCompatActivity() {
 
 
         login_button.setOnClickListener{
-            val intent = Intent(this@MainActivity,LoginActivity::class.java);
+            val intent = Intent(this@MainActivity,LoginActivity::class.java)
             startActivity(intent)
         }
 
         register_button.setOnClickListener{
-            val intent = Intent(this@MainActivity, RegisterActivity::class.java);
+            val intent = Intent(this@MainActivity, RegisterActivity::class.java)
             startActivity(intent)
         }
 

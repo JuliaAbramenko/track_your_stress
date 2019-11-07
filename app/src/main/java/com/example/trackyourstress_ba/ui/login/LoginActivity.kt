@@ -1,11 +1,13 @@
 package com.example.trackyourstress_ba.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
@@ -19,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var loading : ProgressBar
     lateinit var booltext : TextView
     lateinit var con_utils : ConnectionUtils
+    lateinit var  back_button: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         loading = findViewById(R.id.loading)
         booltext = findViewById(R.id.textView)
         con_utils = ConnectionUtils()
+        back_button = findViewById(R.id.tohome_button_login)
 
         login_button.setOnClickListener {
             if(edit_password.text.length > 7 && edit_username.text.contains("@")) {
@@ -40,6 +45,12 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
+
+        back_button.setOnClickListener {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 }
