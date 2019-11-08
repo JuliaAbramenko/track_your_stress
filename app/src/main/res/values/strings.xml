@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrackYourStress_BA</string>
+    <string name="app_name">TrackYourStress</string>
     <string name="welcome_text">Welcome to TrackYourStress!
         Please login or register to get started.</string>
     <string name="TrackYourStressLogo">the logo of TrackYourStress</string>
@@ -19,4 +19,6 @@
     <string name="password_confirm">Confirm Password</string>
     <string name="username">Username</string>
     <string name="Back">Back</string>
+    <string name="register_link_send">"The registration is completed and verficiation link was sent. \nPlease confirm your account by clicking on the verficiation link. \n After that you can login."</string>
+    <string name="resend_verification_link">Resend verficiation link</string>
 </resources>

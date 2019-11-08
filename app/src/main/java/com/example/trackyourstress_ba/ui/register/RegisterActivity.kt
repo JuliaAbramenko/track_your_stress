@@ -41,6 +41,8 @@ class RegisterActivity : AppCompatActivity() {
                     edit_username.text.length > 7) {*/
                 con_utils.registerUser(edit_email.text.toString(), edit_password.text.toString(),
                     edit_password_confirmation.text.toString(), edit_username.text.toString(), this)
+            val intent = Intent(this@RegisterActivity, RegistrationConfirmationActivity::class.java)
+            startActivity(intent)
 
             //}
         }

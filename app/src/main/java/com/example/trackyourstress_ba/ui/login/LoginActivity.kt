@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.ui.home.HomeActivity
 
 //import com.example.trackyourstress_ba.kotlin.loginUser
 
@@ -35,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         booltext = findViewById(R.id.textView)
         con_utils = ConnectionUtils()
         back_button = findViewById(R.id.tohome_button_login)
-
+        /*
         login_button.setOnClickListener {
             if(edit_password.text.length > 7 && edit_username.text.contains("@")) {
                 con_utils.loginUser(edit_username.text.toString(), edit_password.text.toString(), this)
@@ -45,7 +46,15 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
+            */
 
+        login_button.setOnClickListener {
+            if(edit_password.text.length >= 8 && edit_username.text.contains("@") &&
+                edit_username.text.contains(".")) {
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
         back_button.setOnClickListener {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)

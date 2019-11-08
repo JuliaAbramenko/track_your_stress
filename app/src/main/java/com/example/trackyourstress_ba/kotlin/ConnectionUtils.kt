@@ -1,11 +1,16 @@
 package com.example.trackyourstress_ba.kotlin
 
+import android.app.PendingIntent.getActivities
+import android.app.PendingIntent.getActivity
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.*
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegisterActivity
+import com.example.trackyourstress_ba.ui.register.RegistrationConfirmationActivity
 import org.json.JSONObject
 
 class ConnectionUtils() {
@@ -32,7 +37,7 @@ class ConnectionUtils() {
             Response.Listener{response ->
                 caller.test_text.text = "registered"
                 //dummy
-                var x = 5
+                val x = response
             }, Response.ErrorListener{error ->
                 // Error in request
                 caller.test_text.text = "Already registered!"
@@ -73,6 +78,7 @@ class ConnectionUtils() {
             Response.Listener<String> { response: String ->
                 GlobalVariables.localStorage.remove("token")
                 caller.booltext.text = ("logged out")
+
             }, Response.ErrorListener{error ->
                 // Error in request
                 throw Exception("error occurred: $error")
@@ -80,4 +86,25 @@ class ConnectionUtils() {
         // Add the volley post request to the request queue
         requestQueue.add(request)
     }
+
+
+    fun resendVerificationLink(email: String, caller: RegistrationConfirmationActivity) {
+        val data = "data = { 'data' : { 'type' : 'users', 'attributes' : {'email' : '$email'}}}"
+        val url = GlobalVariables.apiEndPoint + "api/v1/verify/resend"
+        val jsonObject = JSONObject(data)
+        // Volley post request with parameters
+        val request = JsonObjectRequest(
+            Request.Method.POST, url, jsonObject,
+            Response.Listener { response ->
+                Toast.makeText(caller,"we did it", LENGTH_SHORT).show()
+                //dummy
+                var x = 5
+            }, Response.ErrorListener{error ->
+                // Error in request
+                throw Exception("shit happened: $error")
+            })
+        // Add the volley post request to the request queue
+        requestQueue.add(request)
+    }
+
 }
