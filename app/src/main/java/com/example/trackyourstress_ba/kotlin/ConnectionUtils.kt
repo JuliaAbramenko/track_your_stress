@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.kotlin
 
 import android.app.PendingIntent.getActivities
 import android.app.PendingIntent.getActivity
+import android.provider.Settings
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.android.volley.Request
@@ -58,10 +59,9 @@ class ConnectionUtils() {
             Request.Method.POST, url,jsonObject,
             Response.Listener { response ->
                 val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
-                caller.booltext.text = token
                 GlobalVariables.localStorage["token"] = token
-                //dummy
-                var x = 5
+                GlobalVariables.localStorage["current_email"] = email
+                caller.response_received(response)
             }, Response.ErrorListener{error ->
                 // Error in request
                 throw Exception("shit happened: $error")
@@ -71,7 +71,7 @@ class ConnectionUtils() {
 
     }
 
-    fun logoutUser(caller: LoginActivity ) { //TODO ADD CALLER
+    fun logoutUser(caller: LoginActivity ) {
         val url = GlobalVariables.apiEndPoint + "/api/v1/auth/logout?token=" + GlobalVariables.localStorage["token"].toString()
         val request = StringRequest(
             Request.Method.DELETE, url,
@@ -92,6 +92,7 @@ class ConnectionUtils() {
         val data = "data = { 'data' : { 'type' : 'users', 'attributes' : {'email' : '$email'}}}"
         val url = GlobalVariables.apiEndPoint + "api/v1/verify/resend"
         val jsonObject = JSONObject(data)
+        GlobalVariables.localStorage.put("current_email", email)
         // Volley post request with parameters
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
