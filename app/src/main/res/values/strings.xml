@@ -21,4 +21,6 @@
     <string name="Back">Back</string>
     <string name="register_link_send">"The registration is completed and verficiation link was sent. \nPlease confirm your account by clicking on the verficiation link. \n After that you can login."</string>
     <string name="resend_verification_link">Resend verficiation link</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
