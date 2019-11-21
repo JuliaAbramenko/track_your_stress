@@ -3,12 +3,15 @@ package com.example.trackyourstress_ba.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trackyourstress_ba.R
+import com.example.trackyourstress_ba.fragments.ProfileFragment
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.google.android.material.navigation.NavigationView
 
@@ -35,6 +38,24 @@ class HomeActivity : AppCompatActivity() {
         drawer_toggle.syncState()
         nav_view = findViewById(R.id.nav_view)
         nav_view.setItemIconTintList(null)
+        val profile_frag = ProfileFragment()
+        nav_view.setNavigationItemSelectedListener {item ->
+            when(item.itemId) {
+
+                R.id.nav_profile -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    //transact.addToBackStack(null)
+                    transact.replace(R.id.fragment_container, profile_frag)
+                    transact.commit()
+                    drawer.closeDrawers()
+                    true
+                }
+                else -> false
+            }
+
+        }
+
+
 
     }
 

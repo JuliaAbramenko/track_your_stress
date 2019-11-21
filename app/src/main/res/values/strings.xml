@@ -23,4 +23,10 @@
     <string name="resend_verification_link">Resend verficiation link</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="first_name">Firstname</string>
+    <string name="last_name">Lastname</string>
+    <string name="sex">Sex</string>
+    <string name="prefer_not_to_say">Prefer not to say</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>
