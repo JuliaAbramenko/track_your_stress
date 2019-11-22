@@ -72,13 +72,14 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/sex_radio_group"
         android:gravity="center"
         android:orientation="vertical">
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/profile_sex_not_specified"
-            android:text="@string/prefer_not_to_say"/>
+            android:id="@+id/profile_sex_not_known"
+            android:text="@string/not_known"/>
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,6 +90,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/profile_female"
             android:text="@string/female"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_not_applicable"
+            android:text="@string/not_applicable"/>
     </RadioGroup>
 
 </LinearLayout>

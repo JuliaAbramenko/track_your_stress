@@ -29,4 +29,6 @@
     <string name="prefer_not_to_say">Prefer not to say</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="not_known">Not known</string>
+    <string name="not_applicable">Not applicable</string>
 </resources>

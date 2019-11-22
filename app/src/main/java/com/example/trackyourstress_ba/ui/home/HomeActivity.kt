@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
                     drawer.closeDrawers()
                     true
                 }
-                else -> false
+                else -> true
             }
 
         }
