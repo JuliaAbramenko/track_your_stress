@@ -22,7 +22,6 @@ class ProfileFragment: Fragment(){
     lateinit var edit_firstname : EditText
     lateinit var edit_lastname : EditText
     lateinit var sex_radio_group : RadioGroup
-    var bool_received = false
     lateinit var profileUtils: ProfileUtils
 
 
@@ -39,10 +38,6 @@ class ProfileFragment: Fragment(){
         edit_firstname = view!!.findViewById(R.id.edit_firstname)
         edit_lastname = view!!.findViewById(R.id.edit_lastname)
         sex_radio_group = view!!.findViewById(R.id.sex_radio_group)
-        if(bool_received) {
-            fill_data_fields()
-        }
-
     }
 
     fun response_received(response: JSONObject){
@@ -53,7 +48,7 @@ class ProfileFragment: Fragment(){
             GlobalVariables.localStorage["first_name"] = profile_JSON_attributes.getString("firstname")
             GlobalVariables.localStorage["last_name"] = profile_JSON_attributes.getString("lastname")
             GlobalVariables.localStorage["sex"] = profile_JSON_attributes.getString("sex")
-            bool_received = true
+            fill_data_fields()
         } catch (except : Exception) {
         }
 
