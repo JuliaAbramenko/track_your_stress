@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical" >
 
-</RelativeLayout>
+    <Switch
+        android:id="@+id/switch_all_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_all_notifcations" />
+
+    <TextView
+        android:id="@+id/manage_notifications_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/manage_notifications"
+        />
+
+    <Switch
+        android:id="@+id/switch_daily_notfications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_daily_notifications" />
+
+    <Switch
+        android:id="@+id/switch_weekly_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_weekly_notifications" />
+
+    <Switch
+        android:id="@+id/switch_monthly_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_monthly_notifcations" />
+</LinearLayout>

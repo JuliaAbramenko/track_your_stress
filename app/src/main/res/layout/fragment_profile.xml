@@ -105,4 +105,20 @@
 
     </Button>
 
+    <Button
+        android:id="@+id/button_change_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_password">
+
+    </Button>
+
+    <Button
+        android:id="@+id/button_delete_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_profile">
+
+    </Button>
+
 </LinearLayout>

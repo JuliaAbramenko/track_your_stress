@@ -25,6 +25,8 @@ class ProfileFragment: Fragment(){
     lateinit var edit_lastname : EditText
     lateinit var sex_radio_group : RadioGroup
     lateinit var submit_button : Button
+    lateinit var change_password_button : Button
+    lateinit var delete_profile_button : Button
     lateinit var profileUtils: ProfileUtils
 
 
@@ -42,6 +44,8 @@ class ProfileFragment: Fragment(){
         edit_lastname = view!!.findViewById(R.id.edit_lastname)
         sex_radio_group = view!!.findViewById(R.id.sex_radio_group)
         submit_button = view!!.findViewById(R.id.submit_button_update_profile)
+        change_password_button = view!!.findViewById(R.id.button_change_password)
+        delete_profile_button = view!!.findViewById(R.id.button_delete_profile)
 
         submit_button.setOnClickListener {
                 profileUtils.updateProfile(
@@ -51,6 +55,11 @@ class ProfileFragment: Fragment(){
                     this
                 )
             Toast.makeText(context, "updated profile", Toast.LENGTH_LONG).show()
+        }
+
+        change_password_button.setOnClickListener {
+            //profileUtils.updataPassword( )
+            //TODO dialog window with 'are you sure?', 'New password, confirm new password'..
         }
 
 

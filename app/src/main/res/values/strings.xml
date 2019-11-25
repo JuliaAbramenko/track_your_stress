@@ -32,4 +32,11 @@
     <string name="not_known">Not known</string>
     <string name="not_applicable">Not applicable</string>
     <string name="submit">Submit</string>
+    <string name="change_password">Change password</string>
+    <string name="delete_profile">Delete profile</string>
+    <string name="turn_on_all_notifcations">Turn on all notifcations</string>
+    <string name="turn_on_daily_notifications">Turn on daily notifications</string>
+    <string name="turn_on_weekly_notifications">Turn on weekly notifications</string>
+    <string name="manage_notifications">Manage notifications</string>
+    <string name="turn_on_monthly_notifcations">Turn on monthly notifcations</string>
 </resources>
