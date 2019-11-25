@@ -97,4 +97,12 @@
             android:text="@string/not_applicable"/>
     </RadioGroup>
 
+    <Button
+        android:id="@+id/submit_button_update_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit">
+
+    </Button>
+
 </LinearLayout>

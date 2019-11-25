@@ -31,4 +31,5 @@
     <string name="female">Female</string>
     <string name="not_known">Not known</string>
     <string name="not_applicable">Not applicable</string>
+    <string name="submit">Submit</string>
 </resources>
