@@ -41,6 +41,11 @@ class LoginActivity : AppCompatActivity() {
                 edit_username.text.contains(".")) {
                 GlobalVariables.localStorage["current_email"] = edit_username.text.toString()
                 conUtils.loginUser(edit_username.text.toString(), edit_password.text.toString(), this)
+            } else {
+                if(edit_password.text.length < 8)
+                    Toast.makeText(getApplicationContext(),
+                        "Password not correct ",
+                        Toast.LENGTH_LONG).show() //TODO catch errors
             }
         }
         back_button.setOnClickListener {

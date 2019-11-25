@@ -1,6 +1,8 @@
 package com.example.trackyourstress_ba.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +40,57 @@ class ProfileFragment: Fragment(){
         edit_firstname = view!!.findViewById(R.id.edit_firstname)
         edit_lastname = view!!.findViewById(R.id.edit_lastname)
         sex_radio_group = view!!.findViewById(R.id.sex_radio_group)
+
+        edit_email.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                val new_email = edit_email.text
+
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+            }
+
+
+
+        })
+        edit_firstname.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                val new_firstname = edit_firstname.text
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {}
+
+        })
+        edit_lastname.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                val new_lastname = edit_lastname.text
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {}
+
+        })
+
+        sex_radio_group.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
+                val new_sex : String
+                val id_chosen = sex_radio_group.checkedRadioButtonId
+                when (id_chosen) {
+
+                    R.id.profile_sex_not_known -> new_sex = "0"
+                    R.id.profile_male -> new_sex = "1"
+                    R.id.profile_female -> new_sex = "2"
+                    R.id.profile_not_applicable -> new_sex="9"
+                }
+            } //TODO?? Button, Submit?
+
+        })
     }
 
     fun response_received(response: JSONObject){
@@ -65,5 +118,25 @@ class ProfileFragment: Fragment(){
             "2" -> sex_radio_group.check(R.id.profile_female)
             "9" -> sex_radio_group.check(R.id.profile_not_applicable)
         }
+    }
+
+    fun update_received(response : JSONObject) {
+        try {
+
+        } catch (except: Exception) {}
+    }
+
+    fun update_password_received(response: JSONObject) {
+        try {
+
+        } catch (except: Exception) {}
+
+    }
+
+    fun profile_deleted(response: JSONObject) {
+        try {
+
+        } catch (except: Exception) {}
+
     }
 }

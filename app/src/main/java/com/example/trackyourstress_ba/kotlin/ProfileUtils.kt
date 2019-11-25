@@ -3,10 +3,7 @@ package com.example.trackyourstress_ba.kotlin
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.toolbox.BasicNetwork
-import com.android.volley.toolbox.HurlStack
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.NoCache
+import com.android.volley.toolbox.*
 import com.example.trackyourstress_ba.fragments.ProfileFragment
 import org.json.JSONObject
 
@@ -36,6 +33,57 @@ class ProfileUtils() {
             }, Response.ErrorListener{ error ->
                 // Error in request
                 throw Exception("shit happened: $error")
+            })
+        // Add the volley post request to the request queue
+        requestQueue.add(request)
+    }
+
+    fun updateProfile(username: String, firstname: String, lastname: String, sex: Int, caller: ProfileFragment) {
+        val data = "{ 'data' : { 'type' : 'users', 'attributes' : {'username' : '$username', 'firstname' : '$firstname', 'lastname' : '$lastname', 'sex' : '${sex.toString()}'}}}"
+        val json = JSONObject(data)
+        val token = GlobalVariables.localStorage["token"]
+        val url = GlobalVariables.apiEndPoint + "/api/v1/my/profile?token=" + token
+        val request = JsonObjectRequest(
+            Request.Method.PATCH, url, json,
+            Response.Listener { response ->
+                caller.update_received(response)
+            }, Response.ErrorListener{error ->
+                // Error in request
+                throw Exception("error occurred: $error")
+            })
+        // Add the volley post request to the request queue
+        requestQueue.add(request)
+
+    }
+
+    fun updataPassword(password: String, caller: ProfileFragment) {
+        val data = "{ 'data' : { 'type' : 'users', 'attributes' : {'password' : '$password'}}}"
+        val json = JSONObject(data)
+        val token = GlobalVariables.localStorage["token"]
+        val url = GlobalVariables.apiEndPoint + "/api/v1/my/profile/password?token=" + token
+        val request = JsonObjectRequest(
+            Request.Method.PATCH, url, json,
+            Response.Listener { response ->
+                caller.update_password_received(response)
+            }, Response.ErrorListener{error ->
+                // Error in request
+                throw Exception("error occurred: $error")
+            })
+        // Add the volley post request to the request queue
+        requestQueue.add(request)
+
+    }
+
+    fun deleteProfile(caller: ProfileFragment) {
+        val token = GlobalVariables.localStorage["token"]
+        val url = GlobalVariables.apiEndPoint + "/api/v1/my/profile?token=" + token
+        val request = JsonObjectRequest(
+            Request.Method.DELETE, url, null,
+            Response.Listener { response ->
+                caller.profile_deleted(response)
+            }, Response.ErrorListener{error ->
+                // Error in request
+                throw Exception("error occurred: $error")
             })
         // Add the volley post request to the request queue
         requestQueue.add(request)
