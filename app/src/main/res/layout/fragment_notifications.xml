@@ -10,30 +10,45 @@
         android:id="@+id/switch_all_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/turn_on_all_notifcations" />
+        android:text="@string/turn_on_all_notifcations"
+        android:checked="true"
+        android:textOff="@string/off"
+        android:textOn="@string/on" />
 
     <TextView
         android:id="@+id/manage_notifications_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/manage_notifications"
+        android:checked="true"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
         />
 
     <Switch
         android:id="@+id/switch_daily_notfications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/turn_on_daily_notifications" />
+        android:text="@string/turn_on_daily_notifications"
+        android:checked="true"
+        android:textOff="@string/off"
+        android:textOn="@string/on" />
 
     <Switch
         android:id="@+id/switch_weekly_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/turn_on_weekly_notifications" />
+        android:text="@string/turn_on_weekly_notifications"
+        android:checked="true"
+        android:textOff="@string/off"
+        android:textOn="@string/on" />
 
     <Switch
         android:id="@+id/switch_monthly_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/turn_on_monthly_notifcations" />
+        android:text="@string/turn_on_monthly_notifcations"
+        android:checked="true"
+        android:textOff="@string/off"
+        android:textOn="@string/on" />
 </LinearLayout>

@@ -62,7 +62,6 @@ class ProfileFragment: Fragment(){
             //TODO dialog window with 'are you sure?', 'New password, confirm new password'..
         }
 
-
     }
 
 

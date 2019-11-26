@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import kotlinx.android.synthetic.main.activity_home.*
 
-class StudyOverviewFragment() : Fragment() {
-    @Override
-    @Nullable
-    fun createView(inflater: LayoutInflater, @Nullable container: ViewGroup, @Nullable savedInstanceState: Bundle): View? {
+class StudyOverviewFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.fragment_study_overview, container, false)
     }
 }

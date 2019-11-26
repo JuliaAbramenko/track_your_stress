@@ -39,4 +39,12 @@
     <string name="turn_on_weekly_notifications">Turn on weekly notifications</string>
     <string name="manage_notifications">Manage notifications</string>
     <string name="turn_on_monthly_notifcations">Turn on monthly notifcations</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="daily_notifications_on">Daily notifications ON</string>
+    <string name="weekly_notfications_on">Weekly notifications ON</string>
+    <string name="monthly_notifications_on">Monthly notfications ON</string>
+    <string name="daily_notifications_off">Daily notifications OFF</string>
+    <string name="weekly_notifications_off">Weekly notifications OFF</string>
+    <string name="monthly_notifications_off">Monthly notifications OFF</string>
 </resources>

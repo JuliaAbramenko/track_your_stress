@@ -11,7 +11,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trackyourstress_ba.R
+import com.example.trackyourstress_ba.fragments.NotificationsFragment
 import com.example.trackyourstress_ba.fragments.ProfileFragment
+import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
+import com.example.trackyourstress_ba.fragments.StudyOverviewFragment
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.google.android.material.navigation.NavigationView
 
@@ -39,6 +42,9 @@ class HomeActivity : AppCompatActivity() {
         nav_view = findViewById(R.id.nav_view)
         nav_view.setItemIconTintList(null)
         val profile_frag = ProfileFragment()
+        val notifications_fragment = NotificationsFragment()
+        val studies_fragment = StudyOverviewFragment()
+        val questionnaires_fragment = QuestionnairesFragment()
         nav_view.setNavigationItemSelectedListener {item ->
             when(item.itemId) {
 
@@ -50,6 +56,32 @@ class HomeActivity : AppCompatActivity() {
                     drawer.closeDrawers()
                     true
                 }
+
+                R.id.nav_notifications -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    //transact.addToBackStack(null)
+                    transact.replace(R.id.fragment_container, notifications_fragment)
+                    transact.commit()
+                    drawer.closeDrawers()
+                    true
+                }
+                R.id.nav_questionnaires -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    //transact.addToBackStack(null)
+                    transact.replace(R.id.fragment_container, questionnaires_fragment)
+                    transact.commit()
+                    drawer.closeDrawers()
+                    true
+                }
+                R.id.nav_study_overview -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    //transact.addToBackStack(null)
+                    transact.replace(R.id.fragment_container, studies_fragment)
+                    transact.commit()
+                    drawer.closeDrawers()
+                    true
+                }
+
                 else -> true
             }
 
