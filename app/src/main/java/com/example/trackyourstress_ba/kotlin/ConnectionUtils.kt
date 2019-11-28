@@ -9,6 +9,8 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.*
+import com.example.trackyourstress_ba.MainActivity
+import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegisterActivity
 import com.example.trackyourstress_ba.ui.register.RegistrationConfirmationActivity
@@ -71,13 +73,12 @@ class ConnectionUtils() {
 
     }
 
-    fun logoutUser(caller: LoginActivity ) {
+    fun logoutUser(caller: HomeActivity) {
         val url = GlobalVariables.apiEndPoint + "/api/v1/auth/logout?token=" + GlobalVariables.localStorage["token"].toString()
         val request = StringRequest(
             Request.Method.DELETE, url,
             Response.Listener<String> { response: String ->
                 GlobalVariables.localStorage.remove("token")
-                caller.booltext.text = ("logged out")
 
             }, Response.ErrorListener{error ->
                 // Error in request
@@ -103,6 +104,22 @@ class ConnectionUtils() {
             }, Response.ErrorListener{error ->
                 // Error in request
                 throw Exception("shit happened: $error")
+            })
+        // Add the volley post request to the request queue
+        requestQueue.add(request)
+    }
+
+    fun refreshToken(old_token: String) {
+        val url =
+            GlobalVariables.apiEndPoint + "/api/v1/auth/refresh?token=" + GlobalVariables.localStorage["token"]
+        val request = StringRequest(
+            Request.Method.POST, url,
+            Response.Listener<String> { response: String ->
+                GlobalVariables.localStorage.remove("token")
+
+            }, Response.ErrorListener { error ->
+                // Error in request
+                throw Exception("error occurred: $error")
             })
         // Add the volley post request to the request queue
         requestQueue.add(request)
