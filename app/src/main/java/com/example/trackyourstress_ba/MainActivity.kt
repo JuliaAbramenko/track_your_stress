@@ -19,10 +19,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var login_button : Button
     lateinit var register_button : Button
     lateinit var requestQueue: RequestQueue
-    val api_end_point = "https://api.trackyourstress.org"
-    val platform = "stress"
-    var con_utils : ConnectionUtils = ConnectionUtils()
-    val global_storage = HashMap<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

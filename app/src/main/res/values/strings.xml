@@ -47,4 +47,9 @@
     <string name="daily_notifications_off">Daily notifications OFF</string>
     <string name="weekly_notifications_off">Weekly notifications OFF</string>
     <string name="monthly_notifications_off">Monthly notifications OFF</string>
+    <string name="channel_daily_notifications">TrackYourStress -Daily Questionnaire</string>
+    <string name="channel_id_daily">1</string>
+    <string name="title_study">Title</string>
+    <string name="running">Running</string>
+    <string name="repeatable">Repeatable</string>
 </resources>
