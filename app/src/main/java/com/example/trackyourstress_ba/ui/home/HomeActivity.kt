@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NotificationCompat
@@ -23,6 +25,9 @@ import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.NotificationCreator
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_home.view.*
+import org.json.JSONObject
+import org.w3c.dom.Text
 
 class HomeActivity : AppCompatActivity() {
 
@@ -31,6 +36,8 @@ class HomeActivity : AppCompatActivity() {
     lateinit var drawer_toggle : ActionBarDrawerToggle
     lateinit var nav_view : NavigationView
     lateinit var connection_utils: ConnectionUtils
+    lateinit var username_text: TextView
+    lateinit var email_text: TextView
     lateinit var refresh_handler: Handler
     lateinit var notification_manager: NotificationManager
 
@@ -67,9 +74,16 @@ class HomeActivity : AppCompatActivity() {
         refresh_handler = Handler()
         // refreshes after 60 * 60 * 1000 = 3 600 000 milli seconds (1 hour)
         refresh_handler.postDelayed(
-            { connection_utils.refreshToken(GlobalVariables.localStorage["token"].toString()) },
+            { connection_utils.refreshToken(this) },
             3600000
         )
+
+        val headerLayout: View = nav_view.getHeaderView(0)
+        username_text = headerLayout.findViewById(R.id.username_drawer)
+        email_text = headerLayout.findViewById(R.id.email_drawer)
+
+        username_text.text = GlobalVariables.localStorage["username"]
+        email_text.text = GlobalVariables.localStorage["current_email"]
 
         val profile_frag = ProfileFragment()
         val notifications_fragment = NotificationsFragment()
@@ -125,8 +139,6 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
-
-
     }
 
     override fun onPause() {
@@ -134,10 +146,11 @@ class HomeActivity : AppCompatActivity() {
         refresh_handler = Handler()
         // refreshes after 60 * 60 * 1000 = 3 600 000 milli seconds (1 hour)
         refresh_handler.postDelayed(
-            { connection_utils.refreshToken(GlobalVariables.localStorage["token"].toString()) },
+            { connection_utils.refreshToken(this) },
             3600000
         )
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -145,6 +158,12 @@ class HomeActivity : AppCompatActivity() {
             drawer.closeDrawer(GravityCompat.START)
         }
         else super.onBackPressed()
+    }
+
+    fun on_new_token_received(response: JSONObject) {
+        val new_token =
+            response.getJSONObject("data").getJSONObject("attributes").getString("token")
+        GlobalVariables.localStorage["token"] = new_token
     }
 
 

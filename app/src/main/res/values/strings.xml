@@ -52,4 +52,5 @@
     <string name="title_study">Title</string>
     <string name="running">Running</string>
     <string name="repeatable">Repeatable</string>
+    <string name="do_you_really_want_to_delete_your_profile">Do you really want to delete your profile?</string>
 </resources>

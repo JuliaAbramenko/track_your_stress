@@ -1,5 +1,7 @@
 package com.example.trackyourstress_ba.fragments
 
+import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
@@ -9,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 
 import com.example.trackyourstress_ba.R
@@ -28,9 +31,12 @@ class ProfileFragment: Fragment(){
     lateinit var change_password_button : Button
     lateinit var delete_profile_button : Button
     lateinit var profileUtils: ProfileUtils
+    lateinit var currentContext: Context
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        currentContext = container!!.context
         profileUtils = ProfileUtils()
         return inflater.inflate(R.layout.fragment_profile,container,false)
     }
@@ -60,6 +66,24 @@ class ProfileFragment: Fragment(){
         change_password_button.setOnClickListener {
             //profileUtils.updataPassword( )
             //TODO dialog window with 'are you sure?', 'New password, confirm new password'..
+        }
+
+        delete_profile_button.setOnClickListener {
+            //profileUtils.deleteProfile()
+            //TODO dialogue are you sure?
+            val dialog: Dialog = Dialog(currentContext)
+            dialog.setContentView(R.layout.dialog_layout)
+            dialog.setTitle("DELETE")
+            //dialog.set TODO settext
+            val delete_yes_button = dialog.findViewById<Button>(R.id.dialog_delete_profile_yes)
+            val delete_no_button = dialog.findViewById<Button>(R.id.dialog_delete_profile_no)
+            delete_no_button.setOnClickListener {
+                profileUtils.deleteProfile(this)
+            }
+
+            delete_yes_button.setOnClickListener {
+
+            }
         }
 
     }

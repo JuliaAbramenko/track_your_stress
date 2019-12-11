@@ -63,13 +63,15 @@ class ConnectionUtils() {
                 val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
                 GlobalVariables.localStorage["token"] = token
                 GlobalVariables.localStorage["current_email"] = email
-                caller.response_received(response)
+                caller.login_response_received(response)
+
             }, Response.ErrorListener{error ->
                 // Error in request
                 throw Exception("shit happened: $error")
             })
         // Add the volley post request to the request queue
         requestQueue.add(request)
+
 
     }
 
@@ -109,13 +111,14 @@ class ConnectionUtils() {
         requestQueue.add(request)
     }
 
-    fun refreshToken(old_token: String) {
+    fun refreshToken(caller: HomeActivity) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/auth/refresh?token=" + GlobalVariables.localStorage["token"]
-        val request = StringRequest(
-            Request.Method.POST, url,
-            Response.Listener<String> { response: String ->
-                GlobalVariables.localStorage.remove("token")
+        val request = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            Response.Listener { response ->
+                //GlobalVariables.localStorage.remove("token")
+                caller.on_new_token_received(response)
 
             }, Response.ErrorListener { error ->
                 // Error in request
@@ -123,6 +126,21 @@ class ConnectionUtils() {
             })
         // Add the volley post request to the request queue
         requestQueue.add(request)
+    }
+
+    fun get_profile_data(caller: LoginActivity) {
+        val url_profile =
+            GlobalVariables.apiEndPoint + "/api/v1/my/profile?token=" + GlobalVariables.localStorage["token"]
+        val profile_request = JsonObjectRequest(
+            Request.Method.GET, url_profile, null,
+            Response.Listener { response ->
+                caller.profile_response_received(response)
+            }, Response.ErrorListener { error ->
+                // Error in request
+                throw Exception("shit happened: $error")
+            })
+        // Add the volley post request to the request queue
+        requestQueue.add(profile_request)
     }
 
 }

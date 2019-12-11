@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var loading : ProgressBar
     lateinit var booltext : TextView
     lateinit var  back_button: Button
-    lateinit var login_JSON: JSONObject
+    lateinit var conUtils: ConnectionUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         loading = findViewById(R.id.loading)
         booltext = findViewById(R.id.textView)
         back_button = findViewById(R.id.tohome_button_login)
-        val conUtils = ConnectionUtils()
+        conUtils = ConnectionUtils()
 
         login_button.setOnClickListener {
             if(edit_password.text.length >= 8 && edit_username.text.contains("@") &&
@@ -53,9 +53,19 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    fun response_received(response: JSONObject) {
-        login_JSON = response
-        GlobalVariables.localStorage["token"] = login_JSON.getJSONObject("data").getJSONObject("attributes").getString("token")
+
+    fun login_response_received(response: JSONObject) {
+        GlobalVariables.localStorage["token"] =
+            response.getJSONObject("data").getJSONObject("attributes").getString("token")
+        conUtils.get_profile_data(this)
+
+    }
+
+    fun profile_response_received(response: JSONObject) {
+        val user_id = response.getJSONObject("data").getString("id")
+        GlobalVariables.localStorage["user_id"] = user_id
+        val username = response.getJSONObject("data").getJSONObject("attributes").getString("name")
+        GlobalVariables.localStorage["username"] = username
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)
     }
