@@ -48,14 +48,13 @@ class QuestionnairesFragment : Fragment() {
         first_row.addView(test_title)
         first_row.addView(test_repeatable)
         first_row.addView(test_running)
-        table_questionnaires.addView(first_row)
+        table_questionnaires.addView(first_row, 0)
 
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        //GET STUDY AND QUESTIONNAIRE IDS
         questionnaireUtils = QuestionnaireUtils()
         associated_questionnaire_ids = ArrayList()
         associatedQuestionnaireTitles = ArrayList()

@@ -18,6 +18,25 @@ class Slider(textOfQuestion: String, sliderValues: Array<Int>, caller: Questionn
         questionTextView.text = questionText
         seekBar.max = (max - min) / step
         stepTextView.text = "0"
+        listen(seekBar)
+    }
+
+    fun listen(seekBar: SeekBar) {
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                // Display the current progress of SeekBar
+                stepTextView.text = "Progress : $i"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // Do something
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // Do something
+            }
+        })
     }
 
 }
