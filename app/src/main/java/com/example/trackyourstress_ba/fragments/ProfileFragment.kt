@@ -1,12 +1,9 @@
 package com.example.trackyourstress_ba.fragments
 
-import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
+import android.content.DialogInterface
 import android.os.Bundle
-import android.provider.Settings
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +11,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 
-import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.ProfileUtils
 import org.json.JSONObject
 import java.lang.Exception
+import android.widget.EditText
+import com.example.trackyourstress_ba.R
+import kotlinx.android.synthetic.main.activity_login.*
+
 
 class ProfileFragment: Fragment(){
 
@@ -62,30 +62,89 @@ class ProfileFragment: Fragment(){
                 )
             Toast.makeText(context, "updated profile", Toast.LENGTH_LONG).show()
         }
-
+        //TODO Modify dialog
         change_password_button.setOnClickListener {
-            //profileUtils.updataPassword( )
-            //TODO dialog window with 'are you sure?', 'New password, confirm new password'..
+            val alert = AlertDialog.Builder(currentContext)
+            val oldPassword = EditText(currentContext)
+
+            oldPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            alert.setMessage("Change Password")
+            alert.setTitle("Enter old password")
+            alert.setView(oldPassword)
+
+            alert.setPositiveButton("Continue",
+                DialogInterface.OnClickListener { dialog, whichButton ->
+                    //What ever you want to do with the value
+                    callNewPasswordDialog()
+                }
+
+            )
+
+            alert.setNegativeButton("Cancel",
+                DialogInterface.OnClickListener { dialog, whichButton ->
+                    Toast.makeText(currentContext, "Would not change", Toast.LENGTH_LONG).show()
+                })
+
+            alert.show()
         }
 
         delete_profile_button.setOnClickListener {
-            //profileUtils.deleteProfile()
-            //TODO dialogue are you sure?
-            val dialog: Dialog = Dialog(currentContext)
-            dialog.setContentView(R.layout.dialog_layout)
-            dialog.setTitle("DELETE")
-            //dialog.set TODO settext
-            val delete_yes_button = dialog.findViewById<Button>(R.id.dialog_delete_profile_yes)
-            val delete_no_button = dialog.findViewById<Button>(R.id.dialog_delete_profile_no)
-            delete_no_button.setOnClickListener {
-                profileUtils.deleteProfile(this)
-            }
-
-            delete_yes_button.setOnClickListener {
+            val builder = AlertDialog.Builder(currentContext)
+            builder.setTitle("DELETE PROFILE")
+            builder.setMessage("Do you want to delete your profile?")
+            builder.setPositiveButton("YES") { dialog, which ->
+                Toast.makeText(
+                    currentContext,
+                    "This would delete your profile.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                //TODO and to test
+                //profileUtils.deleteProfile(this)
 
             }
+            builder.setNegativeButton("No") { dialog, which ->
+                Toast.makeText(currentContext, "Your profile was not deleted", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            builder.setNeutralButton("Cancel") { _, _ ->
+            }
+            val dialog: AlertDialog = builder.create()
+
+            // Display the alert dialog on app interface
+            dialog.show()
         }
 
+
+    }
+
+    private fun callNewPasswordDialog() {
+        val alert = AlertDialog.Builder(currentContext)
+        val newPassword = EditText(currentContext)
+
+        newPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+        alert.setMessage("Change Password")
+        alert.setTitle("Enter new password")
+        alert.setView(newPassword)
+
+        alert.setPositiveButton("Continue",
+            DialogInterface.OnClickListener { dialog, whichButton ->
+                //What ever you want to do with the value
+                val new = newPassword.text.toString()
+                Toast.makeText(currentContext, "this would update password", Toast.LENGTH_LONG)
+                    .show()
+                //profileUtils.updatePassword(new, this)
+
+            }
+
+        )
+
+        alert.setNegativeButton("Cancel",
+            DialogInterface.OnClickListener { dialog, whichButton ->
+                Toast.makeText(currentContext, "Would not change", Toast.LENGTH_LONG).show()
+            })
+
+        alert.show()
     }
 
 

@@ -24,6 +24,7 @@ import com.example.trackyourstress_ba.fragments.StudyOverviewFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.NotificationCreator
+import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_home.view.*
 import org.json.JSONObject
@@ -78,6 +79,7 @@ class HomeActivity : AppCompatActivity() {
             3600000
         )
 
+
         val headerLayout: View = nav_view.getHeaderView(0)
         username_text = headerLayout.findViewById(R.id.username_drawer)
         email_text = headerLayout.findViewById(R.id.email_drawer)
@@ -89,6 +91,10 @@ class HomeActivity : AppCompatActivity() {
         val notifications_fragment = NotificationsFragment()
         val studies_fragment = StudyOverviewFragment()
         val questionnaires_fragment = QuestionnairesFragment()
+
+
+
+
         nav_view.setNavigationItemSelectedListener {item ->
             when(item.itemId) {
 

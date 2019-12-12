@@ -11,7 +11,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 
-class QuestionnaireUtils() {
+class QuestionnaireUtils {
 
     val language_header = "{'Accept-language':" + GlobalVariables.cur_language + "}"
     var requestQueue: RequestQueue
@@ -30,7 +30,7 @@ class QuestionnaireUtils() {
 
     fun get_user_studies(user_id: Int, caller: QuestionnairesFragment) {
         val url =
-            GlobalVariables.apiEndPoint + "api/v1/users/" + user_id + "/studies/member?token=" + GlobalVariables.localStorage["token"]
+            GlobalVariables.apiEndPoint + "/api/v1/users/" + user_id + "/studies/member?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
@@ -46,8 +46,8 @@ class QuestionnaireUtils() {
 
     fun get_associated_questionnaires(study_id: Int, caller: QuestionnairesFragment) {
         val url =
-            GlobalVariables.apiEndPoint + "api/v1/studies/" + study_id + "/questionnaires?token=" + GlobalVariables.localStorage["token"]
-        val request = JsonObjectRequest(
+            GlobalVariables.apiEndPoint + "/api/v1/studies/" + study_id + "/questionnaires?token=" + GlobalVariables.localStorage["token"]
+        val request = JsonObjectRequest( //NULL??
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 caller.associated_questionnaires_received(response)
@@ -61,7 +61,7 @@ class QuestionnaireUtils() {
 
     fun get_associated_questionnaires_relationship(study_id: Int, caller: QuestionnairesFragment) {
         val url =
-            GlobalVariables.apiEndPoint + "api/v1/studies/" + study_id + "/relationships/questionnaires?token=" + GlobalVariables.localStorage["token"]
+            GlobalVariables.apiEndPoint + "/api/v1/studies/" + study_id + "/relationships/questionnaires?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
@@ -76,7 +76,7 @@ class QuestionnaireUtils() {
 
     fun get_questionnaire(questionnaire_id: Int, caller: QuestionnairesFragment) {
         val url =
-            GlobalVariables.apiEndPoint + "api/v1/questionnaires/" + questionnaire_id + "?token=" + GlobalVariables.localStorage["token"]
+            GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + questionnaire_id + "?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
@@ -91,7 +91,7 @@ class QuestionnaireUtils() {
 
     fun get_questionnaire_structure(questionnaire_id: Int, caller: QuestionnairesFragment) {
         val url =
-            GlobalVariables.apiEndPoint + "api/v1/questionnaires/" + questionnaire_id + "/structure?token=" + GlobalVariables.localStorage["token"]
+            GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + questionnaire_id + "/structure?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->

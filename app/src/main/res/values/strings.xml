@@ -53,4 +53,6 @@
     <string name="running">Running</string>
     <string name="repeatable">Repeatable</string>
     <string name="do_you_really_want_to_delete_your_profile">Do you really want to delete your profile?</string>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
 </resources>

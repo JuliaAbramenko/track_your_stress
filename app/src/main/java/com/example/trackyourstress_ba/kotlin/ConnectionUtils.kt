@@ -53,15 +53,13 @@ class ConnectionUtils() {
     fun loginUser(email: String, password: String, caller: LoginActivity) {
         val data = "{ 'data' : { 'type' : 'users', 'attributes' : {'email' : '$email', 'password' : '$password'}}}"
         val url = GlobalVariables.apiEndPoint + "/api/v1/auth/login"
-        //val response = khttp.post(url=GlobalVariables.apiEndPoint + "/api/v1/auth/login", json=data)
-        //val (request, response, result) = Fuel.post(GlobalVariables.apiEndPoint + "/api/v1/auth/login").body(data).response()
         val jsonObject = JSONObject(data)
         // Volley post request with parameters
         val request = JsonObjectRequest(
             Request.Method.POST, url,jsonObject,
             Response.Listener { response ->
-                val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
-                GlobalVariables.localStorage["token"] = token
+                //val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
+                //GlobalVariables.localStorage["token"] = token
                 GlobalVariables.localStorage["current_email"] = email
                 caller.login_response_received(response)
 

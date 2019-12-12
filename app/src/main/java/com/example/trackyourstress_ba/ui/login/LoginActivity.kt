@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
         login_button.setOnClickListener {
             if(edit_password.text.length >= 8 && edit_username.text.contains("@") &&
                 edit_username.text.contains(".")) {
-                GlobalVariables.localStorage["current_email"] = edit_username.text.toString()
                 conUtils.loginUser(edit_username.text.toString(), edit_password.text.toString(), this)
             } else {
                 if(edit_password.text.length < 8)

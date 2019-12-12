@@ -56,13 +56,14 @@ class ProfileUtils() {
 
     }
 
-    fun updataPassword(password: String, caller: ProfileFragment) {
-        val data = "{ 'data' : { 'type' : 'users', 'attributes' : {'password' : '$password'}}}"
+    fun updatePassword(password: String, caller: ProfileFragment) {
+        val data =
+            "{ 'data' : { 'type' : 'users', 'attributes' : {'reset_token' : " + GlobalVariables.localStorage["token"] + ", 'password' : '$password'}}}"
         val json = JSONObject(data)
         val token = GlobalVariables.localStorage["token"]
-        val url = GlobalVariables.apiEndPoint + "/api/v1/my/profile/password?token=" + token
+        val url = GlobalVariables.apiEndPoint + "/api/v1/auth/password/reset?token=" + token
         val request = JsonObjectRequest(
-            Request.Method.PATCH, url, json,
+            Request.Method.POST, url, json,
             Response.Listener { response ->
                 caller.update_password_received(response)
             }, Response.ErrorListener{error ->
