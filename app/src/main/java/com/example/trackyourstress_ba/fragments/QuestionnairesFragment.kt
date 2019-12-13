@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -20,8 +21,9 @@ class QuestionnairesFragment : Fragment() {
     var currentStudyID = 0
     lateinit var questionnaireUtils: QuestionnaireUtils
     //lateinit var questionnaire_ids: ArrayList<Int>
-    lateinit var associated_questionnaire_ids: ArrayList<Int>
-    lateinit var associatedQuestionnaireTitles: ArrayList<String>
+    //lateinit var associated_questionnaire_ids: ArrayList<Int>
+    //lateinit var associatedQuestionnaireTitles: ArrayList<String>
+    lateinit var associatedQuestionnaires: HashMap<Int, String>
 
     private lateinit var table_questionnaires: TableLayout
     val columns = 3
@@ -49,15 +51,13 @@ class QuestionnairesFragment : Fragment() {
         first_row.addView(test_repeatable)
         first_row.addView(test_running)
         table_questionnaires.addView(first_row, 0)
-
         return view
     }
 
     override fun onStart() {
         super.onStart()
         questionnaireUtils = QuestionnaireUtils()
-        associated_questionnaire_ids = ArrayList()
-        associatedQuestionnaireTitles = ArrayList()
+        associatedQuestionnaires = HashMap()
         questionnaireUtils.get_user_studies(GlobalVariables.localStorage["user_id"]!!.toInt(), this)
     }
 
@@ -72,17 +72,16 @@ class QuestionnairesFragment : Fragment() {
     }
 
     fun associated_questionnaires_received(response: JSONObject) {
-        response.keys().forEach { key ->
-            if (key == "id") {
-                val keyvalue = response[key]
-                associated_questionnaire_ids.add(keyvalue as Int)
-
-            }
-            if (key == "name") {
-                val keyvalue = response[key]
-                associatedQuestionnaireTitles.add(keyvalue as String)
-            }
+        GlobalVariables.logger.info("BAAAAAAANG!!!!")
+        val array: JSONArray = response.getJSONArray("data")
+        for (i in 0 until array.length()) {
+            val item = array.getJSONObject(i)
+            val id = item["id"].toString().toInt()
+            //item["name"]
+            val title: String = item.getJSONObject("attributes")["name"].toString()
+            associatedQuestionnaires[id] = title
         }
+
         requestQuestionnaires()
     }
 
@@ -93,15 +92,15 @@ class QuestionnairesFragment : Fragment() {
     }
 
     fun questionnaire_received(response: JSONObject) {
+        GlobalVariables.logger.info("BOOOONG")
         val title =
-            response.getJSONObject("data").getJSONObject("attributes").getJSONObject("title")
-                .toString()
-        val running =
-            response.getJSONObject("data").getJSONObject("attributes").getJSONObject("is_running")
-                .toString().toBoolean()
-        val repeat =
-            response.getJSONObject("data").getJSONObject("attributes").getJSONObject("is_multiple")
-                .toString().toBoolean()
+            response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
+        val runningString =
+            response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
+        val running: Boolean = runningString == "1"
+        val repeatString =
+            response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString()
+        val repeat: Boolean = repeatString == "1"
         fillQuestionnaireRow(title, running, repeat)
     }
 
@@ -110,8 +109,8 @@ class QuestionnairesFragment : Fragment() {
     }
 
     private fun requestQuestionnaires() {
-        for (i in 0 until associated_questionnaire_ids.size) {
-            questionnaireUtils.get_questionnaire(i, this)
+        for ((key, _) in associatedQuestionnaires) {
+            questionnaireUtils.get_questionnaire(key, this)
         }
     }
 
