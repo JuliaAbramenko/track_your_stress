@@ -14,6 +14,7 @@ import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegisterActivity
 import com.example.trackyourstress_ba.ui.register.RegistrationConfirmationActivity
 import org.json.JSONObject
+import java.util.logging.LogManager
 
 class MainActivity : AppCompatActivity() {
     lateinit var login_button : Button

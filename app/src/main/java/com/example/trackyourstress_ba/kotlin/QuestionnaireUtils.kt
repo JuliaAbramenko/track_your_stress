@@ -34,12 +34,14 @@ class QuestionnaireUtils {
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
+                GlobalVariables.logger.info("Received: $response.body")
                 caller.studies_received(response)
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
             })
         // Add the volley post request to the request queue
+        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 
@@ -47,15 +49,17 @@ class QuestionnaireUtils {
     fun get_associated_questionnaires(study_id: Int, caller: QuestionnairesFragment) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/studies/" + study_id + "/questionnaires?token=" + GlobalVariables.localStorage["token"]
-        val request = JsonObjectRequest( //NULL??
+        val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
+                GlobalVariables.logger.info("Received: $response.body")
                 caller.associated_questionnaires_received(response)
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
             })
         // Add the volley post request to the request queue
+        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 
@@ -65,12 +69,14 @@ class QuestionnaireUtils {
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
+                GlobalVariables.logger.info("Received: $response.body")
                 caller.associated_questionnaires_structure_received(response)
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
             })
         // Add the volley post request to the request queue
+        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 
@@ -80,12 +86,14 @@ class QuestionnaireUtils {
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
+                GlobalVariables.logger.info("Received: $response.body")
                 caller.questionnaire_received(response)
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
             })
         // Add the volley post request to the request queue
+        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 
@@ -95,12 +103,14 @@ class QuestionnaireUtils {
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
+                GlobalVariables.logger.info("Received: $response.body")
                 caller.questionnaire_structure_received(response)
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
             })
         // Add the volley post request to the request queue
+        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 }
