@@ -1,5 +1,7 @@
 package com.example.trackyourstress_ba.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +13,20 @@ import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
+import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONArray
 import org.json.JSONObject
 
 
 class QuestionnairesFragment : Fragment() {
 
-    var currentQuestionnaireID = 0
     var currentStudyID = 0
     lateinit var questionnaireUtils: QuestionnaireUtils
-    //lateinit var questionnaire_ids: ArrayList<Int>
-    //lateinit var associated_questionnaire_ids: ArrayList<Int>
-    //lateinit var associatedQuestionnaireTitles: ArrayList<String>
+    var hasLoaded: Boolean = false
     lateinit var associatedQuestionnaires: HashMap<Int, String>
 
     private lateinit var table_questionnaires: TableLayout
-    val columns = 3
+    lateinit var currentContext: Context
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +34,7 @@ class QuestionnairesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_study_overview, container, false)
+        currentContext = container!!.context
         table_questionnaires = view!!.findViewById(R.id.study_table)
         val first_row = TableRow(activity)
         val test_title = TextView(activity)
@@ -56,16 +57,20 @@ class QuestionnairesFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        questionnaireUtils = QuestionnaireUtils()
-        associatedQuestionnaires = HashMap()
-        questionnaireUtils.get_user_studies(GlobalVariables.localStorage["user_id"]!!.toInt(), this)
+        if (!hasLoaded) {
+            associatedQuestionnaires = HashMap()
+            questionnaireUtils = QuestionnaireUtils()
+            questionnaireUtils.get_user_studies(
+                GlobalVariables.localStorage["user_id"]!!.toInt(),
+                this
+            )
+            hasLoaded = true
+        }
+
     }
 
+    
     fun studies_received(response: JSONObject) {
-        /*val tempArr= response.getJSONArray("data")
-        for() {
-           TODO
-        }*/
         currentStudyID = 1
         questionnaireUtils.get_associated_questionnaires(currentStudyID, this)
 
@@ -93,6 +98,7 @@ class QuestionnairesFragment : Fragment() {
 
     fun questionnaire_received(response: JSONObject) {
         GlobalVariables.logger.info("BOOOONG")
+        val name = response.getJSONObject("data").getJSONObject("attributes")["name"].toString()
         val title =
             response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
         val runningString =
@@ -101,11 +107,13 @@ class QuestionnairesFragment : Fragment() {
         val repeatString =
             response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString()
         val repeat: Boolean = repeatString == "1"
-        fillQuestionnaireRow(title, running, repeat)
+        fillQuestionnaireRow(name, title, running, repeat)
     }
 
     fun questionnaire_structure_received(response: JSONObject) {
-
+        val intent = Intent(currentContext, AnswerSheetActivity::class.java)
+        intent.putExtra("response", response.toString())
+        startActivity(intent)
     }
 
     private fun requestQuestionnaires() {
@@ -114,12 +122,17 @@ class QuestionnairesFragment : Fragment() {
         }
     }
 
-    private fun fillQuestionnaireRow(name: String, running: Boolean, repeat: Boolean) {
+    private fun fillQuestionnaireRow(
+        name: String,
+        titleName: String,
+        running: Boolean,
+        repeat: Boolean
+    ) {
         val newRow = TableRow(activity)
         val title = TextView(activity)
         val isRunning = TextView(activity)
         val isRepeatable = TextView(activity)
-        title.text = name
+        title.text = titleName
         isRunning.text = if (running) "YES" else "NO"
         isRepeatable.text = if (repeat) "YES" else "NO"
         newRow.addView(title)
@@ -130,5 +143,21 @@ class QuestionnairesFragment : Fragment() {
             TableLayout.LayoutParams.WRAP_CONTENT
         )
         table_questionnaires.addView(newRow)
+        listenToClickEvents(newRow, name)
+    }
+
+    private fun listenToClickEvents(row: TableRow, name: String) {
+        row.setOnClickListener {
+            var index = -1
+            for ((key, value) in associatedQuestionnaires) {
+                if (value == name) {
+                    index = key
+                    break
+                }
+
+            }
+            questionnaireUtils.get_questionnaire_structure(index, this)
+        }
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.kotlin
 
 import android.provider.Settings
 import android.widget.Toast
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -100,7 +101,7 @@ class QuestionnaireUtils {
     fun get_questionnaire_structure(questionnaire_id: Int, caller: QuestionnairesFragment) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + questionnaire_id + "/structure?token=" + GlobalVariables.localStorage["token"]
-        val request = JsonObjectRequest(
+        val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 GlobalVariables.logger.info("Received: $response.body")
@@ -108,7 +109,14 @@ class QuestionnaireUtils {
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
-            })
+            }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val header = mutableMapOf<String, String>()
+                header.put("Accept-language", GlobalVariables.cur_language)
+                return header
+            }
+        }
+
         // Add the volley post request to the request queue
         GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
