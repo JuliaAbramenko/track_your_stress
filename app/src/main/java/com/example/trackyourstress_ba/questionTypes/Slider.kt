@@ -21,7 +21,7 @@ class Slider(textOfQuestion: String, sliderValues: Array<Int>, caller: Questionn
         listen(seekBar)
     }
 
-    fun listen(seekBar: SeekBar) {
+    private fun listen(seekBar: SeekBar) {
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {

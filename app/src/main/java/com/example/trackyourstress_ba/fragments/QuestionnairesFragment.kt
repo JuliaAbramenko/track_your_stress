@@ -69,7 +69,7 @@ class QuestionnairesFragment : Fragment() {
 
     }
 
-    
+
     fun studies_received(response: JSONObject) {
         currentStudyID = 1
         questionnaireUtils.get_associated_questionnaires(currentStudyID, this)
