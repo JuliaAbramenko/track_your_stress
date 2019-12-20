@@ -6,18 +6,20 @@ import android.widget.TextView
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import android.view.Gravity
 import android.widget.LinearLayout
+import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 
-class SingleChoice(questionText: String, answers: Array<String>, caller: QuestionnairesFragment) {
-    val questionTextView = TextView(caller.context)
+class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerSheetActivity) {
+    val context = caller
+    val questionTextView = TextView(context)
     val text = questionText
     var i = 0
-    private val radioGroup = RadioGroup(caller.context)
+    private val radioGroup = RadioGroup(context)
 
     init {
         questionTextView.text = questionText
         for (item in answers) {
-            val radioButton = RadioButton(caller.context)
+            val radioButton = RadioButton(context)
             radioButton.text = answers[i]
             radioGroup.addView(radioButton)
             i++

@@ -1,23 +1,47 @@
 package com.example.trackyourstress_ba.questionTypes
 
+import android.os.Build
+import android.view.Gravity
 import android.widget.SeekBar
 import android.widget.TextView
-import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
+import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-class Slider(textOfQuestion: String, sliderValues: Array<Int>, caller: QuestionnairesFragment) {
+class Slider(
+    textOfQuestion: String,
+    sliderValues: Array<Int>,
+    minText: String,
+    maxText: String,
+    caller: AnswerSheetActivity
+) {
 
-    val questionTextView = TextView(caller.context)
-    val questionText = textOfQuestion
-    val seekBar = SeekBar(caller.context)
-    val min = sliderValues[0]
-    val max = sliderValues[1]
-    val step = sliderValues[2]
-    val stepTextView = TextView(caller.context)
+    val context = caller
+    private val baseView = caller.linearLayout
+    private val questionTextView = TextView(context)
+    private val questionText = textOfQuestion
+    private val seekBar = SeekBar(context)
+    private val min = sliderValues[0]
+    private val max = sliderValues[1]
+    private val step = sliderValues[2]
+    private var selectedValue = 0
+    private val minTextView = TextView(context)
+    private val maxTextView = TextView(context)
 
     init {
         questionTextView.text = questionText
+        questionTextView.gravity = Gravity.CENTER
+        minTextView.gravity = Gravity.START
+        maxTextView.gravity = Gravity.END
+        minTextView.text = minText
+        maxTextView.text = maxText
         seekBar.max = (max - min) / step
-        stepTextView.text = "0"
+        seekBar.progress = (max - min) / 2
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            seekBar.min = min
+        }
+        baseView.addView(questionTextView)
+        baseView.addView(seekBar)
+        baseView.addView(minTextView)
+        baseView.addView(maxTextView)
         listen(seekBar)
     }
 
@@ -25,16 +49,15 @@ class Slider(textOfQuestion: String, sliderValues: Array<Int>, caller: Questionn
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                // Display the current progress of SeekBar
-                stepTextView.text = "Progress : $i"
+                selectedValue = i
+                //preliminary and TODO
+                minTextView.text = "$i"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // Do something
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                // Do something
             }
         })
     }

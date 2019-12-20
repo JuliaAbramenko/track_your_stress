@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import com.example.trackyourstress_ba.questionTypes.*
 import org.w3c.dom.Text
 
 
@@ -21,6 +22,8 @@ class AnswerSheetActivity : AppCompatActivity() {
     //lateinit var testtext: TextView
     lateinit var linearLayout: LinearLayout
     lateinit var title: String
+    lateinit var text: String
+    lateinit var question: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,22 +39,73 @@ class AnswerSheetActivity : AppCompatActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        //testtext = TextView(this)
-        //layout.addView(testtext)
-        //this.testtext.text = response.toString()
         val jsonArray = response.getJSONArray("data")
         for (i in 0 until jsonArray.length()) {
             val item: JSONObject = jsonArray.getJSONObject(i)
-            if (i == 0 || i == 1) {
-                title =
-                    item.getJSONObject("attributes").getJSONObject("content").getString("headline")
-            } else {
+            val current = item.getJSONObject("attributes").getJSONObject("content")
+            //check if there is a headline to show
+            if (current.has("headline") && current.getString("headline").isNotEmpty()) {
+                title = current.getString("headline")
+            }
+            // check whether there is text instead
+            if (current.has("text") && current.getString("text").isNotEmpty()) {
+                text = current.getString("text")
+            }
+
+            // check which question type and create GUI objects specifically
+            if (current.has("question") && current.getString("question").isNotEmpty()) {
+                question = current.getString("question")
+                if (current.getString("questiontype") == "Slider") {
+                    val sliderValues = current.getJSONArray("values")
+                    val sliderList = Array(sliderValues.length()) {
+                        sliderValues.getInt(it)
+                    }
+                    val minText =
+                        current.getJSONArray("answers").getJSONObject(0).getString("label")
+                    val maxText =
+                        current.getJSONArray("answers").getJSONObject(1).getString("label")
+                    Slider(question, sliderList, minText, maxText, this)
+                }
+                if (current.getString("questiontype") == "MultipleChoice") {
+                    val mcValues = current.getJSONArray("answers")
+                    val mcList = Array(mcValues.length()) {
+                        mcValues.getString(it)
+                    }
+                    MultipleChoice(question, mcList, this)
+                }
+                if (current.getString("questiontype") == "SingleChoice") {
+                    val scValues = current.getJSONArray("answers")
+                    val scList = Array(scValues.length()) {
+                        scValues.getString(it)
+                    }
+                    SingleChoice(question, scList, this)
+                }
+                if (current.getString("questiontype") == "SAMScaleFace") {
+                    val samScaleFaceValues = current.getJSONArray("values")
+                    val samScaleFaceList = Array(samScaleFaceValues.length()) {
+                        samScaleFaceValues.getInt(it)
+                    }
+                    SAMScaleFace()
+                }
+                if (current.getString("questiontype") == "SAMScaleBody") {
+                    val samScaleBodyValues = current.getJSONArray("values")
+                    val samScaleBodyList = Array(samScaleBodyValues.length()) {
+                        samScaleBodyValues.getInt(it)
+                    }
+                    SAMScaleBody()
+                }
+
+
+            }
+
+
+            /*else {
                 val questionText: String =
                     item.getJSONObject("attributes").getJSONObject("content").getString("question")
                 val questionTextView = TextView(this)
                 questionTextView.text = questionText
                 linearLayout.addView(questionTextView)
-            }
+            }*/
         }
 
 

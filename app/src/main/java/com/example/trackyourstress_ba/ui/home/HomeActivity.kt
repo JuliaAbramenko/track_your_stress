@@ -2,17 +2,15 @@ package com.example.trackyourstress_ba.ui.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trackyourstress_ba.MainActivity
@@ -23,12 +21,8 @@ import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import com.example.trackyourstress_ba.fragments.StudyOverviewFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
-import com.example.trackyourstress_ba.kotlin.NotificationCreator
-import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_home.view.*
 import org.json.JSONObject
-import org.w3c.dom.Text
 
 class HomeActivity : AppCompatActivity() {
 
