@@ -23,6 +23,7 @@ class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) {
 
     init {
         questionTextView.text = questionText
+        baseView.addView(questionTextView)
         for (i: Int in images.indices) {
             val imageView = ImageView(caller)
             val image = images[i]

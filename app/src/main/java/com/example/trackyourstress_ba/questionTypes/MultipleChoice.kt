@@ -7,20 +7,23 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 class MultipleChoice(questionText: String, answers: Array<String>, caller: AnswerSheetActivity) {
 
-    val context = caller
-    val questionTextView = TextView(context)
+    private val questionTextView = TextView(caller)
     val text = questionText
     var i = 0
     var hashMap = HashMap<CheckBox, String>()
     var selectedValues = ArrayList<String>()
+    private val baseView = caller.linearLayout
 
     init {
         questionTextView.text = questionText
-        for (i in answers.indices) {
-            val checkBox = CheckBox(context)
+        baseView.addView(questionTextView)
+        for (item in answers) {
+            val checkBox = CheckBox(caller)
             checkBox.text = answers[i]
             hashMap.put(checkBox, answers[i])
+            i++
             listen(checkBox)
+            baseView.addView(checkBox)
         }
     }
 

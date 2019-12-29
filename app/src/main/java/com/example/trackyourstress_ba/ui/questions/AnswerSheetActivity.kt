@@ -77,14 +77,14 @@ class AnswerSheetActivity : AppCompatActivity() {
                     val mcList = Array(mcValues.length()) {
                         mcValues.getString(it)
                     }
-                    //MultipleChoice(question, mcList, this)
+                    MultipleChoice(question, mcList, this)
                 }
                 if (current.getString("questiontype") == "SingleChoice") {
                     val scValues = current.getJSONArray("answers")
                     val scList = Array(scValues.length()) {
                         scValues.getString(it)
                     }
-                    //SingleChoice(question, scList, this)
+                    SingleChoice(question, scList, this)
                 }
                 if (current.getString("questiontype") == "SAMScaleFace") {
                     /*val samScaleFaceValues = current.getJSONArray("values")

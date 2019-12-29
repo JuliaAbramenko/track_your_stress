@@ -10,27 +10,29 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 
 class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerSheetActivity) {
-    val context = caller
-    val questionTextView = TextView(context)
-    val text = questionText
-    var i = 0
-    private val radioGroup = RadioGroup(context)
+
+    private val questionTextView = TextView(caller)
+    private val baseView = caller.linearLayout
+    private var i = 0
+    private val radioGroup = RadioGroup(caller)
 
     init {
         questionTextView.text = questionText
+        baseView.addView(questionTextView)
         for (item in answers) {
-            val radioButton = RadioButton(context)
+            val radioButton = RadioButton(caller)
             radioButton.text = answers[i]
             radioGroup.addView(radioButton)
             i++
         }
 
-        val params = LinearLayout.LayoutParams(
+        /*val params = LinearLayout.LayoutParams(
             RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT
         )
         params.weight = 1.0f
         params.gravity = Gravity.CENTER
 
-        radioGroup.layoutParams = params
+        radioGroup.layoutParams = params */
+        baseView.addView(radioGroup)
     }
 }

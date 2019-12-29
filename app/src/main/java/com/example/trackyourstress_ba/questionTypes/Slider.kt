@@ -27,7 +27,6 @@ class Slider(
     private val maxTextView = TextView(caller)
 
     init {
-        // linearLayout = LinearLayout(caller)
         questionTextView.text = questionText
         questionTextView.gravity = Gravity.CENTER
         minTextView.gravity = Gravity.START
