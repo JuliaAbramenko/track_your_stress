@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.questionTypes
 
 import android.os.Build
 import android.view.Gravity
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
@@ -14,19 +15,19 @@ class Slider(
     caller: AnswerSheetActivity
 ) {
 
-    val context = caller
     private val baseView = caller.linearLayout
-    private val questionTextView = TextView(context)
+    private val questionTextView = TextView(caller)
     private val questionText = textOfQuestion
-    private val seekBar = SeekBar(context)
+    private val seekBar = SeekBar(caller)
     private val min = sliderValues[0]
     private val max = sliderValues[1]
     private val step = sliderValues[2]
     private var selectedValue = 0
-    private val minTextView = TextView(context)
-    private val maxTextView = TextView(context)
+    private val minTextView = TextView(caller)
+    private val maxTextView = TextView(caller)
 
     init {
+        // linearLayout = LinearLayout(caller)
         questionTextView.text = questionText
         questionTextView.gravity = Gravity.CENTER
         minTextView.gravity = Gravity.START
@@ -38,11 +39,13 @@ class Slider(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seekBar.min = min
         }
+
         baseView.addView(questionTextView)
         baseView.addView(seekBar)
         baseView.addView(minTextView)
         baseView.addView(maxTextView)
         listen(seekBar)
+        //baseView.
     }
 
     private fun listen(seekBar: SeekBar) {

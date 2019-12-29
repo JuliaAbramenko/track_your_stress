@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.ScrollView
 import android.widget.TextView
 import com.example.trackyourstress_ba.questionTypes.*
@@ -56,10 +57,15 @@ class AnswerSheetActivity : AppCompatActivity() {
             if (current.has("question") && current.getString("question").isNotEmpty()) {
                 question = current.getString("question")
                 if (current.getString("questiontype") == "Slider") {
-                    val sliderValues = current.getJSONArray("values")
+                    val sliderMin = current.getJSONObject("values").getString("min").toInt()
+                    val sliderMax = current.getJSONObject("values").getString("max").toInt()
+                    val sliderStep = current.getJSONObject("values").getString("step").toInt()
+                    val sliderList = arrayOf(sliderMin, sliderMax, sliderStep)
+
+                    /*val sliderValues = current.getJSONArray("values")
                     val sliderList = Array(sliderValues.length()) {
                         sliderValues.getInt(it)
-                    }
+                    }*/
                     val minText =
                         current.getJSONArray("answers").getJSONObject(0).getString("label")
                     val maxText =
@@ -71,28 +77,28 @@ class AnswerSheetActivity : AppCompatActivity() {
                     val mcList = Array(mcValues.length()) {
                         mcValues.getString(it)
                     }
-                    MultipleChoice(question, mcList, this)
+                    //MultipleChoice(question, mcList, this)
                 }
                 if (current.getString("questiontype") == "SingleChoice") {
                     val scValues = current.getJSONArray("answers")
                     val scList = Array(scValues.length()) {
                         scValues.getString(it)
                     }
-                    SingleChoice(question, scList, this)
+                    //SingleChoice(question, scList, this)
                 }
                 if (current.getString("questiontype") == "SAMScaleFace") {
-                    val samScaleFaceValues = current.getJSONArray("values")
+                    /*val samScaleFaceValues = current.getJSONArray("values")
                     val samScaleFaceList = Array(samScaleFaceValues.length()) {
                         samScaleFaceValues.getInt(it)
-                    }
-                    SAMScaleFace()
+                    }*/
+                    SAMScaleFace(question, this)
                 }
                 if (current.getString("questiontype") == "SAMScaleBody") {
-                    val samScaleBodyValues = current.getJSONArray("values")
+                    /*val samScaleBodyValues = current.getJSONArray("values")
                     val samScaleBodyList = Array(samScaleBodyValues.length()) {
                         samScaleBodyValues.getInt(it)
-                    }
-                    SAMScaleBody()
+                    }*/
+                    SAMScaleBody(question, this)
                 }
 
 
@@ -104,7 +110,7 @@ class AnswerSheetActivity : AppCompatActivity() {
                     item.getJSONObject("attributes").getJSONObject("content").getString("question")
                 val questionTextView = TextView(this)
                 questionTextView.text = questionText
-                linearLayout.addView(questionTextView)
+                listView.addView(questionTextView)
             }*/
         }
 
