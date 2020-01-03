@@ -1,10 +1,12 @@
 package com.example.trackyourstress_ba.questionTypes
 
+import android.graphics.Color
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import android.view.Gravity
+import android.view.View
 import android.widget.LinearLayout
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
@@ -26,6 +28,7 @@ class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerS
             i++
         }
 
+
         /*val params = LinearLayout.LayoutParams(
             RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT
         )
@@ -34,5 +37,14 @@ class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerS
 
         radioGroup.layoutParams = params */
         baseView.addView(radioGroup)
+
+        val separator = View(caller)
+        separator.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            5
+        )
+        separator.setBackgroundColor(Color.parseColor("#B3B3B3"))
+        baseView.orientation = LinearLayout.VERTICAL
+        baseView.addView(separator)
     }
 }

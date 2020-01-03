@@ -99,15 +99,18 @@ class QuestionnairesFragment : Fragment() {
     fun questionnaire_received(response: JSONObject) {
         GlobalVariables.logger.info("BOOOONG")
         val name = response.getJSONObject("data").getJSONObject("attributes")["name"].toString()
-        val title =
-            response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
-        val runningString =
-            response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
-        val running: Boolean = runningString == "1"
-        val repeatString =
-            response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString()
-        val repeat: Boolean = repeatString == "1"
-        fillQuestionnaireRow(name, title, running, repeat)
+        if (response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString() == "1") {
+            val title =
+                response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
+            val runningString =
+                response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
+            val running: Boolean = runningString == "1"
+            val repeatString =
+                response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString()
+            val repeat: Boolean = repeatString == "1"
+            fillQuestionnaireRow(name, title, running, repeat)
+        }
+
     }
 
     fun questionnaire_structure_received(response: JSONObject) {

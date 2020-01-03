@@ -9,10 +9,8 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.ScrollView
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.ActionBar
 import com.example.trackyourstress_ba.questionTypes.*
 import org.w3c.dom.Text
 
@@ -36,6 +34,8 @@ class AnswerSheetActivity : AppCompatActivity() {
         super.onStart()
         try {
             response = JSONObject(intent.getStringExtra("response")!!)
+            val toolbar = findViewById<Toolbar>(R.id.toolbar)
+            //toolbar.title =  TODO manage Toolbar title
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -51,6 +51,7 @@ class AnswerSheetActivity : AppCompatActivity() {
             // check whether there is text instead
             if (current.has("text") && current.getString("text").isNotEmpty()) {
                 text = current.getString("text")
+                Text(text, this)
             }
 
             // check which question type and create GUI objects specifically
@@ -77,7 +78,13 @@ class AnswerSheetActivity : AppCompatActivity() {
                     val mcList = Array(mcValues.length()) {
                         mcValues.getString(it)
                     }
-                    MultipleChoice(question, mcList, this)
+                    val values = current.getJSONArray("values")
+                    val valueList = Array(values.length()) {
+                        values.getString(it)
+                    }
+                    val zipped = valueList.zip(mcList).toMap()
+                    MultipleChoice(question, zipped, this)
+                    //MultipleChoice(question, mcList, this)
                 }
                 if (current.getString("questiontype") == "SingleChoice") {
                     val scValues = current.getJSONArray("answers")

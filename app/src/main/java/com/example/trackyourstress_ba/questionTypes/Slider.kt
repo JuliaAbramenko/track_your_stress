@@ -1,7 +1,9 @@
 package com.example.trackyourstress_ba.questionTypes
 
+import android.graphics.Color
 import android.os.Build
 import android.view.Gravity
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
@@ -44,6 +46,15 @@ class Slider(
         baseView.addView(minTextView)
         baseView.addView(maxTextView)
         listen(seekBar)
+
+        val separator = View(caller)
+        separator.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            5
+        )
+        separator.setBackgroundColor(Color.parseColor("#B3B3B3"))
+        baseView.orientation = LinearLayout.VERTICAL
+        baseView.addView(separator)
         //baseView.
     }
 
