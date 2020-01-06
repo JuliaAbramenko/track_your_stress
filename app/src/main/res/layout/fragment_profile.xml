@@ -99,24 +99,30 @@
 
     <Button
         android:id="@+id/submit_button_update_profile"
-        android:layout_width="match_parent"
+        android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/submit">
 
     </Button>
 
     <Button
         android:id="@+id/button_change_password"
-        android:layout_width="match_parent"
+        android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/change_password">
 
     </Button>
 
     <Button
         android:id="@+id/button_delete_profile"
-        android:layout_width="match_parent"
+        android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/delete_profile">
 
     </Button>

@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
         edit_password = findViewById(R.id.password)
         login_button= findViewById(R.id.login)
         loading = findViewById(R.id.loading)
-        booltext = findViewById(R.id.textView)
         back_button = findViewById(R.id.tohome_button_login)
         conUtils = ConnectionUtils()
 

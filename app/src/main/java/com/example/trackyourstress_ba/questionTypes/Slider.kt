@@ -2,8 +2,10 @@ package com.example.trackyourstress_ba.questionTypes
 
 import android.graphics.Color
 import android.os.Build
+import android.text.Layout
 import android.view.Gravity
 import android.view.View
+import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
@@ -19,7 +21,6 @@ class Slider(
 
     private val baseView = caller.linearLayout
     private val questionTextView = TextView(caller)
-    private val questionText = textOfQuestion
     private val seekBar = SeekBar(caller)
     private val min = sliderValues[0]
     private val max = sliderValues[1]
@@ -29,33 +30,50 @@ class Slider(
     private val maxTextView = TextView(caller)
 
     init {
-        questionTextView.text = questionText
+        val grid = GridLayout(caller)
+        grid.columnCount = 2
+        grid.rowCount = 1
+
+        questionTextView.text = textOfQuestion
         questionTextView.gravity = Gravity.CENTER
-        minTextView.gravity = Gravity.START
-        maxTextView.gravity = Gravity.END
-        minTextView.text = minText
-        maxTextView.text = maxText
         seekBar.max = (max - min) / step
         seekBar.progress = (max - min) / 2
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seekBar.min = min
         }
 
-        baseView.addView(questionTextView)
-        baseView.addView(seekBar)
-        baseView.addView(minTextView)
-        baseView.addView(maxTextView)
+
+        maxTextView.gravity = Gravity.END
+        minTextView.gravity = Gravity.START
+        minTextView.text = minText
+        maxTextView.text = maxText
+
         listen(seekBar)
 
+        baseView.addView(questionTextView)
+        baseView.addView(seekBar)
+        baseView.addView(grid)
+        grid.addView(
+            minTextView,
+            GridLayout.LayoutParams(
+                GridLayout.spec(0, GridLayout.START),
+                GridLayout.spec(0, GridLayout.END)
+            )
+        )
+        grid.addView(
+            maxTextView,
+            GridLayout.LayoutParams(
+                GridLayout.spec(0, GridLayout.START),
+                GridLayout.spec(1, GridLayout.END)
+            )
+        )
         val separator = View(caller)
         separator.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             5
         )
-        separator.setBackgroundColor(Color.parseColor("#B3B3B3"))
-        baseView.orientation = LinearLayout.VERTICAL
+        separator.setBackgroundColor(Color.LTGRAY)
         baseView.addView(separator)
-        //baseView.
     }
 
     private fun listen(seekBar: SeekBar) {

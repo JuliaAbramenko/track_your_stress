@@ -30,7 +30,6 @@ class RegisterActivity : AppCompatActivity() {
         edit_password_confirmation = findViewById(R.id.register_password_confirmation_field)
         edit_username = findViewById(R.id.register_username_field)
         register_button = findViewById(R.id.register_ok_button)
-        test_text = findViewById(R.id.booltext_register)
         con_utils = ConnectionUtils()
         back_button = findViewById(R.id.tohome_button_reg)
 
