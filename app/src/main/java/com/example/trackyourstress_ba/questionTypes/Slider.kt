@@ -17,8 +17,9 @@ class Slider(
     minText: String,
     maxText: String,
     caller: AnswerSheetActivity
-) {
+) : QuestionType {
 
+    override val questionText = textOfQuestion
     private val baseView = caller.linearLayout
     private val questionTextView = TextView(caller)
     private val seekBar = SeekBar(caller)
@@ -26,6 +27,7 @@ class Slider(
     private val max = sliderValues[1]
     private val step = sliderValues[2]
     private var selectedValue = 0
+    private var timestamp = 0L
     private val minTextView = TextView(caller)
     private val maxTextView = TextView(caller)
 
@@ -34,7 +36,7 @@ class Slider(
         grid.columnCount = 2
         grid.rowCount = 1
 
-        questionTextView.text = textOfQuestion
+        questionTextView.text = questionText
         questionTextView.gravity = Gravity.CENTER
         seekBar.max = (max - min) / step
         seekBar.progress = (max - min) / 2
@@ -81,8 +83,8 @@ class Slider(
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 selectedValue = i
-                //preliminary and TODO
-                minTextView.text = "$i"
+                timestamp = System.currentTimeMillis() / 1000L
+
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -91,6 +93,14 @@ class Slider(
             override fun onStopTrackingTouch(seekBar: SeekBar) {
             }
         })
+    }
+
+    private fun getValue(): Int {
+        return selectedValue
+    }
+
+    private fun getTimestamp(): Long {
+        return timestamp
     }
 
 }

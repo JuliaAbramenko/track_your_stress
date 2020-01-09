@@ -64,7 +64,7 @@ class QuestionnaireUtils {
         requestQueue.add(request)
     }
 
-    fun get_associated_questionnaires_relationship(study_id: Int, caller: QuestionnairesFragment) {
+    /*fun get_associated_questionnaires_relationship(study_id: Int, caller: QuestionnairesFragment) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/studies/" + study_id + "/relationships/questionnaires?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
@@ -79,12 +79,12 @@ class QuestionnaireUtils {
         // Add the volley post request to the request queue
         GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
-    }
+    }*/
 
     fun get_questionnaire(questionnaire_id: Int, caller: QuestionnairesFragment) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + questionnaire_id + "?token=" + GlobalVariables.localStorage["token"]
-        val request = JsonObjectRequest(
+        val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 GlobalVariables.logger.info("Received: $response.body")
@@ -92,7 +92,14 @@ class QuestionnaireUtils {
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")
-            })
+            }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val header = mutableMapOf<String, String>()
+                header.put("Accept-language", GlobalVariables.cur_language)
+                return header
+            }
+        }
+
         // Add the volley post request to the request queue
         GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)

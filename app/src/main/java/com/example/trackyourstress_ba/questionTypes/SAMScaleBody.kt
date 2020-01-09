@@ -7,7 +7,7 @@ import android.widget.*
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-class SAMScaleBody(textOfQuestion: String, caller: AnswerSheetActivity) {
+class SAMScaleBody(textOfQuestion: String, caller: AnswerSheetActivity) : QuestionType {
     var images = arrayOf(
         R.drawable.sambody1, R.drawable.empty, R.drawable.sambody2,
         R.drawable.empty, R.drawable.sambody3, R.drawable.empty, R.drawable.sambody4,
@@ -15,23 +15,22 @@ class SAMScaleBody(textOfQuestion: String, caller: AnswerSheetActivity) {
     )
     private val radioGroup = RadioGroup(caller)
     private val questionTextView = TextView(caller)
-    private val questionText = textOfQuestion
+    override val questionText = textOfQuestion
     private val baseView = caller.linearLayout
-    //private val adapter = ArrayAdapter<>(caller, R.layout.activity_answersheet, )
-
+    private var selectedValue = ""
+    private var timestamp = 0L
+    private var i = 1
 
     init {
         questionTextView.text = questionText
         baseView.addView(questionTextView)
         for (item in images) {
-            /*val imageView = ImageView(caller)
-            val image = images[i]*/
             val radioButton = RadioButton(caller)
-            //radioButton.gravity = Gravity.CENTER
-            //radioButton.setPadding(0, 50, 0 , 0)
             radioButton.gravity = Gravity.START
+            radioButton.tag = i.toString()
+            i++
             radioGroup.addView(radioButton)
-            //radioButton.buttonDrawable = caller.resources.getDrawable(images[i])
+            listen(radioButton)
             val imageView = ImageView(caller)
             imageView.setImageResource(item)
             radioGroup.addView(imageView)
@@ -54,6 +53,23 @@ class SAMScaleBody(textOfQuestion: String, caller: AnswerSheetActivity) {
         baseView.addView(radioGroup)
         baseView.addView(separator)
 
+    }
 
+    private fun listen(radioButton: RadioButton) {
+        radioButton.setOnClickListener {
+            if (radioButton.isSelected) {
+                selectedValue = radioButton.tag.toString()
+                timestamp = System.currentTimeMillis() / 1000L
+            }
+
+        }
+    }
+
+    private fun getValue(): String {
+        return selectedValue
+    }
+
+    private fun getTimestamp(): Long {
+        return timestamp
     }
 }

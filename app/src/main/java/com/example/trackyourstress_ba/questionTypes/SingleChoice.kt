@@ -11,11 +11,16 @@ import android.widget.LinearLayout
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 
-class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerSheetActivity) {
-
+class SingleChoice(
+    questionText: String,
+    answers: Map<String, String>,
+    caller: AnswerSheetActivity
+) : QuestionType {
+    override val questionText = questionText
     private val questionTextView = TextView(caller)
+    var selectedValue = ""
+    private var timestamp = 0L
     private val baseView = caller.linearLayout
-    private var i = 0
     private val radioGroup = RadioGroup(caller)
 
     init {
@@ -23,19 +28,12 @@ class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerS
         baseView.addView(questionTextView)
         for (item in answers) {
             val radioButton = RadioButton(caller)
-            radioButton.text = answers[i]
+            radioButton.text = item.value
+            radioButton.tag = item.key
+            listen(radioButton, answers)
             radioGroup.addView(radioButton)
-            i++
         }
 
-
-        /*val params = LinearLayout.LayoutParams(
-            RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT
-        )
-        params.weight = 1.0f
-        params.gravity = Gravity.CENTER
-
-        radioGroup.layoutParams = params */
         baseView.addView(radioGroup)
 
         val separator = View(caller)
@@ -46,5 +44,23 @@ class SingleChoice(questionText: String, answers: Array<String>, caller: AnswerS
         separator.setBackgroundColor(Color.parseColor("#B3B3B3"))
         baseView.orientation = LinearLayout.VERTICAL
         baseView.addView(separator)
+    }
+
+    private fun listen(radioButton: RadioButton, answers: Map<String, String>) {
+        radioButton.setOnClickListener {
+            if (radioButton.isSelected) {
+                selectedValue = answers[radioButton.tag].toString()
+                timestamp = System.currentTimeMillis() / 1000L
+            }
+
+        }
+    }
+
+    private fun getValue(): String {
+        return selectedValue
+    }
+
+    private fun getTimestamp(): Long {
+        return timestamp
     }
 }

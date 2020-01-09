@@ -66,7 +66,6 @@ class QuestionnairesFragment : Fragment() {
             )
             hasLoaded = true
         }
-
     }
 
 
@@ -91,16 +90,11 @@ class QuestionnairesFragment : Fragment() {
     }
 
 
-
-    fun associated_questionnaires_structure_received(response: JSONObject) {
-
-    }
-
     fun questionnaire_received(response: JSONObject) {
         GlobalVariables.logger.info("BOOOONG")
         val name = response.getJSONObject("data").getJSONObject("attributes")["name"].toString()
         if (response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString() == "1") {
-            val title =
+            val title = //getHeadline(response.getJSONArray("data"))
                 response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
             val runningString =
                 response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
@@ -157,7 +151,6 @@ class QuestionnairesFragment : Fragment() {
                     index = key
                     break
                 }
-
             }
             questionnaireUtils.get_questionnaire_structure(index, this)
         }

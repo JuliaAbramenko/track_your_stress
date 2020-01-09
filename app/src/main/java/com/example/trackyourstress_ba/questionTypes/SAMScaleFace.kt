@@ -10,7 +10,7 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 
-class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) {
+class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) : QuestionType {
     private var images = arrayOf(
         R.drawable.samface1, R.drawable.empty, R.drawable.samface2,
         R.drawable.empty, R.drawable.samface3, R.drawable.empty, R.drawable.samface4,
@@ -18,7 +18,10 @@ class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) {
     )
     private val radioGroup = RadioGroup(caller)
     private val questionTextView = TextView(caller)
-    private val questionText = textOfQuestion
+    private var selectedValue = ""
+    private var timestamp = 0L
+    private var i = 1
+    override val questionText = textOfQuestion
     private val baseView = caller.linearLayout
 
 
@@ -26,14 +29,12 @@ class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) {
         questionTextView.text = questionText
         baseView.addView(questionTextView)
         for (item in images) {
-            /*val imageView = ImageView(caller)
-            val image = images[i]*/
             val radioButton = RadioButton(caller)
-            //radioButton.gravity = Gravity.CENTER
-            //radioButton.setPadding(0, 50, 0 , 0)
             radioButton.gravity = Gravity.START
+            radioButton.tag = i.toString()
+            i++
             radioGroup.addView(radioButton)
-            //radioButton.buttonDrawable = caller.resources.getDrawable(images[i])
+            listen(radioButton)
             val imageView = ImageView(caller)
             imageView.setImageResource(item)
             radioGroup.addView(imageView)
@@ -42,10 +43,9 @@ class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) {
             )
             params.weight = 1.0f
             params.gravity = Gravity.RELATIVE_LAYOUT_DIRECTION
-
             radioGroup.layoutParams = params
-
         }
+
         val separator = View(caller)
         separator.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -59,9 +59,21 @@ class SAMScaleFace(textOfQuestion: String, caller: AnswerSheetActivity) {
 
     }
 
-    /*fun listen(radioButton: RadioButton) {
-        if (radioButton.isSelected) {
-            radioButton.ellipsize
+    private fun listen(radioButton: RadioButton) {
+        radioButton.setOnClickListener {
+            if (radioButton.isSelected) {
+                selectedValue = radioButton.tag.toString()
+                timestamp = System.currentTimeMillis() / 1000L
+            }
+
         }
-    }*/
+    }
+
+    private fun getValue(): String {
+        return selectedValue
+    }
+
+    private fun getTimestamp(): Long {
+        return timestamp
+    }
 }

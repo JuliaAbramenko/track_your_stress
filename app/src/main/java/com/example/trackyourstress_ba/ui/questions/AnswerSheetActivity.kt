@@ -1,28 +1,24 @@
 package com.example.trackyourstress_ba.ui.questions
 
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.R
 import org.json.JSONException
 import org.json.JSONObject
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View
 import android.widget.*
-import androidx.appcompat.app.ActionBar
 import com.example.trackyourstress_ba.questionTypes.*
-import org.w3c.dom.Text
 
 
 class AnswerSheetActivity : AppCompatActivity() {
 
     lateinit var response: JSONObject
-    //lateinit var testtext: TextView
     lateinit var linearLayout: LinearLayout
     lateinit var title: String
     lateinit var text: String
     lateinit var question: String
+    var guiList = ArrayList<QuestionType>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +30,7 @@ class AnswerSheetActivity : AppCompatActivity() {
         super.onStart()
         try {
             response = JSONObject(intent.getStringExtra("response")!!)
-            val toolbar = findViewById<Toolbar>(R.id.toolbar)
-            //toolbar.title =  TODO manage Toolbar title
+
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -47,11 +42,15 @@ class AnswerSheetActivity : AppCompatActivity() {
             //check if there is a headline to show
             if (current.has("headline") && current.getString("headline").isNotEmpty()) {
                 title = current.getString("headline")
+                Headline(title, this)
+                //val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                //toolbar.title = title TODO manage Toolbar title
             }
             // check whether there is text instead
             if (current.has("text") && current.getString("text").isNotEmpty()) {
                 text = current.getString("text")
-                Text(text, this)
+                val textElement = Text(text, this)
+                guiList.add(textElement)
             }
 
             // check which question type and create GUI objects specifically
@@ -62,16 +61,12 @@ class AnswerSheetActivity : AppCompatActivity() {
                     val sliderMax = current.getJSONObject("values").getString("max").toInt()
                     val sliderStep = current.getJSONObject("values").getString("step").toInt()
                     val sliderList = arrayOf(sliderMin, sliderMax, sliderStep)
-
-                    /*val sliderValues = current.getJSONArray("values")
-                    val sliderList = Array(sliderValues.length()) {
-                        sliderValues.getInt(it)
-                    }*/
                     val minText =
                         current.getJSONArray("answers").getJSONObject(0).getString("label")
                     val maxText =
                         current.getJSONArray("answers").getJSONObject(1).getString("label")
-                    Slider(question, sliderList, minText, maxText, this)
+                    val sliderElement = Slider(question, sliderList, minText, maxText, this)
+                    guiList.add(sliderElement)
                 }
                 if (current.getString("questiontype") == "MultipleChoice") {
                     val mcValues = current.getJSONArray("answers")
@@ -83,34 +78,40 @@ class AnswerSheetActivity : AppCompatActivity() {
                         values.getString(it)
                     }
                     val zipped = valueList.zip(mcList).toMap()
-                    MultipleChoice(question, zipped, this)
-                    //MultipleChoice(question, mcList, this)
+                    val mcElement = MultipleChoice(question, zipped, this)
+                    guiList.add(mcElement)
                 }
                 if (current.getString("questiontype") == "SingleChoice") {
                     val scValues = current.getJSONArray("answers")
                     val scList = Array(scValues.length()) {
                         scValues.getString(it)
                     }
-                    SingleChoice(question, scList, this)
+                    val values = current.getJSONArray("values")
+                    val valueList = Array(values.length()) {
+                        values.getString(it)
+                    }
+                    val zipped = valueList.zip(scList).toMap()
+                    val scElement = SingleChoice(question, zipped, this)
+                    guiList.add(scElement)
                 }
                 if (current.getString("questiontype") == "SAMScaleFace") {
                     /*val samScaleFaceValues = current.getJSONArray("values")
                     val samScaleFaceList = Array(samScaleFaceValues.length()) {
                         samScaleFaceValues.getInt(it)
                     }*/
-                    SAMScaleFace(question, this)
+                    val samFaceElement = SAMScaleFace(question, this)
+                    guiList.add(samFaceElement)
                 }
                 if (current.getString("questiontype") == "SAMScaleBody") {
                     /*val samScaleBodyValues = current.getJSONArray("values")
                     val samScaleBodyList = Array(samScaleBodyValues.length()) {
                         samScaleBodyValues.getInt(it)
                     }*/
-                    SAMScaleBody(question, this)
+                    val samBodyElement = SAMScaleBody(question, this)
+                    guiList.add(samBodyElement)
                 }
 
-
             }
-
 
             /*else {
                 val questionText: String =
@@ -120,7 +121,19 @@ class AnswerSheetActivity : AppCompatActivity() {
                 listView.addView(questionTextView)
             }*/
         }
+        val submitButton = Button(this)
+        submitButton.text = "Abschicken"
+        submitButton.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        this.linearLayout.addView(submitButton)
 
+        submitButton.setOnClickListener {
+            for (question in guiList) {
+
+            }
+        }
 
     }
 }

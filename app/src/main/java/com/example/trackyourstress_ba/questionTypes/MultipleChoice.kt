@@ -8,22 +8,29 @@ import android.widget.TextView
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-class MultipleChoice//(questionText: String, answers: Array<String>, caller: AnswerSheetActivity) {
-    (questionText: String, answers: Map<String, String>, caller: AnswerSheetActivity) {
+class MultipleChoice(
+    questionText: String,
+    answers: Map<String, String>,
+    caller: AnswerSheetActivity
+) : QuestionType {
+    override val questionText = questionText
     private val questionTextView = TextView(caller)
-    val text = questionText
+
     var hashMap = HashMap<CheckBox, String>()
     var selectedValues = ArrayList<String>()
+    var timestamps = ArrayList<Long>()
     private val baseView = caller.linearLayout
 
     init {
         questionTextView.text = questionText
         baseView.addView(questionTextView)
+
+
         for (item in answers) {
             val checkBox = CheckBox(caller)
             checkBox.text = item.value
             //checkBox.text = answers[i]
-            hashMap.put(checkBox, item.key)
+            hashMap[checkBox] = item.key
             //hashMap.put(checkBox, answers[i])
             listen(checkBox)
             baseView.addView(checkBox)
@@ -39,18 +46,26 @@ class MultipleChoice//(questionText: String, answers: Array<String>, caller: Ans
         baseView.addView(separator)
     }
 
-    //TODO get values of answers
-    fun listen(checkBox: CheckBox) {
+    private fun listen(checkBox: CheckBox) {
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {
                 selectedValues.add(hashMap[checkBox]!!)
-                checkBox.text = "value = " + hashMap[checkBox]
+                timestamps.add(System.currentTimeMillis() / 1000L)
+
             }
             if (!checkBox.isChecked) {
                 selectedValues.remove(hashMap[checkBox])
-                checkBox.text = hashMap[checkBox]
+
             }
         }
+    }
+
+    private fun getValues(): ArrayList<String> {
+        return selectedValues
+    }
+
+    private fun getTimestamp(): Long {
+        return timestamps.max()!!
     }
 
 }

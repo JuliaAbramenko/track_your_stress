@@ -15,8 +15,9 @@ import android.graphics.Color
 import android.view.ViewGroup
 
 
-class Text(text: String, caller: AnswerSheetActivity) {
+class Text(text: String, caller: AnswerSheetActivity) : QuestionType {
 
+    override val questionText = text
     private val textView = TextView(caller)
     private val baseView = caller.linearLayout
 
