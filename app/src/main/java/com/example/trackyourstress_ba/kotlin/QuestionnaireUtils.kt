@@ -112,7 +112,7 @@ class QuestionnaireUtils {
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 GlobalVariables.logger.info("Received: $response.body")
-                caller.questionnaire_structure_received(response)
+                caller.questionnaire_structure_received(response, questionnaire_id)
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("shit happened: $error")

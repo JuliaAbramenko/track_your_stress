@@ -1,24 +1,29 @@
 package com.example.trackyourstress_ba.ui.questions
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.R
 import org.json.JSONException
 import org.json.JSONObject
 import android.widget.*
-import com.example.trackyourstress_ba.questionTypes.*
+import com.android.volley.VolleyError
+import com.example.trackyourstress_ba.QuestionElements.*
+import com.example.trackyourstress_ba.kotlin.AnswersheetUtils
+import com.example.trackyourstress_ba.ui.home.HomeActivity
+import com.example.trackyourstress_ba.ui.login.LoginActivity
 
 
 class AnswerSheetActivity : AppCompatActivity() {
-
     lateinit var response: JSONObject
     lateinit var linearLayout: LinearLayout
     lateinit var title: String
     lateinit var text: String
     lateinit var question: String
-    var guiList = ArrayList<QuestionType>()
+    var questionnaireID = 0
+    private lateinit var answersheetUtils: AnswersheetUtils
+    var guiList = ArrayList<AnswerElement>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +35,8 @@ class AnswerSheetActivity : AppCompatActivity() {
         super.onStart()
         try {
             response = JSONObject(intent.getStringExtra("response")!!)
-
+            questionnaireID = intent.getStringExtra("id").toInt()
+            answersheetUtils = AnswersheetUtils()
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -49,13 +55,15 @@ class AnswerSheetActivity : AppCompatActivity() {
             // check whether there is text instead
             if (current.has("text") && current.getString("text").isNotEmpty()) {
                 text = current.getString("text")
-                val textElement = Text(text, this)
+                val textElement =
+                    Text(text, this)
                 guiList.add(textElement)
             }
 
             // check which question type and create GUI objects specifically
             if (current.has("question") && current.getString("question").isNotEmpty()) {
                 question = current.getString("question")
+                val label = current.getString("label")
                 if (current.getString("questiontype") == "Slider") {
                     val sliderMin = current.getJSONObject("values").getString("min").toInt()
                     val sliderMax = current.getJSONObject("values").getString("max").toInt()
@@ -65,7 +73,15 @@ class AnswerSheetActivity : AppCompatActivity() {
                         current.getJSONArray("answers").getJSONObject(0).getString("label")
                     val maxText =
                         current.getJSONArray("answers").getJSONObject(1).getString("label")
-                    val sliderElement = Slider(question, sliderList, minText, maxText, this)
+                    val sliderElement =
+                        Slider(
+                            question,
+                            label,
+                            sliderList,
+                            minText,
+                            maxText,
+                            this
+                        )
                     guiList.add(sliderElement)
                 }
                 if (current.getString("questiontype") == "MultipleChoice") {
@@ -78,7 +94,13 @@ class AnswerSheetActivity : AppCompatActivity() {
                         values.getString(it)
                     }
                     val zipped = valueList.zip(mcList).toMap()
-                    val mcElement = MultipleChoice(question, zipped, this)
+                    val mcElement =
+                        MultipleChoice(
+                            question,
+                            label,
+                            zipped,
+                            this
+                        )
                     guiList.add(mcElement)
                 }
                 if (current.getString("questiontype") == "SingleChoice") {
@@ -91,35 +113,37 @@ class AnswerSheetActivity : AppCompatActivity() {
                         values.getString(it)
                     }
                     val zipped = valueList.zip(scList).toMap()
-                    val scElement = SingleChoice(question, zipped, this)
+                    val scElement =
+                        SingleChoice(
+                            question,
+                            label,
+                            zipped,
+                            this
+                        )
                     guiList.add(scElement)
                 }
                 if (current.getString("questiontype") == "SAMScaleFace") {
-                    /*val samScaleFaceValues = current.getJSONArray("values")
-                    val samScaleFaceList = Array(samScaleFaceValues.length()) {
-                        samScaleFaceValues.getInt(it)
-                    }*/
-                    val samFaceElement = SAMScaleFace(question, this)
+                    val samFaceElement =
+                        SAMScaleFace(
+                            question,
+                            label,
+                            this
+                        )
                     guiList.add(samFaceElement)
                 }
                 if (current.getString("questiontype") == "SAMScaleBody") {
-                    /*val samScaleBodyValues = current.getJSONArray("values")
-                    val samScaleBodyList = Array(samScaleBodyValues.length()) {
-                        samScaleBodyValues.getInt(it)
-                    }*/
-                    val samBodyElement = SAMScaleBody(question, this)
+                    val samBodyElement =
+                        SAMScaleBody(
+                            question,
+                            label,
+                            this
+                        )
                     guiList.add(samBodyElement)
                 }
 
             }
 
-            /*else {
-                val questionText: String =
-                    item.getJSONObject("attributes").getJSONObject("content").getString("question")
-                val questionTextView = TextView(this)
-                questionTextView.text = questionText
-                listView.addView(questionTextView)
-            }*/
+
         }
         val submitButton = Button(this)
         submitButton.text = "Abschicken"
@@ -130,10 +154,17 @@ class AnswerSheetActivity : AppCompatActivity() {
         this.linearLayout.addView(submitButton)
 
         submitButton.setOnClickListener {
-            for (question in guiList) {
-
-            }
+            answersheetUtils.submitAnswersheet(guiList, questionnaireID, this)
         }
+    }
 
+    fun submitSuccess(response: JSONObject) {
+        Toast.makeText(this, "AnswerSheet submitted!", Toast.LENGTH_LONG)
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun submitFail(response: VolleyError) {
+        Toast.makeText(this, "AnswerSheet could not be submitted!", Toast.LENGTH_LONG)
     }
 }

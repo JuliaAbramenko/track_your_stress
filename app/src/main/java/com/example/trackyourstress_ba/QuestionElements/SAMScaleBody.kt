@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.questionTypes
+package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
 import android.view.Gravity
@@ -7,22 +7,24 @@ import android.widget.*
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-class SAMScaleBody(textOfQuestion: String, caller: AnswerSheetActivity) : QuestionType {
+class SAMScaleBody(textOfQuestion: String, label: String, caller: AnswerSheetActivity) :
+    SingleAnswerElement {
     var images = arrayOf(
         R.drawable.sambody1, R.drawable.empty, R.drawable.sambody2,
         R.drawable.empty, R.drawable.sambody3, R.drawable.empty, R.drawable.sambody4,
         R.drawable.empty, R.drawable.sambody5
     )
+    override var label = label
     private val radioGroup = RadioGroup(caller)
     private val questionTextView = TextView(caller)
-    override val questionText = textOfQuestion
+    override var text = textOfQuestion
     private val baseView = caller.linearLayout
-    private var selectedValue = ""
-    private var timestamp = 0L
+    override var selectedValue = ""
+    override var timestamp = 0L
     private var i = 1
 
     init {
-        questionTextView.text = questionText
+        questionTextView.text = text
         baseView.addView(questionTextView)
         for (item in images) {
             val radioButton = RadioButton(caller)
@@ -57,19 +59,12 @@ class SAMScaleBody(textOfQuestion: String, caller: AnswerSheetActivity) : Questi
 
     private fun listen(radioButton: RadioButton) {
         radioButton.setOnClickListener {
-            if (radioButton.isSelected) {
-                selectedValue = radioButton.tag.toString()
-                timestamp = System.currentTimeMillis() / 1000L
-            }
+            //if (radioButton.isSelected) {
+            timestamp = System.currentTimeMillis() / 1000L
+            selectedValue = radioButton.tag.toString()
+            //}
 
         }
     }
 
-    private fun getValue(): String {
-        return selectedValue
-    }
-
-    private fun getTimestamp(): Long {
-        return timestamp
-    }
 }

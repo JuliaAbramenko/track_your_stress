@@ -1,23 +1,25 @@
-package com.example.trackyourstress_ba.questionTypes
+package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 class MultipleChoice(
     questionText: String,
+    labelString: String,
     answers: Map<String, String>,
     caller: AnswerSheetActivity
-) : QuestionType {
-    override val questionText = questionText
+) : MultiAnswerElement {
+    override var text = questionText
+    override var label = labelString
+    override var timestamp = System.currentTimeMillis() / 1000L
     private val questionTextView = TextView(caller)
 
     var hashMap = HashMap<CheckBox, String>()
-    var selectedValues = ArrayList<String>()
+    override var selectedValues = ArrayList<String>()
     var timestamps = ArrayList<Long>()
     private val baseView = caller.linearLayout
 
@@ -50,7 +52,9 @@ class MultipleChoice(
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {
                 selectedValues.add(hashMap[checkBox]!!)
-                timestamps.add(System.currentTimeMillis() / 1000L)
+                var newTimestamp = System.currentTimeMillis() / 1000L
+                timestamps.add(newTimestamp)
+                timestamp = timestamps.max()!!
 
             }
             if (!checkBox.isChecked) {
@@ -58,14 +62,6 @@ class MultipleChoice(
 
             }
         }
-    }
-
-    private fun getValues(): ArrayList<String> {
-        return selectedValues
-    }
-
-    private fun getTimestamp(): Long {
-        return timestamps.max()!!
     }
 
 }

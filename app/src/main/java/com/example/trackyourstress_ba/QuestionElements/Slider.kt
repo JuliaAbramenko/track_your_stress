@@ -1,8 +1,7 @@
-package com.example.trackyourstress_ba.questionTypes
+package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
 import android.os.Build
-import android.text.Layout
 import android.view.Gravity
 import android.view.View
 import android.widget.GridLayout
@@ -13,21 +12,23 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 class Slider(
     textOfQuestion: String,
+    label: String,
     sliderValues: Array<Int>,
     minText: String,
     maxText: String,
     caller: AnswerSheetActivity
-) : QuestionType {
+) : SingleAnswerElement {
 
-    override val questionText = textOfQuestion
+    override var text = textOfQuestion
+    override var label: String = label
     private val baseView = caller.linearLayout
     private val questionTextView = TextView(caller)
     private val seekBar = SeekBar(caller)
     private val min = sliderValues[0]
     private val max = sliderValues[1]
     private val step = sliderValues[2]
-    private var selectedValue = 0
-    private var timestamp = 0L
+    override var selectedValue = "0"
+    override var timestamp = System.currentTimeMillis() / 1000L
     private val minTextView = TextView(caller)
     private val maxTextView = TextView(caller)
 
@@ -36,7 +37,7 @@ class Slider(
         grid.columnCount = 2
         grid.rowCount = 1
 
-        questionTextView.text = questionText
+        questionTextView.text = text
         questionTextView.gravity = Gravity.CENTER
         seekBar.max = (max - min) / step
         seekBar.progress = (max - min) / 2
@@ -82,7 +83,7 @@ class Slider(
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                selectedValue = i
+                selectedValue = i.toString()
                 timestamp = System.currentTimeMillis() / 1000L
 
             }
@@ -95,12 +96,5 @@ class Slider(
         })
     }
 
-    private fun getValue(): Int {
-        return selectedValue
-    }
-
-    private fun getTimestamp(): Long {
-        return timestamp
-    }
 
 }

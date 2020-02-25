@@ -81,7 +81,6 @@ class QuestionnairesFragment : Fragment() {
         for (i in 0 until array.length()) {
             val item = array.getJSONObject(i)
             val id = item["id"].toString().toInt()
-            //item["name"]
             val title: String = item.getJSONObject("attributes")["name"].toString()
             associatedQuestionnaires[id] = title
         }
@@ -107,9 +106,10 @@ class QuestionnairesFragment : Fragment() {
 
     }
 
-    fun questionnaire_structure_received(response: JSONObject) {
+    fun questionnaire_structure_received(response: JSONObject, questionnaireID: Int) {
         val intent = Intent(currentContext, AnswerSheetActivity::class.java)
         intent.putExtra("response", response.toString())
+        intent.putExtra("id", questionnaireID.toString())
         startActivity(intent)
     }
 
