@@ -90,7 +90,6 @@ class AnswersheetUtils {
             Response.Listener { response ->
                 caller.submitSuccess(response)
             }, Response.ErrorListener { error ->
-                // Error in request
                 GlobalVariables.logger.info("Error at server: " + error)
                 caller.submitFail(error)
 

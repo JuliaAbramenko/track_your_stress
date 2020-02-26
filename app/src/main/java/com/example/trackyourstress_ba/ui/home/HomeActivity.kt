@@ -7,6 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,7 @@ import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import com.example.trackyourstress_ba.fragments.StudyOverviewFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
+import com.example.trackyourstress_ba.kotlin.HomeUtils
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
 
@@ -35,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var email_text: TextView
     lateinit var refresh_handler: Handler
     lateinit var notification_manager: NotificationManager
+    lateinit var root: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        root = findViewById(R.id.homeRoot)
         connection_utils = ConnectionUtils()
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -72,7 +77,7 @@ class HomeActivity : AppCompatActivity() {
             { connection_utils.refreshToken(this) },
             3600000
         )
-
+        val homeUtils = HomeUtils()
 
         val headerLayout: View = nav_view.getHeaderView(0)
         username_text = headerLayout.findViewById(R.id.username_drawer)
@@ -97,6 +102,7 @@ class HomeActivity : AppCompatActivity() {
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, profile_frag)
                     transact.commit()
+                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -106,6 +112,7 @@ class HomeActivity : AppCompatActivity() {
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, notifications_fragment)
                     transact.commit()
+                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -114,6 +121,7 @@ class HomeActivity : AppCompatActivity() {
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, questionnaires_fragment)
                     transact.commit()
+                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -122,6 +130,7 @@ class HomeActivity : AppCompatActivity() {
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, studies_fragment)
                     transact.commit()
+                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -136,9 +145,13 @@ class HomeActivity : AppCompatActivity() {
 
                 else -> true
             }
-
         }
+        homeUtils.getActivities(this)
 
+    }
+
+    private fun deleteActivities() {
+        root.removeAllViews()
     }
 
     override fun onPause() {
@@ -164,6 +177,27 @@ class HomeActivity : AppCompatActivity() {
         val new_token =
             response.getJSONObject("data").getJSONObject("attributes").getString("token")
         GlobalVariables.localStorage["token"] = new_token
+    }
+
+    fun activitiesReceived(response: JSONObject) {
+        val headline = TextView(this)
+        headline.text = getString(R.string.myActivities)
+        root.addView(headline)
+        val entries = response.getJSONArray("data")
+        for (i in 0 until entries.length()) {
+            val entry = entries.getJSONObject(i)
+            val date =
+                entry.getJSONObject("attributes").getJSONObject("created_at").getString("date")
+                    .substring(0, 19)
+            val message = entry.getJSONObject("attributes").getString("text")
+            makeActivity(date, message)
+        }
+    }
+
+    fun makeActivity(date: String, message: String) {
+        val newMessage = TextView(this)
+        newMessage.text = "$date : $message"
+        root.addView(newMessage)
     }
 
 
