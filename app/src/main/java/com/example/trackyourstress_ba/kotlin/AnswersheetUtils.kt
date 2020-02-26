@@ -8,9 +8,7 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
-import com.example.trackyourstress_ba.QuestionElements.AnswerElement
-import com.example.trackyourstress_ba.QuestionElements.MultiAnswerElement
-import com.example.trackyourstress_ba.QuestionElements.SingleAnswerElement
+import com.example.trackyourstress_ba.QuestionElements.*
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONObject
 import kotlin.reflect.typeOf
@@ -40,10 +38,14 @@ class AnswersheetUtils {
         guiList.forEachIndexed { j, item ->
             when (item) {
                 is SingleAnswerElement -> {
-                    answerJSON += "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : " + item.selectedValue + "}"
+                    answerJSON += if (item is SingleChoice) {
+                        "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : \"" + item.selectedValue + "\"}"
+                    } else {
+                        "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : " + item.selectedValue + "}"
+                    }
                 }
                 is MultiAnswerElement -> {
-                    answerJSON += "{\"collected_at\" : " + item.timestamp + ",  \"label\": \"" + item.label + "\", \"value\" : "
+                    answerJSON += "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : "
                     var valueString = "["
                     item.selectedValues.forEachIndexed { i, value ->
                         valueString += "\"" + value + "\""
@@ -54,8 +56,9 @@ class AnswersheetUtils {
                     valueString += "]}"
                     answerJSON += valueString
                 }
+
             }
-            if (guiList.lastIndex != j && j != 0) {
+            if (j != guiList.lastIndex && j != 0 && item !is Text) {
                 answerJSON += ","
             }
         }

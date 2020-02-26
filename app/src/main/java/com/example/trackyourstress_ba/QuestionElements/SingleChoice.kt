@@ -30,7 +30,7 @@ class SingleChoice(
             val radioButton = RadioButton(caller)
             radioButton.text = item.value
             radioButton.tag = item.key
-            listen(radioButton, answers)
+            listen(radioButton/*, answers*/)
             radioGroup.addView(radioButton)
         }
 
@@ -46,13 +46,10 @@ class SingleChoice(
         baseView.addView(separator)
     }
 
-    private fun listen(radioButton: RadioButton, answers: Map<String, String>) {
+    private fun listen(radioButton: RadioButton/*, answers: Map<String, String>*/) {
         radioButton.setOnClickListener {
-            if (radioButton.isSelected) {
-                selectedValue = answers[radioButton.tag].toString()
-                timestamp = System.currentTimeMillis() / 1000L
-            }
-
+            selectedValue = radioButton.tag.toString()
+            timestamp = System.currentTimeMillis() / 1000L
         }
     }
 
