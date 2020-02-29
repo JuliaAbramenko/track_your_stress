@@ -1,6 +1,8 @@
 package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
+import android.os.Build
+import android.text.Html
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -24,7 +26,10 @@ class SAMScaleBody(textOfQuestion: String, label: String, caller: AnswerSheetAct
     private var i = 1
 
     init {
-        questionTextView.text = text
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            questionTextView.text = Html.fromHtml(text)
+        }
+        //questionTextView.text = text
         baseView.addView(questionTextView)
         for (item in images) {
             val radioButton = RadioButton(caller)

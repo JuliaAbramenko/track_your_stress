@@ -4,6 +4,8 @@ import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import android.view.View
 import android.graphics.Color.parseColor
+import android.os.Build
+import android.text.Html
 import android.widget.LinearLayout
 
 
@@ -16,7 +18,10 @@ class Text(text: String, caller: AnswerSheetActivity) :
     private val baseView = caller.linearLayout
 
     init {
-        textView.text = text
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textView.text = Html.fromHtml(text)
+        }
+        //textView.text = text
         val separator = View(caller)
         separator.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,

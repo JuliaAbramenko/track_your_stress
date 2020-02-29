@@ -1,6 +1,8 @@
 package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
+import android.os.Build
+import android.text.Html
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -24,7 +26,10 @@ class SingleChoice(
     private val radioGroup = RadioGroup(caller)
 
     init {
-        questionTextView.text = questionText
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            questionTextView.text = Html.fromHtml(questionText)
+        }
+        //questionTextView.text = questionText
         baseView.addView(questionTextView)
         for (item in answers) {
             val radioButton = RadioButton(caller)

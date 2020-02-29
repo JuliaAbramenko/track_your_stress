@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
 import android.os.Build
+import android.text.Html
 import android.view.Gravity
 import android.view.View
 import android.widget.GridLayout
@@ -36,8 +37,10 @@ class Slider(
         val grid = GridLayout(caller)
         grid.columnCount = 2
         grid.rowCount = 1
-
-        questionTextView.text = text
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            questionTextView.text = Html.fromHtml(text)
+        }
+        //questionTextView.text = text
         questionTextView.gravity = Gravity.CENTER
         seekBar.max = (max - min) / step
         seekBar.progress = (max - min) / 2

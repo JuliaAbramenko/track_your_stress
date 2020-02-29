@@ -1,6 +1,8 @@
 package com.example.trackyourstress_ba.QuestionElements
 
 import android.graphics.Color
+import android.os.Build
+import android.text.Html
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
@@ -24,7 +26,10 @@ class MultipleChoice(
     private val baseView = caller.linearLayout
 
     init {
-        questionTextView.text = questionText
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            questionTextView.text = Html.fromHtml(text)
+        }
+        //questionTextView.text = questionText
         baseView.addView(questionTextView)
 
 
