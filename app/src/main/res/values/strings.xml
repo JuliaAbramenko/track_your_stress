@@ -41,7 +41,7 @@
     <string name="monthly_notifications_off">Monthly notifications OFF</string>
     <string name="channel_daily_notifications">TrackYourStress - Täglicher Fragebogen</string>
     <string name="channel_id_daily">1</string>
-    <string name="title_study">Titel</string>
+    <string name="title_questionnaire">Titel</string>
     <string name="running">Laufend</string>
     <string name="repeatable">Wiederholbar</string>
     <string name="do_you_really_want_to_delete_your_profile">Möchten Sie Ihr Profil sicher löschen?</string>
@@ -51,4 +51,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="myActivities">Meine Aktivitäten</string>
+    <string name="profile">Profil</string>
+    <string name="activities">Aktivitäten</string>
+    <string name="questionnaires">Fragebögen</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="logout">Logout</string>
+    <string name="about_us">Über uns</string>
+    <string name="options">Optionen</string>
+    <string name="home_text">Mit TrackYourStress können Sie Ihre individuellen Schwankungen des Stress-Levels mittels einer Smartphone App erfassen. Mit Hilfe ihres Smartphones können Sie die Schwankungen Ihres Stress-Levels systematisch erfassen und herausfinden womit diese zusammenhängen.</string>
 </resources>

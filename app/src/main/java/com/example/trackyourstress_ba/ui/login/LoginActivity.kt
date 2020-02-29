@@ -8,6 +8,7 @@ import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
+import com.example.trackyourstress_ba.kotlin.NotificationUtils
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import org.json.JSONObject
 
@@ -22,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var booltext : TextView
     lateinit var  back_button: Button
     lateinit var conUtils: ConnectionUtils
+    lateinit var notifUtils: NotificationUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +36,10 @@ class LoginActivity : AppCompatActivity() {
         loading = findViewById(R.id.loading)
         back_button = findViewById(R.id.tohome_button_login)
         conUtils = ConnectionUtils()
+        notifUtils = NotificationUtils()
 
-        login_button.setOnClickListener {
+
+        /*login_button.setOnClickListener {
             if(edit_password.text.length >= 8 && edit_username.text.contains("@") &&
                 edit_username.text.contains(".")) {
                 conUtils.loginUser(edit_username.text.toString(), edit_password.text.toString(), this)
@@ -45,6 +49,13 @@ class LoginActivity : AppCompatActivity() {
                         "Password not correct ",
                         Toast.LENGTH_LONG).show() //TODO catch errors
             }
+        }*/
+        login_button.setOnClickListener {
+            notifUtils.scheduleNotification(
+                notifUtils.getNotification("5 second delay", this),
+                1000,
+                this
+            )
         }
         back_button.setOnClickListener {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)

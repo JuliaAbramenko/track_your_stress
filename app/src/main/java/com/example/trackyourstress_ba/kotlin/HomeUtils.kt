@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.*
 import com.example.trackyourstress_ba.MainActivity
+import com.example.trackyourstress_ba.fragments.ActivitiesFragment
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegisterActivity
@@ -30,7 +31,7 @@ class HomeUtils() {
         }
     }
 
-    fun getActivities(caller: HomeActivity) {
+    fun getActivities(caller: ActivitiesFragment) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/my/activities?token=" + GlobalVariables.localStorage["token"]
         val request = object : JsonObjectRequest(
@@ -45,7 +46,7 @@ class HomeUtils() {
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
-                header.put("Accept-language", GlobalVariables.cur_language)
+                header["Accept-language"] = GlobalVariables.cur_language
                 return header
             }
         }

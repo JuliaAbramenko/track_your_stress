@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -20,7 +19,7 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.NotificationsFragment
 import com.example.trackyourstress_ba.fragments.ProfileFragment
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
-import com.example.trackyourstress_ba.fragments.StudyOverviewFragment
+import com.example.trackyourstress_ba.fragments.ActivitiesFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.HomeUtils
@@ -88,21 +87,20 @@ class HomeActivity : AppCompatActivity() {
 
         val profile_frag = ProfileFragment()
         val notifications_fragment = NotificationsFragment()
-        val studies_fragment = StudyOverviewFragment()
+        val activitiesFragment = ActivitiesFragment()
         val questionnaires_fragment = QuestionnairesFragment()
 
 
+//TODO delete mainviews?
 
-
-        nav_view.setNavigationItemSelectedListener {item ->
-            when(item.itemId) {
+        nav_view.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
 
                 R.id.nav_profile -> {
                     val transact = supportFragmentManager.beginTransaction()
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, profile_frag)
                     transact.commit()
-                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -112,7 +110,6 @@ class HomeActivity : AppCompatActivity() {
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, notifications_fragment)
                     transact.commit()
-                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -121,16 +118,14 @@ class HomeActivity : AppCompatActivity() {
                     //transact.addToBackStack(null)
                     transact.replace(R.id.fragment_container, questionnaires_fragment)
                     transact.commit()
-                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
-                R.id.nav_study_overview -> {
+                R.id.nav_activities -> {
                     val transact = supportFragmentManager.beginTransaction()
                     //transact.addToBackStack(null)
-                    transact.replace(R.id.fragment_container, studies_fragment)
+                    transact.replace(R.id.fragment_container, activitiesFragment)
                     transact.commit()
-                    deleteActivities()
                     drawer.closeDrawers()
                     true
                 }
@@ -146,12 +141,7 @@ class HomeActivity : AppCompatActivity() {
                 else -> true
             }
         }
-        homeUtils.getActivities(this)
 
-    }
-
-    private fun deleteActivities() {
-        root.removeAllViews()
     }
 
     override fun onPause() {
@@ -179,26 +169,7 @@ class HomeActivity : AppCompatActivity() {
         GlobalVariables.localStorage["token"] = new_token
     }
 
-    fun activitiesReceived(response: JSONObject) {
-        val headline = TextView(this)
-        headline.text = getString(R.string.myActivities)
-        root.addView(headline)
-        val entries = response.getJSONArray("data")
-        for (i in 0 until entries.length()) {
-            val entry = entries.getJSONObject(i)
-            val date =
-                entry.getJSONObject("attributes").getJSONObject("created_at").getString("date")
-                    .substring(0, 19)
-            val message = entry.getJSONObject("attributes").getString("text")
-            makeActivity(date, message)
-        }
+    private fun deleteActivities() {
+        root.removeAllViews()
     }
-
-    fun makeActivity(date: String, message: String) {
-        val newMessage = TextView(this)
-        newMessage.text = "$date : $message"
-        root.addView(newMessage)
-    }
-
-
 }

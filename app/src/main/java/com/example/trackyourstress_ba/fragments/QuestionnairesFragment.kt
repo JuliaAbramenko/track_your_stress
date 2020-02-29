@@ -33,9 +33,9 @@ class QuestionnairesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_study_overview, container, false)
+        val view = inflater.inflate(R.layout.fragment_questionnaires, container, false)
         currentContext = container!!.context
-        table_questionnaires = view!!.findViewById(R.id.study_table)
+        table_questionnaires = view!!.findViewById(R.id.questionnaire_table)
         val first_row = TableRow(activity)
         val test_title = TextView(activity)
         val test_running = TextView(activity)
@@ -45,7 +45,7 @@ class QuestionnairesFragment : Fragment() {
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT
             )
-        test_title.text = getString(R.string.title_study)
+        test_title.text = getString(R.string.title_questionnaire)
         test_running.text = getString(R.string.running)
         test_repeatable.text = getString(R.string.repeatable)
         first_row.addView(test_title)
@@ -67,6 +67,22 @@ class QuestionnairesFragment : Fragment() {
             hasLoaded = true
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (!hasLoaded) {
+            associatedQuestionnaires = HashMap()
+            questionnaireUtils = QuestionnaireUtils()
+            questionnaireUtils.get_user_studies(
+                GlobalVariables.localStorage["user_id"]!!.toInt(),
+                this
+            )
+            hasLoaded = true
+        }
+
+    }
+
+    //override fun on
 
 
     fun studies_received(response: JSONObject) {
