@@ -3,6 +3,7 @@ package com.example.trackyourstress_ba.ui.home
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.media.session.MediaSession
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -23,6 +24,7 @@ import com.example.trackyourstress_ba.fragments.ActivitiesFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.HomeUtils
+import com.example.trackyourstress_ba.kotlin.TokenReceiver
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
 
@@ -35,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var connection_utils: ConnectionUtils
     lateinit var username_text: TextView
     lateinit var email_text: TextView
-    lateinit var refresh_handler: Handler
+    lateinit var tokenReceiver: TokenReceiver
     lateinit var notification_manager: NotificationManager
     lateinit var root: LinearLayout
 
@@ -70,12 +72,9 @@ class HomeActivity : AppCompatActivity() {
         drawer_toggle.syncState()
         nav_view = findViewById(R.id.nav_view)
         nav_view.setItemIconTintList(null)
-        refresh_handler = Handler()
+        tokenReceiver = TokenReceiver()
         // refreshes after 60 * 60 * 1000 = 3 600 000 milli seconds (1 hour)
-        refresh_handler.postDelayed(
-            { connection_utils.refreshToken(this) },
-            3600000
-        )
+
         val homeUtils = HomeUtils()
 
         val headerLayout: View = nav_view.getHeaderView(0)
@@ -146,12 +145,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        refresh_handler = Handler()
-        // refreshes after 60 * 60 * 1000 = 3 600 000 milli seconds (1 hour)
-        refresh_handler.postDelayed(
-            { connection_utils.refreshToken(this) },
-            3600000
-        )
+        connection_utils.refreshToken(this)
     }
 
 

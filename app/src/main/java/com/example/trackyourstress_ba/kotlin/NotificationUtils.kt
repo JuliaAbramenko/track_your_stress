@@ -46,7 +46,7 @@ class NotificationUtils() {
 
         builder.setContentTitle("Scheduled Notification")
         builder.setContentText(content)
-        builder.setSmallIcon(R.drawable.ic_media_play)
+        builder.setSmallIcon(R.drawable.ic_lock_idle_alarm)
         return builder.build()
     }
 

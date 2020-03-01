@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         login_button.setOnClickListener {
             notifUtils.scheduleNotification(
                 notifUtils.getNotification("5 second delay", this),
-                1000,
+                10000,
                 this
             )
         }
