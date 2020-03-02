@@ -35,9 +35,9 @@ class RegisterActivity : AppCompatActivity() {
 
         register_button.setOnClickListener {
             /*if(edit_email.text.contains("@") &&
-                    edit_password.text.length > 7 && edit_password.text.equals(edit_password_confirmation.text) &&
+                    editPassword.text.length > 7 && editPassword.text.equals(edit_password_confirmation.text) &&
                     edit_password_confirmation.text.length > 7 &&
-                    edit_username.text.length > 7) {*/
+                    editUsername.text.length > 7) {*/
                 con_utils.registerUser(edit_email.text.toString(), edit_password.text.toString(),
                     edit_password_confirmation.text.toString(), edit_username.text.toString(), this)
             val intent = Intent(this@RegisterActivity, RegistrationConfirmationActivity::class.java)

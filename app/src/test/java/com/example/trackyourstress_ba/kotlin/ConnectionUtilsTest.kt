@@ -1,5 +1,7 @@
 package com.example.trackyourstress_ba.kotlin
 
+import android.content.Context
+import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegisterActivity
 import org.junit.Test
 
@@ -21,6 +23,17 @@ class ConnectionUtilsTest {
 
     @Test
     fun loginUser() {
+        val email = "julileo@hotmail.de"
+        val password = "testtest"
+        val connectionUtils = ConnectionUtils()
+        val loginActivity = LoginActivity()
+        connectionUtils.loginUser(email, password, loginActivity)
+        val preferences = loginActivity.getSharedPreferences(
+            loginActivity.packageName, Context.MODE_PRIVATE
+        )
+
+        assert(preferences.contains("token"))
+        assert(preferences.contains("currentEmail"))
     }
 
     @Test
