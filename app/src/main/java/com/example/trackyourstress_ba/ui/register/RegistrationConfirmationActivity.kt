@@ -1,40 +1,60 @@
 package com.example.trackyourstress_ba.ui.register
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
-import com.example.trackyourstress_ba.kotlin.GlobalVariables
 
 class RegistrationConfirmationActivity : AppCompatActivity() {
 
-    lateinit var registration_link_send: TextView
-    lateinit var back_button: Button
-    lateinit var resend_verification_button: Button
-    lateinit var con_utils : ConnectionUtils
+    lateinit var registrationLinkSent: TextView
+    lateinit var backButton: Button
+    lateinit var resendVerificationButton: Button
+    lateinit var conUtils: ConnectionUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration__confirmation)
+        registrationLinkSent = findViewById(R.id.registration_confirm_text)
+        backButton = findViewById(R.id.register_back)
+        resendVerificationButton = findViewById(R.id.resend_verfication_link_button)
+        conUtils = ConnectionUtils()
 
-        con_utils = ConnectionUtils()
-
-        registration_link_send = findViewById(R.id.registration_confirm_text)
-        back_button = findViewById(R.id.register_back)
-        resend_verification_button = findViewById(R.id.resend_verfication_link_button)
-
-        resend_verification_button.setOnClickListener {
-            val email = GlobalVariables.localStorage["current_email"].toString()
-            con_utils.resendVerificationLink(email, this)
+        resendVerificationButton.setOnClickListener {
+            val preferences = this.getSharedPreferences(
+                this.packageName, Context.MODE_PRIVATE
+            )
+            val email = preferences.getString("userEmail", null)
+            if (email != null) {
+                conUtils.resendVerificationLink(email, this)
+            }
         }
 
-        back_button.setOnClickListener {
+        backButton.setOnClickListener {
             val intent = Intent(this@RegistrationConfirmationActivity, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun linkResent() {
+        Toast.makeText(
+            applicationContext,
+            "Link wurde erneut gesendet. Prüfen Sie Ihre Emails",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun notify400() {
+        Toast.makeText(
+            applicationContext,
+            "Link konnte nicht gesendet werden. Nutzer nicht gefunden oder bereits verifiziert",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

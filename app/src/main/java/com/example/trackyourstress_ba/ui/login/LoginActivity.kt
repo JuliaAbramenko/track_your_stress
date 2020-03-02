@@ -4,16 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
-import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import org.json.JSONObject
-
-//import com.example.trackyourstress_ba.kotlin.loginUser
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,8 +25,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
+
         preferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
@@ -37,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
         if (!preferences.contains("currentLanguage")) {
             preferences.edit().putString("currentLanguage", "de").apply() //default german
         }
-
 
         editUsername = findViewById(R.id.username)
         editPassword = findViewById(R.id.password)
@@ -84,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginResponseReceived(email: String, response: JSONObject) {
-
         preferences.edit().putString("currentEmail", email).apply()
         val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
         preferences.edit().putString("token", token).apply()
@@ -92,12 +89,24 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun profile_response_received(response: JSONObject) {
-        val user_id = response.getJSONObject("data").getString("id")
-        GlobalVariables.localStorage["user_id"] = user_id
+    fun profileResponseReceived(response: JSONObject) {
+        val userId = response.getJSONObject("data").getString("id")
+        if (!preferences.contains("userId")) {
+            preferences.edit().putString("userId", userId).apply()
+        }
         val username = response.getJSONObject("data").getJSONObject("attributes").getString("name")
-        GlobalVariables.localStorage["username"] = username
+        if (!preferences.contains("username")) {
+            preferences.edit().putString("username", username).apply() //default german
+        }
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)
+    }
+
+    fun notifyMissingData() {
+        Toast.makeText(
+            applicationContext,
+            "Profildaten können nicht geladen werden. Bitte starten Sie die App neu",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
