@@ -6,7 +6,7 @@ import android.content.Intent
 
 class TokenReceiver : BroadcastReceiver() {
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(context: Context, intent: Intent) {
 
     }
 }

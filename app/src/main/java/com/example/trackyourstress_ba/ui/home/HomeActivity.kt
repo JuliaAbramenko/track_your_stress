@@ -1,15 +1,12 @@
 package com.example.trackyourstress_ba.ui.home
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
-import android.media.session.MediaSession
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -22,7 +19,6 @@ import com.example.trackyourstress_ba.fragments.ProfileFragment
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import com.example.trackyourstress_ba.fragments.ActivitiesFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
-import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.HomeUtils
 import com.example.trackyourstress_ba.kotlin.TokenReceiver
 import com.google.android.material.navigation.NavigationView
@@ -32,73 +28,77 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var toolbar: Toolbar
     lateinit var drawer : DrawerLayout
-    lateinit var drawer_toggle : ActionBarDrawerToggle
-    lateinit var nav_view : NavigationView
-    lateinit var connection_utils: ConnectionUtils
-    lateinit var username_text: TextView
-    lateinit var email_text: TextView
+    lateinit var drawerToggle: ActionBarDrawerToggle
+    lateinit var navView: NavigationView
+    lateinit var conUtils: ConnectionUtils
+    lateinit var usernameText: TextView
+    lateinit var emailText: TextView
     lateinit var tokenReceiver: TokenReceiver
-    lateinit var notification_manager: NotificationManager
     lateinit var root: LinearLayout
+    lateinit var notifications: ArrayList<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel
-            val name = getString(R.string.channel_daily_notifications)
-            val descriptionText = getString(R.string.channel_daily_notifications) + "testing"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val mChannel =
-                NotificationChannel(R.string.channel_id_daily.toString(), name, importance)
-            mChannel.description = descriptionText
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
-        }
-
     }
 
     override fun onStart() {
         super.onStart()
+        val homeUtils = HomeUtils()
+        val preferences = this.getSharedPreferences(
+            this.packageName, Context.MODE_PRIVATE
+        )
+        if (!preferences.contains("dailyNotification") && !preferences.contains("weeklyNotification") && !preferences.contains(
+                "monthlyNotification"
+            )
+        ) {
+            homeUtils.initiateNotificationSettings(this)
+        } else notifications = homeUtils.getNotificationSettings(this)
+        homeUtils.initiateScheduling(this, notifications)
+
         root = findViewById(R.id.homeRoot)
-        connection_utils = ConnectionUtils()
+        conUtils = ConnectionUtils()
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         drawer = findViewById(R.id.drawer_layout)
-        drawer_toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer.addDrawerListener(drawer_toggle)
-        drawer_toggle.syncState()
-        nav_view = findViewById(R.id.nav_view)
-        nav_view.setItemIconTintList(null)
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            drawer,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawer.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+        navView = findViewById(R.id.nav_view)
+        navView.itemIconTintList = null
         tokenReceiver = TokenReceiver()
-        // refreshes after 60 * 60 * 1000 = 3 600 000 milli seconds (1 hour)
 
-        val homeUtils = HomeUtils()
 
-        val headerLayout: View = nav_view.getHeaderView(0)
-        username_text = headerLayout.findViewById(R.id.username_drawer)
-        email_text = headerLayout.findViewById(R.id.email_drawer)
+        val headerLayout: View = navView.getHeaderView(0)
+        usernameText = headerLayout.findViewById(R.id.username_drawer)
+        emailText = headerLayout.findViewById(R.id.email_drawer)
+        val sharedPrefs = this.getSharedPreferences(
+            this.packageName, Context.MODE_PRIVATE
+        )
+        val userName = sharedPrefs.getString("userName", null)
+        usernameText.text = userName
+        val userEmail = sharedPrefs.getString("userEmail", null)
+        emailText.text = userEmail
 
-        username_text.text = GlobalVariables.localStorage["username"]
-        email_text.text = GlobalVariables.localStorage["current_email"]
-
-        val profile_frag = ProfileFragment()
-        val notifications_fragment = NotificationsFragment()
+        val profileFragment = ProfileFragment()
+        val notificationsFragment = NotificationsFragment()
         val activitiesFragment = ActivitiesFragment()
-        val questionnaires_fragment = QuestionnairesFragment()
+        val questionnairesFragment = QuestionnairesFragment()
 
 
-//TODO delete mainviews?
-
-        nav_view.setNavigationItemSelectedListener { item ->
+        navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
                 R.id.nav_profile -> {
                     val transact = supportFragmentManager.beginTransaction()
-                    //transact.addToBackStack(null)
-                    transact.replace(R.id.fragment_container, profile_frag)
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, profileFragment)
                     transact.commit()
                     drawer.closeDrawers()
                     true
@@ -106,23 +106,23 @@ class HomeActivity : AppCompatActivity() {
 
                 R.id.nav_notifications -> {
                     val transact = supportFragmentManager.beginTransaction()
-                    //transact.addToBackStack(null)
-                    transact.replace(R.id.fragment_container, notifications_fragment)
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, notificationsFragment)
                     transact.commit()
                     drawer.closeDrawers()
                     true
                 }
                 R.id.nav_questionnaires -> {
                     val transact = supportFragmentManager.beginTransaction()
-                    //transact.addToBackStack(null)
-                    transact.replace(R.id.fragment_container, questionnaires_fragment)
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, questionnairesFragment)
                     transact.commit()
                     drawer.closeDrawers()
                     true
                 }
                 R.id.nav_activities -> {
                     val transact = supportFragmentManager.beginTransaction()
-                    //transact.addToBackStack(null)
+                    deleteAllViews()
                     transact.replace(R.id.fragment_container, activitiesFragment)
                     transact.commit()
                     drawer.closeDrawers()
@@ -130,22 +130,25 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_logout -> {
-                    connection_utils.logoutUser(this)
+                    conUtils.logoutUser(this)
                     drawer.closeDrawers()
-                    val intent = Intent(this@HomeActivity, MainActivity::class.java)
-                    startActivity(intent)
+                    returnToLogin()
                     true
                 }
 
                 else -> true
             }
         }
+    }
 
+    private fun returnToLogin() {
+        val intent = Intent(this@HomeActivity, MainActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onPause() {
         super.onPause()
-        connection_utils.refreshToken(this)
+        //conUtils.refreshToken(this)
     }
 
 
@@ -157,13 +160,25 @@ class HomeActivity : AppCompatActivity() {
         else super.onBackPressed()
     }
 
-    fun on_new_token_received(response: JSONObject) {
-        val new_token =
+    fun onNewTokenReceived(response: JSONObject) {
+        val newToken =
             response.getJSONObject("data").getJSONObject("attributes").getString("token")
-        GlobalVariables.localStorage["token"] = new_token
+        val sharedPrefs = this.getSharedPreferences(
+            this.packageName, Context.MODE_PRIVATE
+        )
+        sharedPrefs.edit().putString("token", newToken).apply()
+
     }
 
-    private fun deleteActivities() {
+    private fun deleteAllViews() {
         root.removeAllViews()
+    }
+
+    fun notify500() {
+        Toast.makeText(
+            applicationContext,
+            "Fehler bei Logout",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

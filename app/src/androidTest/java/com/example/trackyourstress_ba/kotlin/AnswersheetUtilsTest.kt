@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class AnswersheetUtilsTest {
-
+/*
     @Mock
     lateinit var requestQueue: RequestQueue
 
@@ -29,5 +29,5 @@ class AnswersheetUtilsTest {
         guiList[0] = SingleChoice("Test", "test01", map, answersheet)
 
         answerutils.submitAnswersheet(guiList, 1, answersheet)
-    }
+    }*/
 }

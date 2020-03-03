@@ -1,56 +1,109 @@
 package com.example.trackyourstress_ba.kotlin
 
-import android.app.PendingIntent.getActivities
-import android.app.PendingIntent.getActivity
-import android.provider.Settings
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
-import com.android.volley.Request
+import android.content.Context
 import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.*
-import com.example.trackyourstress_ba.MainActivity
-import com.example.trackyourstress_ba.fragments.ActivitiesFragment
+import com.android.volley.toolbox.BasicNetwork
+import com.android.volley.toolbox.HurlStack
+import com.android.volley.toolbox.NoCache
 import com.example.trackyourstress_ba.ui.home.HomeActivity
-import com.example.trackyourstress_ba.ui.login.LoginActivity
-import com.example.trackyourstress_ba.ui.register.RegisterActivity
-import com.example.trackyourstress_ba.ui.register.RegistrationConfirmationActivity
-import org.json.JSONObject
+import java.util.*
+import kotlin.random.Random
 
-class HomeUtils() {
+class HomeUtils {
     var requestQueue: RequestQueue
+    var notificationUtils: NotificationUtils
+    lateinit var tokenReceiver: TokenReceiver
 
     init {
-        // Instantiate the cache
-        val cache = NoCache() //TODO diskbased cache
-        // Set up the network to use HttpURLConnection as the HTTP client
+        val cache = NoCache()
         val network = BasicNetwork(HurlStack())
-        // Instantiate the RequestQueue with the cache and network. Start the queue
         requestQueue = RequestQueue(cache, network).apply {
             start()
         }
+        notificationUtils = NotificationUtils()
     }
 
-    fun getActivities(caller: ActivitiesFragment) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/my/activities?token=" + GlobalVariables.localStorage["token"]
-        val request = object : JsonObjectRequest(
-            Request.Method.GET, url, null,
-            Response.Listener { response ->
-                //GlobalVariables.localStorage.remove("token")
-                caller.activitiesReceived(response)
+    fun initiateScheduling(activity: HomeActivity, notifications: ArrayList<Boolean>) {
+        val now = Calendar.getInstance()
+        var nextDailyNotification = 0L
+        var nextWeeklyNotification = 0L
+        var nextMonthlyNotification = 0L
 
-            }, Response.ErrorListener { error ->
-                // Error in request
-                throw Exception("error occurred: $error")
-            }) {
-            override fun getHeaders(): MutableMap<String, String> {
-                val header = mutableMapOf<String, String>()
-                header["Accept-language"] = GlobalVariables.cur_language
-                return header
-            }
+        if (notifications[0]) {
+            nextDailyNotification = getRandomMilliSecondDaily()
         }
-        requestQueue.add(request)
+        val nextDaily = now.timeInMillis + nextDailyNotification
+        notificationUtils.scheduleNotification(
+            notificationUtils.getNotification(
+                "Täglicher Fragebogen",
+                activity
+            ), nextDaily, activity
+        )
+
+        if (notifications[1]) {
+            nextWeeklyNotification = getRandomMilliSecondWeekly()
+        }
+        val nextWeekly = now.timeInMillis + nextWeeklyNotification
+        notificationUtils.scheduleNotification(
+            notificationUtils.getNotification(
+                "Wöchentlicher Fragebogen",
+                activity
+            ), nextWeekly, activity
+        )
+
+        if (notifications[2]) {
+            nextMonthlyNotification = getRandomMilliSecondMonthly()
+        }
+        val nextMonthly = now.timeInMillis + nextMonthlyNotification
+        notificationUtils.scheduleNotification(
+            notificationUtils.getNotification(
+                "Monatlicher Fragebogen",
+                activity
+            ), nextMonthly, activity
+        )
+
+
     }
 
+    private fun getRandomMilliSecondDaily(): Long {
+        val milliSecondsDay = 60 * 60 * 24 * 1000
+        return Random.nextLong((0L until milliSecondsDay + 1).random())
+    }
+
+    private fun getRandomMilliSecondWeekly(): Long {
+        val milliSecondsWeek = 60 * 60 * 24 * 1000 * 7
+        return Random.nextLong((0L until milliSecondsWeek + 1).random())
+    }
+
+    private fun getRandomMilliSecondMonthly(): Long {
+        val milliSecondsMonth = 60 * 60 * 24 * 1000 * 30
+        return Random.nextLong((0L until milliSecondsMonth + 1).random())
+    }
+
+    fun initiateNotificationSettings(caller: HomeActivity) {
+        val preferences = caller.getSharedPreferences(
+            caller.packageName, Context.MODE_PRIVATE
+        )
+        preferences.edit().putBoolean("dailyNotification", true).apply()
+        preferences.edit().putBoolean("weeklyNotification", true).apply()
+        preferences.edit().putBoolean("monthlyNotification", true).apply()
+    }
+
+    fun getNotificationSettings(caller: HomeActivity): ArrayList<Boolean> {
+        val preferences = caller.getSharedPreferences(
+            caller.packageName, Context.MODE_PRIVATE
+        )
+        val notifications = ArrayList<Boolean>(3)
+        if (preferences.contains("dailyNotification")) {
+            notifications[0] = preferences.getBoolean("dailyNotification", true)
+        }
+        if (preferences.contains("weeklyNotification")) {
+            notifications[1] = preferences.getBoolean("weeklyNotification", true)
+        }
+        if (preferences.contains("monthlyNotification")) {
+            notifications[2] = preferences.getBoolean("monthlyNotification", true)
+        }
+        return notifications
+
+    }
 }

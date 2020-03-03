@@ -95,8 +95,8 @@ class LoginActivity : AppCompatActivity() {
             preferences.edit().putString("userId", userId).apply()
         }
         val username = response.getJSONObject("data").getJSONObject("attributes").getString("name")
-        if (!preferences.contains("username")) {
-            preferences.edit().putString("username", username).apply() //default german
+        if (!preferences.contains("userName")) {
+            preferences.edit().putString("userName", username).apply() //default german
         }
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)

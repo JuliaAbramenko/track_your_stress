@@ -3,6 +3,7 @@ package com.example.trackyourstress_ba.ui.register
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var editPassword: EditText
     private lateinit var editPasswordConfirmation: EditText
     private lateinit var editUsername: EditText
+    private lateinit var checkBox: CheckBox
     private lateinit var registerButton: Button
     private lateinit var conUtils: ConnectionUtils
     private lateinit var backButton: Button
@@ -28,6 +30,7 @@ class RegisterActivity : AppCompatActivity() {
         editPassword = findViewById(R.id.register_password_field)
         editPasswordConfirmation = findViewById(R.id.register_password_confirmation_field)
         editUsername = findViewById(R.id.register_username_field)
+        checkBox = findViewById(R.id.save_data_confirm)
         registerButton = findViewById(R.id.register_ok_button)
         conUtils = ConnectionUtils()
         backButton = findViewById(R.id.tohome_button_reg)
@@ -41,6 +44,9 @@ class RegisterActivity : AppCompatActivity() {
             }
             if (editPassword.text != editPasswordConfirmation.text) {
                 passwordsNotMatching()
+            }
+            if (!checkBox.isChecked) {
+                needCheck()
             }
             if (editEmail.text.contains("@") && editEmail.text.contains(".") &&
                 editPassword.text.length > 7 && editPassword.text == editPasswordConfirmation.text &&
@@ -80,6 +86,14 @@ class RegisterActivity : AppCompatActivity() {
         Toast.makeText(
             applicationContext,
             "Die Email ist nicht gültig. Prüfen Sie Ihre Eingabe",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun needCheck() {
+        Toast.makeText(
+            applicationContext,
+            "Bitte bestätigen Sie die Bedingung",
             Toast.LENGTH_LONG
         ).show()
     }

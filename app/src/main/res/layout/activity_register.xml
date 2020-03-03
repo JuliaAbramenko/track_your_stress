@@ -8,22 +8,22 @@
 
     <EditText
         android:id="@+id/register_email_field"
-        android:layout_width="329dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/prompt_email"
         android:importantForAutofill="no"
         android:inputType="textEmailSubject"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/register_password_field"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.588" />
 
     <EditText
         android:id="@+id/register_password_field"
-        android:layout_width="328dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/prompt_password"
@@ -31,14 +31,14 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.202" />
+        app:layout_constraintVertical_bias="0.152" />
 
     <EditText
         android:id="@+id/register_password_confirmation_field"
-        android:layout_width="327dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password_confirm"
@@ -46,14 +46,14 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.28" />
+        app:layout_constraintVertical_bias="0.256" />
 
     <EditText
         android:id="@+id/register_username_field"
-        android:layout_width="328dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/username"
@@ -62,10 +62,23 @@
         android:text="@string/username"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.36" />
+
+    <CheckBox
+        android:id="@+id/save_data_confirm"
+        android:layout_width="330dp"
+        android:layout_height="99dp"
+        android:text="@string/confirmSaveData"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toTopOf="@+id/register_ok_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_username_field"
+        app:layout_constraintVertical_bias="0.341" />
 
     <Button
         android:id="@+id/register_ok_button"
@@ -74,9 +87,10 @@
         android:text="@string/Register_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.652" />
 
     <Button
         android:id="@+id/tohome_button_reg"

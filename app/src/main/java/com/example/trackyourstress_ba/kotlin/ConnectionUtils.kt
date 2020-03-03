@@ -1,8 +1,6 @@
 package com.example.trackyourstress_ba.kotlin
 
 import android.content.Context
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -111,17 +109,20 @@ class ConnectionUtils {
         requestQueue.add(request)
     }
 
-
     fun logoutUser(caller: HomeActivity) {
-        val url = GlobalVariables.apiEndPoint + "/api/v1/auth/logout?token=" + GlobalVariables.localStorage["token"].toString()
+        val sharedPrefs = caller.getSharedPreferences(
+            caller.packageName, Context.MODE_PRIVATE
+        )
+        val apiEndpoint = sharedPrefs.getString("apiEndpoint", null)
+        val token = sharedPrefs.getString("token", null)
+        val url = "$apiEndpoint/api/v1/auth/logout?token=$token"
         val request = StringRequest(
             Request.Method.DELETE, url,
             Response.Listener<String> { response: String ->
-                GlobalVariables.localStorage.remove("token")
+
 
             }, Response.ErrorListener{error ->
-                // Error in request
-                throw Exception("error occurred: $error")
+                caller.notify500()
             })
         // Add the volley post request to the request queue
         requestQueue.add(request)
@@ -135,7 +136,7 @@ class ConnectionUtils {
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 //GlobalVariables.localStorage.remove("token")
-                caller.on_new_token_received(response)
+                caller.onNewTokenReceived(response)
 
             }, Response.ErrorListener { error ->
                 // Error in request

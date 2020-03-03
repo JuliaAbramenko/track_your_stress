@@ -9,7 +9,7 @@ import android.content.Intent
 
 class NotificationPublisher : BroadcastReceiver() {
     companion object {
-        var notificationID = "notification-id"
+        var notificationID = "notificationID"
         var notification = "notification"
     }
 
