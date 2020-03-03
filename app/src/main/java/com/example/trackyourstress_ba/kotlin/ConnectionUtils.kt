@@ -101,9 +101,9 @@ class ConnectionUtils {
         val jsonObject = JSONObject(data)
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
-            Response.Listener { response ->
+            Response.Listener {
                 caller.linkResent()
-            }, Response.ErrorListener { error ->
+            }, Response.ErrorListener {
                 caller.notify400()
             })
         requestQueue.add(request)
@@ -118,16 +118,16 @@ class ConnectionUtils {
         val url = "$apiEndpoint/api/v1/auth/logout?token=$token"
         val request = StringRequest(
             Request.Method.DELETE, url,
-            Response.Listener<String> { response: String ->
+            Response.Listener<String> { _: String ->
 
 
-            }, Response.ErrorListener{error ->
+            }, Response.ErrorListener { _ ->
                 caller.notify500()
             })
         // Add the volley post request to the request queue
         requestQueue.add(request)
     }
-    fun refreshToken(caller: HomeActivity) {
+    /*fun refreshToken(caller: HomeActivity) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/auth/refresh?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
@@ -140,6 +140,6 @@ class ConnectionUtils {
                 throw Exception("error occurred: $error")
             })
         requestQueue.add(request)
-    }
+    }*/
 
 }

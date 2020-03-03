@@ -25,8 +25,6 @@ class ActivitiesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_activities, container, false)
         currentContext = view!!.context
         root = view!!.findViewById(R.id.activitiesRootLayout)
-        val homeUtils = HomeUtils()
-        homeUtils.getActivities(this)
         return view
     }
 
@@ -40,7 +38,7 @@ class ActivitiesFragment : Fragment() {
             val entry = entries.getJSONObject(i)
             val date =
                 entry.getJSONObject("attributes").getJSONObject("created_at").getString("date")
-                    .substring(0, 19)
+                    .substring(0, 17)
             val message = entry.getJSONObject("attributes").getString("text")
             makeActivity(date, message)
         }

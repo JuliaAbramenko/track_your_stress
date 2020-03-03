@@ -72,17 +72,17 @@ class HomeUtils {
     }
 
     private fun getRandomMilliSecondDaily(): Long {
-        val milliSecondsDay = 60 * 60 * 24 * 1000
+        val milliSecondsDay = 60L * 60L * 24L * 1000L
         return Random.nextLong((0L until milliSecondsDay + 1).random())
     }
 
     private fun getRandomMilliSecondWeekly(): Long {
-        val milliSecondsWeek = 60 * 60 * 24 * 1000 * 7
+        val milliSecondsWeek = 60L * 60L * 24L * 1000L * 7L
         return Random.nextLong((0L until milliSecondsWeek + 1).random())
     }
 
     private fun getRandomMilliSecondMonthly(): Long {
-        val milliSecondsMonth = 60 * 60 * 24 * 1000 * 30
+        val milliSecondsMonth = 60L * 60L * 24L * 1000L * 30L
         return Random.nextLong((0L until milliSecondsMonth + 1).random())
     }
 

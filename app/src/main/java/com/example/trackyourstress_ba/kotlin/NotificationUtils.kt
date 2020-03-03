@@ -10,6 +10,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 
 
+@Suppress("DEPRECATION")
 class NotificationUtils {
 
     lateinit var alarmManager: AlarmManager
