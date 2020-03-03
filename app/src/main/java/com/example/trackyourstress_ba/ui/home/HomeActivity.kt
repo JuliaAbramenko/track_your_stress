@@ -20,7 +20,7 @@ import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 import com.example.trackyourstress_ba.fragments.ActivitiesFragment
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.HomeUtils
-import com.example.trackyourstress_ba.kotlin.TokenReceiver
+import com.example.trackyourstress_ba.kotlin.TokenUtils
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
 
@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var conUtils: ConnectionUtils
     lateinit var usernameText: TextView
     lateinit var emailText: TextView
-    lateinit var tokenReceiver: TokenReceiver
+    lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
     lateinit var notifications: ArrayList<Boolean>
 
@@ -44,7 +44,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val homeUtils = HomeUtils()
+        homeUtils = HomeUtils()
+        homeUtils.initiateTokenRefresher(this)
         val preferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
@@ -53,8 +54,12 @@ class HomeActivity : AppCompatActivity() {
             )
         ) {
             homeUtils.initiateNotificationSettings(this)
-        } else notifications = homeUtils.getNotificationSettings(this)
-        homeUtils.initiateScheduling(this, notifications)
+        } else {
+            notifications = homeUtils.getNotificationSettings(this)
+            homeUtils.initiateScheduling(this, notifications)
+        }
+
+
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()
@@ -72,7 +77,6 @@ class HomeActivity : AppCompatActivity() {
         drawerToggle.syncState()
         navView = findViewById(R.id.nav_view)
         navView.itemIconTintList = null
-        tokenReceiver = TokenReceiver()
 
 
         val headerLayout: View = navView.getHeaderView(0)
@@ -146,11 +150,6 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    override fun onPause() {
-        super.onPause()
-        //conUtils.refreshToken(this)
-    }
-
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -160,15 +159,6 @@ class HomeActivity : AppCompatActivity() {
         else super.onBackPressed()
     }
 
-    fun onNewTokenReceived(response: JSONObject) {
-        val newToken =
-            response.getJSONObject("data").getJSONObject("attributes").getString("token")
-        val sharedPrefs = this.getSharedPreferences(
-            this.packageName, Context.MODE_PRIVATE
-        )
-        sharedPrefs.edit().putString("token", newToken).apply()
-
-    }
 
     private fun deleteAllViews() {
         root.removeAllViews()

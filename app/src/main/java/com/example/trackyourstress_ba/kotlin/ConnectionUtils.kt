@@ -127,22 +127,18 @@ class ConnectionUtils {
         // Add the volley post request to the request queue
         requestQueue.add(request)
     }
-
-
     fun refreshToken(caller: HomeActivity) {
         val url =
             GlobalVariables.apiEndPoint + "/api/v1/auth/refresh?token=" + GlobalVariables.localStorage["token"]
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                //GlobalVariables.localStorage.remove("token")
                 caller.onNewTokenReceived(response)
 
             }, Response.ErrorListener { error ->
                 // Error in request
                 throw Exception("error occurred: $error")
             })
-        // Add the volley post request to the request queue
         requestQueue.add(request)
     }
 

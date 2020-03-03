@@ -11,8 +11,8 @@ import kotlin.random.Random
 
 class HomeUtils {
     var requestQueue: RequestQueue
-    var notificationUtils: NotificationUtils
-    lateinit var tokenReceiver: TokenReceiver
+    lateinit var notificationUtils: NotificationUtils
+    lateinit var tokenUtils: TokenUtils
 
     init {
         val cache = NoCache()
@@ -20,10 +20,16 @@ class HomeUtils {
         requestQueue = RequestQueue(cache, network).apply {
             start()
         }
-        notificationUtils = NotificationUtils()
+    }
+
+    fun initiateTokenRefresher(activity: HomeActivity) {
+        tokenUtils = TokenUtils()
+        tokenUtils.scheduleTokenRefresher(activity)
+
     }
 
     fun initiateScheduling(activity: HomeActivity, notifications: ArrayList<Boolean>) {
+        notificationUtils = NotificationUtils()
         val now = Calendar.getInstance()
         var nextDailyNotification = 0L
         var nextWeeklyNotification = 0L
