@@ -2,6 +2,8 @@ package com.example.trackyourstress_ba.fragments
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -11,76 +13,75 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 
-import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.ProfileUtils
 import org.json.JSONObject
 import java.lang.Exception
 import android.widget.EditText
 import com.example.trackyourstress_ba.R
-import kotlinx.android.synthetic.main.activity_login.*
 
 
 class ProfileFragment: Fragment(){
 
-    lateinit var edit_username : EditText
-    lateinit var edit_email : EditText
-    lateinit var edit_firstname : EditText
-    lateinit var edit_lastname : EditText
-    lateinit var sex_radio_group : RadioGroup
-    lateinit var submit_button : Button
-    lateinit var change_password_button : Button
-    lateinit var delete_profile_button : Button
+    lateinit var editUsername: EditText
+    lateinit var editEmail: EditText
+    lateinit var editFirstName: EditText
+    lateinit var editLastName: EditText
+    lateinit var sexRadioGroup: RadioGroup
+    lateinit var submitButton: Button
+    lateinit var changePasswordButton: Button
+    lateinit var deleteProfileButton: Button
     lateinit var profileUtils: ProfileUtils
     lateinit var currentContext: Context
+    lateinit var sharedPreferences: SharedPreferences
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         currentContext = container!!.context
-        profileUtils = ProfileUtils()
+        profileUtils = ProfileUtils(this)
         return inflater.inflate(R.layout.fragment_profile,container,false)
     }
 
     override fun onStart() {
         super.onStart()
         profileUtils.getProfile(this)
-        edit_username = view!!.findViewById(R.id.edit_name)
-        edit_email = view!!.findViewById(R.id.edit_email)
-        edit_firstname = view!!.findViewById(R.id.edit_firstname)
-        edit_lastname = view!!.findViewById(R.id.edit_lastname)
-        sex_radio_group = view!!.findViewById(R.id.sex_radio_group)
-        submit_button = view!!.findViewById(R.id.submit_button_update_profile)
-        change_password_button = view!!.findViewById(R.id.button_change_password)
-        delete_profile_button = view!!.findViewById(R.id.button_delete_profile)
+        editUsername = view!!.findViewById(R.id.edit_name)
+        editEmail = view!!.findViewById(R.id.edit_email)
+        editFirstName = view!!.findViewById(R.id.edit_firstname)
+        editLastName = view!!.findViewById(R.id.edit_lastname)
+        sexRadioGroup = view!!.findViewById(R.id.sex_radio_group)
+        submitButton = view!!.findViewById(R.id.submit_button_update_profile)
+        changePasswordButton = view!!.findViewById(R.id.button_change_password)
+        deleteProfileButton = view!!.findViewById(R.id.button_delete_profile)
 
-        submit_button.setOnClickListener {
+        submitButton.setOnClickListener {
                 profileUtils.updateProfile(
-                    edit_username.text.toString(), edit_firstname.text.toString(),
-                    edit_lastname.text.toString(),
-                    get_current_sex_id(),
+                    editUsername.text.toString(), editFirstName.text.toString(),
+                    editLastName.text.toString(),
+                    getCurrentSexId(),
                     this
                 )
-            Toast.makeText(context, "updated profile", Toast.LENGTH_LONG).show()
+            profileUpdated()
         }
-        //TODO Modify dialog
-        change_password_button.setOnClickListener {
-            val alert = AlertDialog.Builder(currentContext)
+        changePasswordButton.setOnClickListener {
+            val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
             val oldPassword = EditText(currentContext)
+            oldPassword.setTextColor(Color.BLACK)
 
             oldPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            alert.setMessage("Change Password")
-            alert.setTitle("Enter old password")
+            alert.setTitle("Passwort ändern")
+            alert.setMessage("Altes Passwort")
             alert.setView(oldPassword)
-
-            alert.setPositiveButton("Continue",
+            alert.setPositiveButton(
+                "Weiter",
                 DialogInterface.OnClickListener { dialog, whichButton ->
                     //What ever you want to do with the value
                     callNewPasswordDialog()
                 }
-
             )
 
-            alert.setNegativeButton("Cancel",
+            alert.setNegativeButton(
+                "Abbrechen",
                 DialogInterface.OnClickListener { dialog, whichButton ->
                     Toast.makeText(currentContext, "Would not change", Toast.LENGTH_LONG).show()
                 })
@@ -88,8 +89,8 @@ class ProfileFragment: Fragment(){
             alert.show()
         }
 
-        delete_profile_button.setOnClickListener {
-            val builder = AlertDialog.Builder(currentContext)
+        deleteProfileButton.setOnClickListener {
+            val builder = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
             builder.setTitle("DELETE PROFILE")
             builder.setMessage("Do you want to delete your profile?")
             builder.setPositiveButton("YES") { dialog, which ->
@@ -118,13 +119,18 @@ class ProfileFragment: Fragment(){
 
     }
 
+    private fun profileUpdated() {
+        Toast.makeText(context, "updated profile", Toast.LENGTH_LONG).show()
+    }
+
     private fun callNewPasswordDialog() {
-        val alert = AlertDialog.Builder(currentContext)
+        val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
         val newPassword = EditText(currentContext)
 
         newPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-        alert.setMessage("Change Password")
-        alert.setTitle("Enter new password")
+        alert.setTitle("Passwort ändern")
+        alert.setMessage("Neues Passwort")
+
         alert.setView(newPassword)
 
         alert.setPositiveButton("Continue",
@@ -148,8 +154,8 @@ class ProfileFragment: Fragment(){
     }
 
 
-    fun get_current_sex_id(): Int {
-        when (sex_radio_group.checkedRadioButtonId) {
+    fun getCurrentSexId(): Int {
+        when (sexRadioGroup.checkedRadioButtonId) {
             R.id.profile_sex_not_known -> return 0
             R.id.profile_male -> return 1
             R.id.profile_female -> return 2
@@ -158,55 +164,48 @@ class ProfileFragment: Fragment(){
         }
 
     }
-    fun response_received(response: JSONObject){
+
+    fun responseReceived(response: JSONObject) {
         try {
-            val profile_JSON_attributes = response.getJSONObject("data").getJSONObject("attributes")
-            GlobalVariables.localStorage["username"] = profile_JSON_attributes.getString("name")
-            GlobalVariables.localStorage["current_email"] = profile_JSON_attributes.getString("email")
-            GlobalVariables.localStorage["first_name"] = profile_JSON_attributes.getString("firstname")
-            GlobalVariables.localStorage["last_name"] = profile_JSON_attributes.getString("lastname")
-            GlobalVariables.localStorage["sex"] = profile_JSON_attributes.getString("sex")
-            fill_data_fields()
+            val profileJSON = response.getJSONObject("data").getJSONObject("attributes")
+            val sharedPrefs = currentContext.getSharedPreferences(
+                currentContext.packageName, Context.MODE_PRIVATE
+            )
+            sharedPrefs.edit().putString("userName", profileJSON.getString("name")).apply()
+            sharedPrefs.edit().putString("userEmail", profileJSON.getString("email")).apply()
+            sharedPrefs.edit().putString("firstName", profileJSON.getString("firstname")).apply()
+            sharedPrefs.edit().putString("lastName", profileJSON.getString("lastname")).apply()
+            sharedPrefs.edit().putString("sex", profileJSON.getString("sex")).apply()
+            fillDataFields(sharedPrefs)
         } catch (except : Exception) {
         }
 
     }
 
-    fun fill_data_fields () {
-        edit_username.setText( GlobalVariables.localStorage["username"])
-        edit_email.setText(GlobalVariables.localStorage["current_email"])
-        edit_firstname.setText(GlobalVariables.localStorage["first_name"])
-        edit_lastname.setText(GlobalVariables.localStorage["last_name"])
-        when(GlobalVariables.localStorage["sex"]) {
-            "0" -> sex_radio_group.check(R.id.profile_sex_not_known)
-            "1" -> sex_radio_group.check(R.id.profile_male)
-            "2" -> sex_radio_group.check(R.id.profile_female)
-            "9" -> sex_radio_group.check(R.id.profile_not_applicable)
+    fun fillDataFields(sharedPrefs: SharedPreferences) {
+        editUsername.setText(sharedPrefs.getString("userName", null))
+        editEmail.setText(sharedPrefs.getString("userEmail", null))
+        editFirstName.setText(sharedPrefs.getString("firstName", null))
+        editLastName.setText(sharedPrefs.getString("lastName", null))
+        when (sharedPrefs.getString("sex", null)) {
+            "0" -> sexRadioGroup.check(R.id.profile_sex_not_known)
+            "1" -> sexRadioGroup.check(R.id.profile_male)
+            "2" -> sexRadioGroup.check(R.id.profile_female)
+            "9" -> sexRadioGroup.check(R.id.profile_not_applicable)
         }
     }
 
-    fun update_received(response : JSONObject) {
-        try {
-            val profile_JSON_attributes = response.getJSONObject("data").getJSONObject("attributes")
-            GlobalVariables.localStorage["username"] = profile_JSON_attributes.getString("name")
-            GlobalVariables.localStorage["current_email"] = profile_JSON_attributes.getString("email")
-            GlobalVariables.localStorage["first_name"] = profile_JSON_attributes.getString("firstname")
-            GlobalVariables.localStorage["last_name"] = profile_JSON_attributes.getString("lastname")
-            GlobalVariables.localStorage["sex"] = profile_JSON_attributes.getString("sex")
-            fill_data_fields()
-        } catch (except: Exception) {}
-    }
 
-    fun update_password_received(response: JSONObject) {
+    fun updatePasswordReceived(response: JSONObject) {
         try {
 
         } catch (except: Exception) {}
 
     }
 
-    fun profile_deleted(response: JSONObject) {
+    fun profileDeleted(response: JSONObject) {
         try {
-            GlobalVariables.localStorage.clear()
+            //GlobalVariables.localStorage.clear()
         } catch (except: Exception) {}
 
     }

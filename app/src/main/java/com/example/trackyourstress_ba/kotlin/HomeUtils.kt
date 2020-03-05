@@ -28,7 +28,7 @@ class HomeUtils {
 
     }
 
-    fun initiateScheduling(activity: HomeActivity, notifications: ArrayList<Boolean>) {
+    fun initiateScheduling(activity: HomeActivity, notifications: BooleanArray) {
         notificationUtils = NotificationUtils()
         val now = Calendar.getInstance()
         var nextDailyNotification = 0L
@@ -37,38 +37,36 @@ class HomeUtils {
 
         if (notifications[0]) {
             nextDailyNotification = getRandomMilliSecondDaily()
+            val nextDaily = nextDailyNotification
+            notificationUtils.scheduleNotification(
+                notificationUtils.getNotification(
+                    "Täglicher Fragebogen",
+                    activity
+                ), nextDaily, 0, activity
+            )
         }
-        val nextDaily = now.timeInMillis + nextDailyNotification
-        notificationUtils.scheduleNotification(
-            notificationUtils.getNotification(
-                "Täglicher Fragebogen",
-                activity
-            ), nextDaily, activity
-        )
 
         if (notifications[1]) {
             nextWeeklyNotification = getRandomMilliSecondWeekly()
+            val nextWeekly = nextWeeklyNotification
+            notificationUtils.scheduleNotification(
+                notificationUtils.getNotification(
+                    "Wöchentlicher Fragebogen",
+                    activity
+                ), nextWeekly, 1, activity
+            )
         }
-        val nextWeekly = now.timeInMillis + nextWeeklyNotification
-        notificationUtils.scheduleNotification(
-            notificationUtils.getNotification(
-                "Wöchentlicher Fragebogen",
-                activity
-            ), nextWeekly, activity
-        )
 
         if (notifications[2]) {
             nextMonthlyNotification = getRandomMilliSecondMonthly()
+            val nextMonthly = nextMonthlyNotification
+            notificationUtils.scheduleNotification(
+                notificationUtils.getNotification(
+                    "Monatlicher Fragebogen",
+                    activity
+                ), nextMonthly, 2, activity
+            )
         }
-        val nextMonthly = now.timeInMillis + nextMonthlyNotification
-        notificationUtils.scheduleNotification(
-            notificationUtils.getNotification(
-                "Monatlicher Fragebogen",
-                activity
-            ), nextMonthly, activity
-        )
-
-
     }
 
     private fun getRandomMilliSecondDaily(): Long {
@@ -79,6 +77,7 @@ class HomeUtils {
     private fun getRandomMilliSecondWeekly(): Long {
         val milliSecondsWeek = 60L * 60L * 24L * 1000L * 7L
         return Random.nextLong((0L until milliSecondsWeek + 1).random())
+
     }
 
     private fun getRandomMilliSecondMonthly(): Long {
@@ -95,11 +94,11 @@ class HomeUtils {
         preferences.edit().putBoolean("monthlyNotification", true).apply()
     }
 
-    fun getNotificationSettings(caller: HomeActivity): ArrayList<Boolean> {
+    fun getNotificationSettings(caller: HomeActivity): BooleanArray {
         val preferences = caller.getSharedPreferences(
             caller.packageName, Context.MODE_PRIVATE
         )
-        val notifications = ArrayList<Boolean>(3)
+        val notifications = BooleanArray(3)
         if (preferences.contains("dailyNotification")) {
             notifications[0] = preferences.getBoolean("dailyNotification", true)
         }

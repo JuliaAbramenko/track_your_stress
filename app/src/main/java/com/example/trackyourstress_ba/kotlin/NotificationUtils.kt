@@ -15,20 +15,24 @@ class NotificationUtils {
 
     lateinit var alarmManager: AlarmManager
 
-    fun scheduleNotification(notification: Notification, delay: Long, activity: HomeActivity) {
+    fun scheduleNotification(
+        notification: Notification,
+        delay: Long,
+        id: Int,
+        activity: HomeActivity
+    ) {
         val notificationIntent = Intent(activity, NotificationPublisher::class.java)
-        notificationIntent.putExtra(NotificationPublisher.notificationID, 1)
+        notificationIntent.putExtra(NotificationPublisher.notificationID, id)
         notificationIntent.putExtra(NotificationPublisher.notification, notification)
         val pendingIntent = PendingIntent.getBroadcast(
             activity,
-            0,
+            id,
             notificationIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
-        val futureInMillis = SystemClock.elapsedRealtime() + delay
+        val futureInMillis = System.currentTimeMillis() + delay
         alarmManager = activity.getSystemService(Context.ALARM_SERVICE)!! as AlarmManager
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent)
+        alarmManager.set(AlarmManager.RTC, futureInMillis, pendingIntent)
 
     }
 
@@ -51,7 +55,7 @@ class NotificationUtils {
             val name = "Test"
             val descriptionText = "TestChannel"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val mChannel = NotificationChannel("TrackYourStress", name, importance)
+            val mChannel = NotificationChannel("0", name, importance)
             mChannel.description = descriptionText
             val notificationManager =
                 activity.getSystemService(NOTIFICATION_SERVICE) as NotificationManager

@@ -38,21 +38,18 @@ class RegisterActivity : AppCompatActivity() {
         registerButton.setOnClickListener {
             if (!editEmail.text.contains("@") && !editEmail.text.contains(".")) {
                 emailNotValid()
-            }
-            if (editPassword.text.length <= 7) {
+            } else if (editPassword.text.length <= 7) {
                 passwordTooShort()
-            }
-            if (editPassword.text != editPasswordConfirmation.text) {
+            } else if (editPassword.text.toString() != editPasswordConfirmation.text.toString()) {
                 passwordsNotMatching()
-            }
-            if (!checkBox.isChecked) {
+            } else if (!checkBox.isChecked) {
                 needCheck()
-            }
-            if (editEmail.text.contains("@") && editEmail.text.contains(".") &&
+            } else
+            /*(editEmail.text.contains("@") && editEmail.text.contains(".") &&
                 editPassword.text.length > 7 && editPassword.text == editPasswordConfirmation.text &&
                 editPasswordConfirmation.text.length > 7 &&
                 editUsername.text.length > 7
-            ) {
+            ) */ {
                 conUtils.registerUser(
                     editEmail.text.toString(), editPassword.text.toString(),
                     editPasswordConfirmation.text.toString(), editUsername.text.toString(), this

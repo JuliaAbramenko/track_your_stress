@@ -16,6 +16,7 @@ class ActivitiesFragment : Fragment() {
 
     lateinit var root: LinearLayout
     lateinit var currentContext: Context
+    //lateinit var
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +27,10 @@ class ActivitiesFragment : Fragment() {
         currentContext = view!!.context
         root = view!!.findViewById(R.id.activitiesRootLayout)
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
 

@@ -21,20 +21,21 @@ class LoginActivity : AppCompatActivity() {
     lateinit var loginButton: Button
     lateinit var backButton: Button
     lateinit var conUtils: ConnectionUtils
-    lateinit var preferences: SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        preferences = this.getSharedPreferences(
+        sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
-        if (!preferences.contains("apiEndpoint")) {
-            preferences.edit().putString("apiEndpoint", "https://api.trackyourstress.org").apply()
+        if (!sharedPreferences.contains("apiEndpoint")) {
+            sharedPreferences.edit().putString("apiEndpoint", "https://api.trackyourstress.org")
+                .apply()
         }
-        if (!preferences.contains("currentLanguage")) {
-            preferences.edit().putString("currentLanguage", "de").apply() //default german
+        if (!sharedPreferences.contains("currentLanguage")) {
+            sharedPreferences.edit().putString("currentLanguage", "de").apply() //default german
         }
 
         editUsername = findViewById(R.id.username)
@@ -82,21 +83,21 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginResponseReceived(email: String, response: JSONObject) {
-        preferences.edit().putString("currentEmail", email).apply()
+        sharedPreferences.edit().putString("userEmail", email).apply()
         val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
-        preferences.edit().putString("token", token).apply()
+        sharedPreferences.edit().putString("token", token).apply()
         conUtils.getProfileData(this)
 
     }
 
     fun profileResponseReceived(response: JSONObject) {
         val userId = response.getJSONObject("data").getString("id")
-        if (!preferences.contains("userId")) {
-            preferences.edit().putString("userId", userId).apply()
+        if (!sharedPreferences.contains("userId")) {
+            sharedPreferences.edit().putString("userId", userId).apply()
         }
         val username = response.getJSONObject("data").getJSONObject("attributes").getString("name")
-        if (!preferences.contains("userName")) {
-            preferences.edit().putString("userName", username).apply() //default german
+        if (!sharedPreferences.contains("userName")) {
+            sharedPreferences.edit().putString("userName", username).apply() //default german
         }
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)

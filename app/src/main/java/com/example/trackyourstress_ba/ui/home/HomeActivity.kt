@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var emailText: TextView
     lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
-    lateinit var notifications: ArrayList<Boolean>
+    lateinit var notifications: BooleanArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +54,9 @@ class HomeActivity : AppCompatActivity() {
             )
         ) {
             homeUtils.initiateNotificationSettings(this)
-        } else {
-            notifications = homeUtils.getNotificationSettings(this)
-            homeUtils.initiateScheduling(this, notifications)
         }
-
-
+        notifications = homeUtils.getNotificationSettings(this)
+        homeUtils.initiateScheduling(this, notifications)
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()

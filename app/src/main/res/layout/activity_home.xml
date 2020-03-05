@@ -26,41 +26,6 @@
             android:visibility="visible"
             app:layout_scrollFlags="scroll|enterAlways" />
 
-        <TextView
-            android:id="@+id/headlineHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/alegreya_sc"
-            android:text="TrackYourStress" />
-
-        <TextView
-            android:id="@+id/homeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/home_text" />
-
-
-        <ImageView
-            android:id="@+id/logoKrems"
-            android:layout_width="124dip"
-            android:layout_height="124dip"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/logo_uni_krems" />
-
-        <ImageView
-            android:id="@+id/logoUlm"
-            android:layout_width="124dip"
-            android:layout_height="124dip"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/logo_uni_ulm" />
-
-        <ImageView
-            android:id="@+id/logoNuernberg"
-            android:layout_width="124dip"
-            android:layout_height="124dip"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/logo_uni_nuernberg" />
-
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -68,10 +33,46 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/homeRoot"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:id="@+id/homeRoot" />
+                android:padding="@dimen/nicePadding">
+
+                <TextView
+                    android:id="@+id/homeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:text="@string/home_text"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:id="@+id/logoKrems"
+                    android:layout_width="124dip"
+                    android:layout_height="124dip"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:textAlignment="center"
+                    app:srcCompat="@drawable/logo_uni_krems" />
+
+                <ImageView
+                    android:id="@+id/logoUlm"
+                    android:layout_width="280dip"
+                    android:layout_height="124dip"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    app:srcCompat="@drawable/logo_uni_ulm" />
+
+                <ImageView
+                    android:id="@+id/logoNuernberg"
+                    android:layout_width="124dip"
+                    android:layout_height="124dip"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    app:srcCompat="@drawable/logo_uni_nuernberg" />
+            </LinearLayout>
 
         </FrameLayout>
 

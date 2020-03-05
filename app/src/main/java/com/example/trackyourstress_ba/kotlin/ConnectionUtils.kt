@@ -23,10 +23,19 @@ class ConnectionUtils {
     }
 
     fun loginUser(email: String, password: String, caller: LoginActivity) {
-        val apiEndpoint = caller.preferences.getString("apiEndpoint", null)
-        val data = "{ 'data' : { 'type' : 'users', 'attributes' : {'email' : '$email', 'password' : '$password'}}}"
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
         val url = "$apiEndpoint/api/v1/auth/login"
-        val jsonObject = JSONObject(data)
+        val jsonObject = JSONObject(
+            mapOf(
+                "data" to mapOf(
+                    "type" to "users",
+                    "attributes" to mapOf(
+                        "email" to email,
+                        "password" to password
+                    )
+                )
+            )
+        )
         val request = JsonObjectRequest(
             Request.Method.POST, url,jsonObject,
             Response.Listener { response ->
@@ -43,8 +52,8 @@ class ConnectionUtils {
     }
 
     fun getProfileData(caller: LoginActivity) {
-        val apiEndpoint = caller.preferences.getString("apiEndpoint", null)
-        val token = caller.preferences.getString("token", null)
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
         val url = "$apiEndpoint/api/v1/my/profile?token=$token"
         val profileRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -63,16 +72,26 @@ class ConnectionUtils {
         username: String,
         caller: RegisterActivity
     ) {
-        val data = "{ 'data' : {'type' : 'users', 'attributes' : {'email' : '$email', " +
-                "'password' : '$password', 'password_confirmation' : '$password_confirmation', 'name' : '$username'}}}"
-        val jsonObject = JSONObject(data)
+        val jsonObject = JSONObject(
+            mapOf(
+                "data" to mapOf(
+                    "type" to "users",
+                    "attributes" to mapOf(
+                        "email" to email.trim(),
+                        "password" to password,
+                        "password_confirmation" to password_confirmation,
+                        "name" to username.trim()
+                    )
+                )
+            )
+        )
         val sharedPrefs = caller.getSharedPreferences(
             caller.packageName, Context.MODE_PRIVATE
         )
         val apiEndpoint = sharedPrefs.getString("apiEndpoint", null)
         val url = "$apiEndpoint/api/v1/auth/register"
-        val request = JsonObjectRequest(
-            Request.Method.POST, url, jsonObject,
+        val request = object : JsonObjectRequest(
+            Method.POST, url, jsonObject,
             Response.Listener {
                 val preferences = caller.getSharedPreferences(
                     caller.packageName, Context.MODE_PRIVATE
@@ -87,7 +106,13 @@ class ConnectionUtils {
                 caller.registrationSuccessful()
             }, Response.ErrorListener {
                 caller.registrationError()
-            })
+            }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val header = mutableMapOf<String, String>()
+                header["Accept-language"] = "de"
+                return header
+            }
+        }
         requestQueue.add(request)
     }
 
@@ -96,9 +121,15 @@ class ConnectionUtils {
             caller.packageName, Context.MODE_PRIVATE
         )
         val apiEndpoint = sharedPrefs.getString("apiEndpoint", null)
-        val data = "data = { 'data' : { 'type' : 'users', 'attributes' : {'email' : '$email'}}}"
+        val jsonObject = JSONObject(
+            mapOf(
+                "type" to "users",
+                "attributes" to mapOf(
+                    "email" to email
+                )
+            )
+        )
         val url = "$apiEndpoint/api/v1/verify/resend"
-        val jsonObject = JSONObject(data)
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
             Response.Listener {
@@ -124,22 +155,8 @@ class ConnectionUtils {
             }, Response.ErrorListener { _ ->
                 caller.notify500()
             })
-        // Add the volley post request to the request queue
+
         requestQueue.add(request)
     }
-    /*fun refreshToken(caller: HomeActivity) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/auth/refresh?token=" + GlobalVariables.localStorage["token"]
-        val request = JsonObjectRequest(
-            Request.Method.GET, url, null,
-            Response.Listener { response ->
-                caller.onNewTokenReceived(response)
-
-            }, Response.ErrorListener { error ->
-                // Error in request
-                throw Exception("error occurred: $error")
-            })
-        requestQueue.add(request)
-    }*/
 
 }

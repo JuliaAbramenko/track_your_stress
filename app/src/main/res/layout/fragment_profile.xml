@@ -103,6 +103,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_margin="8dp"
+        android:padding="6dp"
         android:text="@string/submit">
 
     </Button>
@@ -113,6 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_margin="4dp"
+        android:padding="8dp"
         android:text="@string/change_password">
 
     </Button>
@@ -123,6 +127,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_margin="8dp"
+        android:padding="6dp"
         android:text="@string/delete_profile">
 
     </Button>
