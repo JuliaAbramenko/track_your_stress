@@ -158,7 +158,7 @@ class AnswerSheetActivity : AppCompatActivity() {
     }
 
     fun submitSuccess(response: JSONObject) {
-        Toast.makeText(this, "AnswerSheet submitted!", Toast.LENGTH_LONG)
+        Toast.makeText(this, "Fragebogen abgeschickt!", Toast.LENGTH_LONG)
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }

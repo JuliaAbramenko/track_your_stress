@@ -23,7 +23,6 @@ class QuestionnairesFragment : Fragment() {
     lateinit var questionnaireUtils: QuestionnaireUtils
     var hasLoaded: Boolean = false
     lateinit var associatedQuestionnaires: HashMap<Int, String>
-    var registrationQuestionnaireExists: Boolean = false
 
     private lateinit var tableQuestionnaires: TableLayout
     lateinit var currentContext: Context
@@ -54,8 +53,8 @@ class QuestionnairesFragment : Fragment() {
         testRunning.text = getString(R.string.running)
         testRepeatable.text = getString(R.string.repeatable)
         firstRow.addView(textTitle)
-        firstRow.addView(testRepeatable)
         firstRow.addView(testRunning)
+        firstRow.addView(testRepeatable)
         tableQuestionnaires.addView(firstRow, 0)
         return view
     }
@@ -65,10 +64,6 @@ class QuestionnairesFragment : Fragment() {
         if (!hasLoaded) {
             associatedQuestionnaires = HashMap()
             questionnaireUtils = QuestionnaireUtils()
-            /*questionnaireUtils.getUserStudies(
-                sharedPreferences.getString("userId", null)!!.toInt(),
-                this
-            )*/
             questionnaireUtils.getMyQuestionnaires(this)
             hasLoaded = true
         }
@@ -79,61 +74,19 @@ class QuestionnairesFragment : Fragment() {
         if (!hasLoaded) {
             associatedQuestionnaires = HashMap()
             questionnaireUtils = QuestionnaireUtils()
-            /*questionnaireUtils.getUserStudies(
-                sharedPreferences.getString("userId", null)!!.toInt(),
-                this
-            )*/
-            hasLoaded = true
+            //TODO hasLoaded = true
         }
 
     }
 
-    //override fun on
-
-
-    /*fun studiesReceived(response: JSONObject) {
-        //currently only one study available
-        currentStudyID = 1
-        questionnaireUtils.getAssociatedQuestionnaires(currentStudyID, this)
-
-    }*/
-
-    /*fun associatedQuestionnairesReceived(response: JSONObject) {
-        val array: JSONArray = response.getJSONArray("data")
-        for (i in 0 until array.length()) {
-            val item = array.getJSONObject(i)
-            val id = item["id"].toString().toInt()
-            val title: String = item.getJSONObject("attributes")["name"].toString()
-            associatedQuestionnaires[id] = title
-        }
-        requestQuestionnaires()
-    }*/
-
-
-    fun questionnaireReceived(response: JSONObject) {
-        val name = response.getJSONObject("data").getJSONObject("attributes")["name"].toString()
-        if (response.getJSONObject("data").getJSONObject("attributes")["is_onetime"].toString() == "1") {
-            val title =
-                response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
-            val runningString =
-                response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
+    fun getRelevantValues(current: JSONObject) {
+        if (current.getString("is_filled_out") == "false") {
+            val name = current["name"].toString()
+            val title = current["title"].toString()
+            val runningString = current["is_active"].toString()
             val running: Boolean = runningString == "1"
-            val repeatString =
-                response.getJSONObject("data").getJSONObject("attributes")["is_onetime"].toString()
+            val repeatString = current["is_multiple"].toString()
             val repeat: Boolean = repeatString == "1"
-            registrationQuestionnaireExists = true
-            fillQuestionnaireRow(name, title, running, repeat)
-        }
-        if (!registrationQuestionnaireExists && response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString() == "1") {
-            val title =
-                response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
-            val runningString =
-                response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
-            val running: Boolean = runningString == "1"
-            val repeatString =
-                response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString()
-            val repeat: Boolean = repeatString == "1"
-            registrationQuestionnaireExists = false
             fillQuestionnaireRow(name, title, running, repeat)
         }
     }
@@ -145,12 +98,6 @@ class QuestionnairesFragment : Fragment() {
         startActivity(intent)
     }
 
-    /*private fun requestQuestionnaires() {
-        for ((key, _) in associatedQuestionnaires) {
-            questionnaireUtils.getQuestionnaire(key, this)
-        }
-    }*/
-
     private fun fillQuestionnaireRow(
         name: String,
         titleName: String,
@@ -161,7 +108,7 @@ class QuestionnairesFragment : Fragment() {
         val title = TextView(activity)
         val isRunning = TextView(activity)
         val isRepeatable = TextView(activity)
-        title.text = titleName
+        title.text = titleName.substring(20)
         isRunning.text = if (running) "YES" else "NO"
         isRepeatable.text = if (repeat) "YES" else "NO"
         newRow.addView(title)
@@ -189,13 +136,32 @@ class QuestionnairesFragment : Fragment() {
 
     }
 
-    fun questionnairesReceived(response: JSONObject?) {
-        val array: JSONArray = response!!.getJSONArray("data")
+    fun allQuestionnairesReceived(response: JSONObject?) {
+        var array: JSONArray = response!!.getJSONArray("data")
+        var regQuestionaire: JSONObject? = null
+        var regIndex = -1
+        for (i in 0 until array.length()) {
+            if (array.getJSONObject(i).getJSONObject("attributes").getString("name")
+                    .contains("Demography")
+            ) {
+                regQuestionaire = array.getJSONObject(i)
+                regIndex = i
+            }
+        }
+        if (regQuestionaire != null && regQuestionaire.getJSONObject("attributes")
+                .getString("is_filled_out") == "false"
+        ) {
+            array = JSONArray()
+            array.put(regQuestionaire)
+        } else if (regIndex != -1) {
+            array.remove(regIndex)
+        }
         for (i in 0 until array.length()) {
             val item = array.getJSONObject(i)
             val questionnaireId = item.getString("id").toInt()
-
-            questionnaireUtils.getQuestionnaire(questionnaireId, this)
+            val questionnaireName = item.getJSONObject("attributes").getString("name")
+            associatedQuestionnaires[questionnaireId] = questionnaireName
+            getRelevantValues(item.getJSONObject("attributes"))
         }
     }
 }

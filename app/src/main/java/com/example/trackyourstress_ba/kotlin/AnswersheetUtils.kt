@@ -68,19 +68,20 @@ class AnswersheetUtils {
         val release = Build.VERSION.RELEASE
         val sdkVersion = Build.VERSION.SDK_INT
         val clientOS = "Android SDK: $sdkVersion ($release)"
-        val clientName = GlobalVariables.clientName
+        val clientName = "track-your-stress 1.0.0"
         val clientJSON =
             "{\"device\" : \"$clientDevice\", \"name\" : \"$clientName\", \"os\" : \"$clientOS\"}"
         val currentTimestamp = System.currentTimeMillis() / 1000L
+        val language = caller.sharedPreferences.getString("currentLanguage", null)
         var data = "{\"data\" : {\"type\" : \"answersheets\", \"attributes\" : " +
                 "{\"answers\" : $answerJSON, " +
                 "\"client\" : $clientJSON, " +
                 "\"collected_at\" : \"$currentTimestamp\", " +
-                "\"locale\" : \"${GlobalVariables.cur_language}\"}}}"
+                "\"locale\" : \"$language\"}}}"
         val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
         val token = caller.sharedPreferences.getString("token", null)
         val url = "$apiEndpoint/api/v1/questionnaires/$questionnaireID/answersheets?token=$token"
-        var jsonObject = JSONObject(data)
+        val jsonObject = JSONObject(data)
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
             Response.Listener { response ->
