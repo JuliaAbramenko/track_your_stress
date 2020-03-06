@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.kotlin.GlobalVariables
 import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONArray
@@ -20,13 +20,14 @@ import org.json.JSONObject
 
 class QuestionnairesFragment : Fragment() {
 
-    var currentStudyID = 0
     lateinit var questionnaireUtils: QuestionnaireUtils
     var hasLoaded: Boolean = false
     lateinit var associatedQuestionnaires: HashMap<Int, String>
+    var registrationQuestionnaireExists: Boolean = false
 
-    private lateinit var table_questionnaires: TableLayout
+    private lateinit var tableQuestionnaires: TableLayout
     lateinit var currentContext: Context
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,23 +36,27 @@ class QuestionnairesFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_questionnaires, container, false)
         currentContext = container!!.context
-        table_questionnaires = view!!.findViewById(R.id.questionnaire_table)
-        val first_row = TableRow(activity)
-        val test_title = TextView(activity)
-        val test_running = TextView(activity)
-        val test_repeatable = TextView(activity)
-        first_row.layoutParams =
+        tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table)
+        sharedPreferences =
+            currentContext.getSharedPreferences(currentContext.packageName, Context.MODE_PRIVATE)
+
+        val firstRow = TableRow(activity)
+        val textTitle = TextView(activity)
+        val testRunning = TextView(activity)
+        val testRepeatable = TextView(activity)
+        firstRow.layoutParams =
             TableLayout.LayoutParams(
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT
             )
-        test_title.text = getString(R.string.title_questionnaire)
-        test_running.text = getString(R.string.running)
-        test_repeatable.text = getString(R.string.repeatable)
-        first_row.addView(test_title)
-        first_row.addView(test_repeatable)
-        first_row.addView(test_running)
-        table_questionnaires.addView(first_row, 0)
+        // TODO firstRow.background = "00000ff"
+        textTitle.text = getString(R.string.title_questionnaire)
+        testRunning.text = getString(R.string.running)
+        testRepeatable.text = getString(R.string.repeatable)
+        firstRow.addView(textTitle)
+        firstRow.addView(testRepeatable)
+        firstRow.addView(testRunning)
+        tableQuestionnaires.addView(firstRow, 0)
         return view
     }
 
@@ -60,10 +65,11 @@ class QuestionnairesFragment : Fragment() {
         if (!hasLoaded) {
             associatedQuestionnaires = HashMap()
             questionnaireUtils = QuestionnaireUtils()
-            questionnaireUtils.get_user_studies(
-                GlobalVariables.localStorage["user_id"]!!.toInt(),
+            /*questionnaireUtils.getUserStudies(
+                sharedPreferences.getString("userId", null)!!.toInt(),
                 this
-            )
+            )*/
+            questionnaireUtils.getMyQuestionnaires(this)
             hasLoaded = true
         }
     }
@@ -73,10 +79,10 @@ class QuestionnairesFragment : Fragment() {
         if (!hasLoaded) {
             associatedQuestionnaires = HashMap()
             questionnaireUtils = QuestionnaireUtils()
-            questionnaireUtils.get_user_studies(
-                GlobalVariables.localStorage["user_id"]!!.toInt(),
+            /*questionnaireUtils.getUserStudies(
+                sharedPreferences.getString("userId", null)!!.toInt(),
                 this
-            )
+            )*/
             hasLoaded = true
         }
 
@@ -85,14 +91,14 @@ class QuestionnairesFragment : Fragment() {
     //override fun on
 
 
-    fun studies_received(response: JSONObject) {
+    /*fun studiesReceived(response: JSONObject) {
+        //currently only one study available
         currentStudyID = 1
-        questionnaireUtils.get_associated_questionnaires(currentStudyID, this)
+        questionnaireUtils.getAssociatedQuestionnaires(currentStudyID, this)
 
-    }
+    }*/
 
-    fun associated_questionnaires_received(response: JSONObject) {
-        GlobalVariables.logger.info("BAAAAAAANG!!!!")
+    /*fun associatedQuestionnairesReceived(response: JSONObject) {
         val array: JSONArray = response.getJSONArray("data")
         for (i in 0 until array.length()) {
             val item = array.getJSONObject(i)
@@ -100,16 +106,26 @@ class QuestionnairesFragment : Fragment() {
             val title: String = item.getJSONObject("attributes")["name"].toString()
             associatedQuestionnaires[id] = title
         }
-
         requestQuestionnaires()
-    }
+    }*/
 
 
-    fun questionnaire_received(response: JSONObject) {
-        GlobalVariables.logger.info("BOOOONG")
+    fun questionnaireReceived(response: JSONObject) {
         val name = response.getJSONObject("data").getJSONObject("attributes")["name"].toString()
-        if (response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString() == "1") {
-            val title = //getHeadline(response.getJSONArray("data"))
+        if (response.getJSONObject("data").getJSONObject("attributes")["is_onetime"].toString() == "1") {
+            val title =
+                response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
+            val runningString =
+                response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
+            val running: Boolean = runningString == "1"
+            val repeatString =
+                response.getJSONObject("data").getJSONObject("attributes")["is_onetime"].toString()
+            val repeat: Boolean = repeatString == "1"
+            registrationQuestionnaireExists = true
+            fillQuestionnaireRow(name, title, running, repeat)
+        }
+        if (!registrationQuestionnaireExists && response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString() == "1") {
+            val title =
                 response.getJSONObject("data").getJSONObject("attributes")["title"].toString()
             val runningString =
                 response.getJSONObject("data").getJSONObject("attributes")["is_active"].toString()
@@ -117,23 +133,23 @@ class QuestionnairesFragment : Fragment() {
             val repeatString =
                 response.getJSONObject("data").getJSONObject("attributes")["is_multiple"].toString()
             val repeat: Boolean = repeatString == "1"
+            registrationQuestionnaireExists = false
             fillQuestionnaireRow(name, title, running, repeat)
         }
-
     }
 
-    fun questionnaire_structure_received(response: JSONObject, questionnaireID: Int) {
+    fun startAnswerSheetActivity(response: JSONObject, questionnaireID: Int) {
         val intent = Intent(currentContext, AnswerSheetActivity::class.java)
         intent.putExtra("response", response.toString())
         intent.putExtra("id", questionnaireID.toString())
         startActivity(intent)
     }
 
-    private fun requestQuestionnaires() {
+    /*private fun requestQuestionnaires() {
         for ((key, _) in associatedQuestionnaires) {
-            questionnaireUtils.get_questionnaire(key, this)
+            questionnaireUtils.getQuestionnaire(key, this)
         }
-    }
+    }*/
 
     private fun fillQuestionnaireRow(
         name: String,
@@ -155,7 +171,7 @@ class QuestionnairesFragment : Fragment() {
             TableLayout.LayoutParams.MATCH_PARENT,
             TableLayout.LayoutParams.WRAP_CONTENT
         )
-        table_questionnaires.addView(newRow)
+        tableQuestionnaires.addView(newRow)
         listenToClickEvents(newRow, name)
     }
 
@@ -168,8 +184,18 @@ class QuestionnairesFragment : Fragment() {
                     break
                 }
             }
-            questionnaireUtils.get_questionnaire_structure(index, this)
+            questionnaireUtils.getQuestionnaireStructure(index, this)
         }
 
+    }
+
+    fun questionnairesReceived(response: JSONObject?) {
+        val array: JSONArray = response!!.getJSONArray("data")
+        for (i in 0 until array.length()) {
+            val item = array.getJSONObject(i)
+            val questionnaireId = item.getString("id").toInt()
+
+            questionnaireUtils.getQuestionnaire(questionnaireId, this)
+        }
     }
 }

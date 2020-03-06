@@ -1,8 +1,5 @@
 package com.example.trackyourstress_ba.kotlin
 
-import android.provider.Settings
-import android.widget.Toast
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -13,119 +10,99 @@ import com.android.volley.toolbox.NoCache
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 
 class QuestionnaireUtils {
-
-    val language_header = "{'Accept-language':" + GlobalVariables.cur_language + "}"
     var requestQueue: RequestQueue
-
     init {
-        // Instantiate the cache
-        val cache = NoCache() //TODO diskbased cache
-        // Set up the network to use HttpURLConnection as the HTTP client
-        val network: BasicNetwork = BasicNetwork(HurlStack())
-        // Instantiate the RequestQueue with the cache and network. Start the queue
+        val cache = NoCache()
+        val network = BasicNetwork(HurlStack())
         requestQueue = RequestQueue(cache, network).apply {
             start()
         }
     }
 
-
-    fun get_user_studies(user_id: Int, caller: QuestionnairesFragment) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/users/" + user_id + "/studies/member?token=" + GlobalVariables.localStorage["token"]
+    fun getMyQuestionnaires(caller: QuestionnairesFragment) {
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/my/questionnaires?token=$token"
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                GlobalVariables.logger.info("Received: $response.body")
-                caller.studies_received(response)
+                caller.questionnairesReceived(response)
             }, Response.ErrorListener { error ->
-                // Error in request
                 throw Exception("shit happened: $error")
             })
-        // Add the volley post request to the request queue
-        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 
 
-    fun get_associated_questionnaires(study_id: Int, caller: QuestionnairesFragment) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/studies/" + study_id + "/questionnaires?token=" + GlobalVariables.localStorage["token"]
+    /*fun getUserStudies(userId: Int, caller: QuestionnairesFragment) {
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/users/$userId/studies/member?token=$token"
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                GlobalVariables.logger.info("Received: $response.body")
-                caller.associated_questionnaires_received(response)
+                caller.studiesReceived(response)
             }, Response.ErrorListener { error ->
-                // Error in request
                 throw Exception("shit happened: $error")
             })
-        // Add the volley post request to the request queue
-        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
-    }
+    } */
 
-    /*fun get_associated_questionnaires_relationship(study_id: Int, caller: QuestionnairesFragment) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/studies/" + study_id + "/relationships/questionnaires?token=" + GlobalVariables.localStorage["token"]
+
+    /*fun getAssociatedQuestionnaires(studyId: Int, caller: QuestionnairesFragment) {
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/studies/$studyId/questionnaires?token=$token"
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                GlobalVariables.logger.info("Received: $response.body")
-                caller.associated_questionnaires_structure_received(response)
+                caller.associatedQuestionnairesReceived(response)
             }, Response.ErrorListener { error ->
-                // Error in request
                 throw Exception("shit happened: $error")
             })
-        // Add the volley post request to the request queue
-        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }*/
 
-    fun get_questionnaire(questionnaire_id: Int, caller: QuestionnairesFragment) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + questionnaire_id + "?token=" + GlobalVariables.localStorage["token"]
+
+    fun getQuestionnaire(questionnaireId: Int, caller: QuestionnairesFragment) {
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/questionnaires/$questionnaireId?token=$token"
         val request = object : JsonObjectRequest(
-            Request.Method.GET, url, null,
+            Method.GET, url, null,
             Response.Listener { response ->
-                GlobalVariables.logger.info("Received: $response.body")
-                caller.questionnaire_received(response)
+                caller.questionnaireReceived(response)
             }, Response.ErrorListener { error ->
-                // Error in request
                 throw Exception("shit happened: $error")
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
-                header.put("Accept-language", GlobalVariables.cur_language)
+                val language = caller.sharedPreferences.getString("currentLanguage", null)
+                header["Accept-language"] = language!!
                 return header
             }
         }
-
-        // Add the volley post request to the request queue
-        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 
-    fun get_questionnaire_structure(questionnaire_id: Int, caller: QuestionnairesFragment) {
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + questionnaire_id + "/structure?token=" + GlobalVariables.localStorage["token"]
+    fun getQuestionnaireStructure(questionnaireId: Int, caller: QuestionnairesFragment) {
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/questionnaires/$questionnaireId/structure?token=$token"
         val request = object : JsonObjectRequest(
-            Request.Method.GET, url, null,
+            Method.GET, url, null,
             Response.Listener { response ->
-                GlobalVariables.logger.info("Received: $response.body")
-                caller.questionnaire_structure_received(response, questionnaire_id)
+                caller.startAnswerSheetActivity(response, questionnaireId)
             }, Response.ErrorListener { error ->
-                // Error in request
                 throw Exception("shit happened: $error")
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
-                header.put("Accept-language", GlobalVariables.cur_language)
+                val language = caller.sharedPreferences.getString("currentLanguage", null)
+                header["Accept-language"] = language!!
                 return header
             }
         }
-
-        // Add the volley post request to the request queue
-        GlobalVariables.logger.info("Queued message: ${request.body}")
         requestQueue.add(request)
     }
 }

@@ -1,6 +1,8 @@
 package com.example.trackyourstress_ba.ui.questions
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +24,7 @@ class AnswerSheetActivity : AppCompatActivity() {
     lateinit var text: String
     lateinit var question: String
     var questionnaireID = 0
+    lateinit var sharedPreferences: SharedPreferences
     private lateinit var answersheetUtils: AnswersheetUtils
     var guiList = ArrayList<AnswerElement>()
 
@@ -33,6 +36,9 @@ class AnswerSheetActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        sharedPreferences = this.getSharedPreferences(
+            this.packageName, Context.MODE_PRIVATE
+        )
         try {
             response = JSONObject(intent.getStringExtra("response")!!)
             questionnaireID = intent.getStringExtra("id").toInt()
@@ -45,21 +51,17 @@ class AnswerSheetActivity : AppCompatActivity() {
         for (i in 0 until jsonArray.length()) {
             val item: JSONObject = jsonArray.getJSONObject(i)
             val current = item.getJSONObject("attributes").getJSONObject("content")
-            //check if there is a headline to show
             if (current.has("headline") && current.getString("headline").isNotEmpty()) {
                 title = current.getString("headline")
                 Headline(title, this)
-                //val toolbar = findViewById<Toolbar>(R.id.toolbar)
                 //toolbar.title = title TODO manage Toolbar title
             }
-            // check whether there is text instead
             if (current.has("text") && current.getString("text").isNotEmpty()) {
                 text = current.getString("text")
                 val textElement =
                     Text(text, this)
                 guiList.add(textElement)
             }
-
             // check which question type and create GUI objects specifically
             if (current.has("question") && current.getString("question").isNotEmpty()) {
                 question = current.getString("question")
@@ -140,10 +142,7 @@ class AnswerSheetActivity : AppCompatActivity() {
                         )
                     guiList.add(samBodyElement)
                 }
-
             }
-
-
         }
         val submitButton = Button(this)
         submitButton.text = "Abschicken"

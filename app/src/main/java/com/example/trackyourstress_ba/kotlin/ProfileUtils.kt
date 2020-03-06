@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.kotlin
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.appcompat.app.AlertDialog
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -71,7 +72,7 @@ class ProfileUtils(caller: ProfileFragment) {
 
     }
 
-    fun updatePassword(password: String, caller: ProfileFragment) {
+    fun updatePassword(password: String, alert: AlertDialog, caller: ProfileFragment) {
         val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
         val token = sharedPreferences.getString("token", null)
         val jsonObject = JSONObject(
@@ -82,7 +83,6 @@ class ProfileUtils(caller: ProfileFragment) {
                 )
             )
         )
-
         val url = "$apiEndpoint/api/v1/auth/password/reset?token=$token"
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
@@ -108,4 +108,33 @@ class ProfileUtils(caller: ProfileFragment) {
             })
         requestQueue.add(request)
     }
+
+    fun repeatLogin(password: String, caller: ProfileFragment) {
+        val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
+        val email = sharedPreferences.getString("userEmail", null)
+        val url = "$apiEndpoint/api/v1/auth/login"
+        val jsonObject = JSONObject(
+            mapOf(
+                "data" to mapOf(
+                    "type" to "users",
+                    "attributes" to mapOf(
+                        "email" to email,
+                        "password" to password
+                    )
+                )
+            )
+        )
+        val request = JsonObjectRequest(
+            Request.Method.POST, url, jsonObject,
+            Response.Listener { response ->
+                caller.callNewPasswordDialog()
+            }, Response.ErrorListener { error ->
+                if (error.networkResponse.statusCode != 200) {
+                    caller.abortPasswordChange()
+                }
+
+            })
+        requestQueue.add(request)
+    }
+
 }

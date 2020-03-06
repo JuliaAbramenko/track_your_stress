@@ -17,11 +17,8 @@ class AnswersheetUtils {
     var requestQueue: RequestQueue
 
     init {
-        // Instantiate the cache
-        val cache = NoCache() //TODO diskbased cache
-        // Set up the network to use HttpURLConnection as the HTTP client
-        val network: BasicNetwork = BasicNetwork(HurlStack())
-        // Instantiate the RequestQueue with the cache and network. Start the queue
+        val cache = NoCache()
+        val network = BasicNetwork(HurlStack())
         requestQueue = RequestQueue(cache, network).apply {
             start()
         }
@@ -32,6 +29,7 @@ class AnswersheetUtils {
         questionnaireID: Int,
         caller: AnswerSheetActivity
     ) {
+
         var answerJSON = "["
 
         //for(item in guiList) {
@@ -79,20 +77,16 @@ class AnswersheetUtils {
                 "\"client\" : $clientJSON, " +
                 "\"collected_at\" : \"$currentTimestamp\", " +
                 "\"locale\" : \"${GlobalVariables.cur_language}\"}}}"
-
-        var id = questionnaireID
-        val url =
-            GlobalVariables.apiEndPoint + "/api/v1/questionnaires/" + id + "/answersheets?token=" + GlobalVariables.localStorage["token"]
+        val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
+        val token = caller.sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/questionnaires/$questionnaireID/answersheets?token=$token"
         var jsonObject = JSONObject(data)
-        GlobalVariables.logger.info("msg sent:" + data)
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
             Response.Listener { response ->
                 caller.submitSuccess(response)
             }, Response.ErrorListener { error ->
-                GlobalVariables.logger.info("Error at server: " + error)
                 caller.submitFail(error)
-
             })
         requestQueue.add(request)
 

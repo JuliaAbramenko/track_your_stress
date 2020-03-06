@@ -3,7 +3,6 @@ package com.example.trackyourstress_ba.fragments
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -33,8 +32,6 @@ class ProfileFragment: Fragment(){
     lateinit var profileUtils: ProfileUtils
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         currentContext = container!!.context
@@ -66,23 +63,18 @@ class ProfileFragment: Fragment(){
         changePasswordButton.setOnClickListener {
             val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
             val oldPassword = EditText(currentContext)
-            oldPassword.setTextColor(Color.BLACK)
-
             oldPassword.transformationMethod = PasswordTransformationMethod.getInstance()
             alert.setTitle("Passwort ändern")
             alert.setMessage("Altes Passwort")
             alert.setView(oldPassword)
             alert.setPositiveButton(
-                "Weiter",
-                DialogInterface.OnClickListener { dialog, whichButton ->
-                    //What ever you want to do with the value
-                    callNewPasswordDialog()
-                }
-            )
-
+                "Weiter"
+            ) { _, _ ->
+                checkOldPassword(oldPassword.text.toString())
+            }
             alert.setNegativeButton(
                 "Abbrechen",
-                DialogInterface.OnClickListener { dialog, whichButton ->
+                { dialog, whichButton ->
                     Toast.makeText(currentContext, "Would not change", Toast.LENGTH_LONG).show()
                 })
 
@@ -119,31 +111,35 @@ class ProfileFragment: Fragment(){
 
     }
 
+    private fun notifyRedo() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun checkOldPassword(oldPassword: String) {
+        profileUtils.repeatLogin(oldPassword, this)
+    }
+
     private fun profileUpdated() {
         Toast.makeText(context, "updated profile", Toast.LENGTH_LONG).show()
     }
 
-    private fun callNewPasswordDialog() {
+    fun callNewPasswordDialog() {
         val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
         val newPassword = EditText(currentContext)
-
         newPassword.transformationMethod = PasswordTransformationMethod.getInstance()
         alert.setTitle("Passwort ändern")
         alert.setMessage("Neues Passwort")
 
         alert.setView(newPassword)
 
-        alert.setPositiveButton("Continue",
-            DialogInterface.OnClickListener { dialog, whichButton ->
-                //What ever you want to do with the value
-                val new = newPassword.text.toString()
-                Toast.makeText(currentContext, "this would update password", Toast.LENGTH_LONG)
-                    .show()
-                //profileUtils.updatePassword(new, this)
+        alert.setPositiveButton(
+            "Weiter"
 
-            }
+        ) { dialog, whichButton ->
+            val new = newPassword.text.toString()
+            profileUtils.updatePassword(new, alert.show(), this)
 
-        )
+        }
 
         alert.setNegativeButton("Cancel",
             DialogInterface.OnClickListener { dialog, whichButton ->
@@ -153,7 +149,6 @@ class ProfileFragment: Fragment(){
         alert.show()
     }
 
-
     fun getCurrentSexId(): Int {
         when (sexRadioGroup.checkedRadioButtonId) {
             R.id.profile_sex_not_known -> return 0
@@ -162,7 +157,6 @@ class ProfileFragment: Fragment(){
             R.id.profile_not_applicable -> return 9
             else -> return 0
         }
-
     }
 
     fun responseReceived(response: JSONObject) {
@@ -195,11 +189,8 @@ class ProfileFragment: Fragment(){
         }
     }
 
-
     fun updatePasswordReceived(response: JSONObject) {
-        try {
 
-        } catch (except: Exception) {}
 
     }
 
@@ -207,6 +198,10 @@ class ProfileFragment: Fragment(){
         try {
             //GlobalVariables.localStorage.clear()
         } catch (except: Exception) {}
+
+    }
+
+    fun abortPasswordChange() {
 
     }
 }
