@@ -13,7 +13,7 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONObject
 import kotlin.reflect.typeOf
 
-class AnswersheetUtils {
+open class AnswersheetUtils {
     var requestQueue: RequestQueue
 
     init {
@@ -39,10 +39,11 @@ class AnswersheetUtils {
                                 mapOf(
                                     "collected_at" to item.timestamp,
                                     "label" to item.label,
-                                    "value" to item.selectedValue.toInt()
+                                    "value" to if (item.selectedValue.toIntOrNull() == null)
+                                        item.selectedValue else item.selectedValue.toInt()
                                 )
                             )
-                    } else {
+                        } else {
                             JSONObject(
                                 mapOf(
                                     "collected_at" to item.timestamp,
@@ -79,7 +80,6 @@ class AnswersheetUtils {
         val clientName = "track-your-stress 1.0.0"
         val clientJSON =
             JSONObject(mapOf("device" to clientDevice, "name" to clientName, "os" to clientOS))
-        //"{\"device\" : \"$clientDevice\", \"name\" : \"$clientName\", \"os\" : \"$clientOS\"}"
         val currentTimestamp = System.currentTimeMillis() / 1000L
         val language = caller.sharedPreferences.getString("currentLanguage", null)
         val jsonObject = JSONObject(
@@ -103,7 +103,9 @@ class AnswersheetUtils {
             Response.Listener { response ->
                 caller.submitSuccess(response)
             }, Response.ErrorListener { error ->
-                if (error.networkResponse.statusCode == 422) {
+                if (error.networkResponse == null || error.networkResponse.statusCode == 422) {
+                    //TODO toast "unexpected network response, please check if sheet was submited"
+                    print("ERROR OCCURED: 422!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     caller.submitSuccess(JSONObject())
                 } else {
                     caller.submitFail(error)

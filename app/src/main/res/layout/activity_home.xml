@@ -73,7 +73,6 @@
                     android:padding="@dimen/activity_horizontal_margin"
                     app:srcCompat="@drawable/logo_uni_nuernberg" />
             </LinearLayout>
-
         </FrameLayout>
 
 

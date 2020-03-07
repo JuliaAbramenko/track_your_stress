@@ -14,10 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.fragments.NotificationsFragment
-import com.example.trackyourstress_ba.fragments.ProfileFragment
-import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
-import com.example.trackyourstress_ba.fragments.ActivitiesFragment
+import com.example.trackyourstress_ba.fragments.*
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.HomeUtils
 import com.example.trackyourstress_ba.kotlin.TokenUtils
@@ -87,20 +84,53 @@ class HomeActivity : AppCompatActivity() {
         val userEmail = sharedPrefs.getString("userEmail", null)
         emailText.text = userEmail
 
+        val homeFragment = HomeFragment()
         val profileFragment = ProfileFragment()
         val notificationsFragment = NotificationsFragment()
         val activitiesFragment = ActivitiesFragment()
         val questionnairesFragment = QuestionnairesFragment()
+        val impressumFragment = ImpressumFragment()
 
 
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
+
+                R.id.nav_home -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, homeFragment)
+                    transact.commit()
+                    deleteAllViews()
+                    drawer.closeDrawers()
+                    true
+                }
 
                 R.id.nav_profile -> {
                     val transact = supportFragmentManager.beginTransaction()
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, profileFragment)
                     transact.commit()
+                    deleteAllViews()
+                    drawer.closeDrawers()
+                    true
+                }
+
+                R.id.nav_activities -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, activitiesFragment)
+                    transact.commit()
+                    deleteAllViews()
+                    drawer.closeDrawers()
+                    true
+                }
+
+                R.id.nav_questionnaires -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, questionnairesFragment)
+                    transact.commit()
+                    deleteAllViews()
                     drawer.closeDrawers()
                     true
                 }
@@ -110,26 +140,20 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, notificationsFragment)
                     transact.commit()
-                    drawer.closeDrawers()
-                    true
-                }
-                R.id.nav_questionnaires -> {
-                    val transact = supportFragmentManager.beginTransaction()
                     deleteAllViews()
-                    transact.replace(R.id.fragment_container, questionnairesFragment)
-                    transact.commit()
-                    drawer.closeDrawers()
-                    true
-                }
-                R.id.nav_activities -> {
-                    val transact = supportFragmentManager.beginTransaction()
-                    deleteAllViews()
-                    transact.replace(R.id.fragment_container, activitiesFragment)
-                    transact.commit()
                     drawer.closeDrawers()
                     true
                 }
 
+                R.id.nav_impressum -> {
+                    val transact = supportFragmentManager.beginTransaction()
+                    deleteAllViews()
+                    transact.replace(R.id.fragment_container, impressumFragment)
+                    transact.commit()
+                    deleteAllViews()
+                    drawer.closeDrawers()
+                    true
+                }
                 R.id.nav_logout -> {
                     conUtils.logoutUser(this)
                     drawer.closeDrawers()

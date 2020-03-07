@@ -17,7 +17,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 
 
-class AnswerSheetActivity : AppCompatActivity() {
+open class AnswerSheetActivity : AppCompatActivity() {
     lateinit var response: JSONObject
     lateinit var linearLayout: LinearLayout
     lateinit var title: String
