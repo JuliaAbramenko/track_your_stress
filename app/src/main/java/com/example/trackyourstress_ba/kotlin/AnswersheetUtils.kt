@@ -29,39 +29,47 @@ class AnswersheetUtils {
         questionnaireID: Int,
         caller: AnswerSheetActivity
     ) {
-
-        var answerJSON = "["
-
-        //for(item in guiList) {
+        val answerJSON = ArrayList<JSONObject>()
         guiList.forEachIndexed { j, item ->
             when (item) {
                 is SingleAnswerElement -> {
-                    answerJSON += if (item is SingleChoice) {
-                        "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : \"" + item.selectedValue + "\"}"
+                    answerJSON.add(
+                        if (item is SingleChoice) {
+                            JSONObject(
+                                mapOf(
+                                    "collected_at" to item.timestamp,
+                                    "label" to item.label,
+                                    "value" to item.selectedValue.toInt()
+                                )
+                            )
                     } else {
-                        "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : " + item.selectedValue + "}"
-                    }
+                            JSONObject(
+                                mapOf(
+                                    "collected_at" to item.timestamp,
+                                    "label" to item.label,
+                                    "value" to item.selectedValue.toInt()
+                                )
+                            )
+                        }
+                    )
                 }
                 is MultiAnswerElement -> {
-                    answerJSON += "{\"collected_at\" : " + item.timestamp + ", \"label\": \"" + item.label + "\", \"value\" : "
-                    var valueString = "["
+                    val valArray = ArrayList<String>()
                     item.selectedValues.forEachIndexed { i, value ->
-                        valueString += "\"" + value + "\""
-                        if (item.selectedValues.lastIndex != i) {
-                            valueString += ","
-                        }
+                        valArray.add(value)
                     }
-                    valueString += "]}"
-                    answerJSON += valueString
+                    answerJSON.add(
+                        JSONObject(
+                            mapOf(
+                                "collected_at" to item.timestamp,
+                                "label" to item.label,
+                                "value" to valArray
+                            )
+                        )
+                    )
                 }
-
-            }
-            if (j != guiList.lastIndex && j != 0 && item !is Text) {
-                answerJSON += ","
             }
         }
-        answerJSON += "]"
-
 
         val clientDevice = Build.MANUFACTURER + Build.MODEL + Build.VERSION.RELEASE
 
@@ -70,25 +78,45 @@ class AnswersheetUtils {
         val clientOS = "Android SDK: $sdkVersion ($release)"
         val clientName = "track-your-stress 1.0.0"
         val clientJSON =
-            "{\"device\" : \"$clientDevice\", \"name\" : \"$clientName\", \"os\" : \"$clientOS\"}"
+            JSONObject(mapOf("device" to clientDevice, "name" to clientName, "os" to clientOS))
+        //"{\"device\" : \"$clientDevice\", \"name\" : \"$clientName\", \"os\" : \"$clientOS\"}"
         val currentTimestamp = System.currentTimeMillis() / 1000L
         val language = caller.sharedPreferences.getString("currentLanguage", null)
-        var data = "{\"data\" : {\"type\" : \"answersheets\", \"attributes\" : " +
-                "{\"answers\" : $answerJSON, " +
-                "\"client\" : $clientJSON, " +
-                "\"collected_at\" : \"$currentTimestamp\", " +
-                "\"locale\" : \"$language\"}}}"
+        val jsonObject = JSONObject(
+            mapOf(
+                "data" to mapOf(
+                    "type" to "answersheets", "attributes" to mapOf(
+                        "answers" to answerJSON,
+                        "client" to clientJSON,
+                        "collected_at" to currentTimestamp,
+                        "locale" to language
+                    )
+                )
+            )
+        )
         val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
         val token = caller.sharedPreferences.getString("token", null)
         val url = "$apiEndpoint/api/v1/questionnaires/$questionnaireID/answersheets?token=$token"
-        val jsonObject = JSONObject(data)
-        val request = JsonObjectRequest(
-            Request.Method.POST, url, jsonObject,
+
+        val request = object : JsonObjectRequest(
+            Method.POST, url, jsonObject,
             Response.Listener { response ->
                 caller.submitSuccess(response)
             }, Response.ErrorListener { error ->
-                caller.submitFail(error)
-            })
+                if (error.networkResponse.statusCode == 422) {
+                    caller.submitSuccess(JSONObject())
+                } else {
+                    caller.submitFail(error)
+                }
+
+            }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val header = mutableMapOf<String, String>()
+                header["Accept-language"] = "de"
+                return header
+            }
+        }
+        print(jsonObject)
         requestQueue.add(request)
 
     }

@@ -158,12 +158,12 @@ class AnswerSheetActivity : AppCompatActivity() {
     }
 
     fun submitSuccess(response: JSONObject) {
-        Toast.makeText(this, "Fragebogen abgeschickt!", Toast.LENGTH_LONG)
+        Toast.makeText(this, "Fragebogen abgeschickt!", Toast.LENGTH_LONG).show()
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 
     fun submitFail(response: VolleyError) {
-        Toast.makeText(this, "AnswerSheet could not be submitted!", Toast.LENGTH_LONG)
+        Toast.makeText(this, "AnswerSheet could not be submitted!", Toast.LENGTH_LONG).show()
     }
 }
