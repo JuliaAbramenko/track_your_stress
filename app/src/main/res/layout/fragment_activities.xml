@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activitiesRootLayout"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical" />
+    android:orientation="vertical"
+    android:padding="@dimen/nicePadding">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activitiesRootLayout">
+
+                <TextView
+                    android:id="@+id/headlineActivities"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/alegreya_sc"
+                    android:textSize="@dimen/nicePadding" />
+        </LinearLayout>
+
+</ScrollView>

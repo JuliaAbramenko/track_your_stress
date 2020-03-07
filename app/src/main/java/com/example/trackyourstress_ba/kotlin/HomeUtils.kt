@@ -25,18 +25,14 @@ class HomeUtils {
     fun initiateTokenRefresher(activity: HomeActivity) {
         tokenUtils = TokenUtils()
         tokenUtils.scheduleTokenRefresher(activity)
-
     }
 
     fun initiateScheduling(activity: HomeActivity, notifications: BooleanArray) {
         notificationUtils = NotificationUtils()
         val now = Calendar.getInstance()
-        var nextDailyNotification = 0L
-        var nextWeeklyNotification = 0L
-        var nextMonthlyNotification = 0L
 
         if (notifications[0]) {
-            nextDailyNotification = getRandomMilliSecondDaily()
+            var nextDailyNotification = getRandomMilliSecondDaily()
             val nextDaily = nextDailyNotification
             notificationUtils.scheduleNotification(
                 notificationUtils.getNotification(
@@ -47,7 +43,7 @@ class HomeUtils {
         }
 
         if (notifications[1]) {
-            nextWeeklyNotification = getRandomMilliSecondWeekly()
+            var nextWeeklyNotification = getRandomMilliSecondWeekly()
             val nextWeekly = nextWeeklyNotification
             notificationUtils.scheduleNotification(
                 notificationUtils.getNotification(
@@ -58,7 +54,7 @@ class HomeUtils {
         }
 
         if (notifications[2]) {
-            nextMonthlyNotification = getRandomMilliSecondMonthly()
+            var nextMonthlyNotification = getRandomMilliSecondMonthly()
             val nextMonthly = nextMonthlyNotification
             notificationUtils.scheduleNotification(
                 notificationUtils.getNotification(

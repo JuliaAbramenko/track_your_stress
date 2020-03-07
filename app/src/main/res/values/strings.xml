@@ -50,7 +50,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="myActivities">Meine Aktivitäten</string>
+    <string name="myActivities">Aktivitäten</string>
     <string name="profile">Profil</string>
     <string name="activities">Aktivitäten</string>
     <string name="questionnaires">Fragebögen</string>

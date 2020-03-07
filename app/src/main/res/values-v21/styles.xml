@@ -13,7 +13,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
 
-        <item name="buttonStyle">@style/buttonStyleTYS</item>
+        <item name="android:buttonStyle">@style/buttonStyleTYS</item>
         <item name="android:textViewStyle">@style/textViewStyleTYS</item>
 
         <item name="android:windowActivityTransitions">true</item>
