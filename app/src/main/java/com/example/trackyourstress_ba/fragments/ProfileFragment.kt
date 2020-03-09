@@ -42,14 +42,14 @@ class ProfileFragment: Fragment(){
     override fun onStart() {
         super.onStart()
         profileUtils.getProfile(this)
-        editUsername = view!!.findViewById(R.id.edit_name)
-        editEmail = view!!.findViewById(R.id.edit_email)
-        editFirstName = view!!.findViewById(R.id.edit_firstname)
-        editLastName = view!!.findViewById(R.id.edit_lastname)
-        sexRadioGroup = view!!.findViewById(R.id.sex_radio_group)
-        submitButton = view!!.findViewById(R.id.submit_button_update_profile)
-        changePasswordButton = view!!.findViewById(R.id.button_change_password)
-        deleteProfileButton = view!!.findViewById(R.id.button_delete_profile)
+        editUsername = requireView().findViewById(R.id.edit_name)
+        editEmail = requireView().findViewById(R.id.edit_email)
+        editFirstName = requireView().findViewById(R.id.edit_firstname)
+        editLastName = requireView().findViewById(R.id.edit_lastname)
+        sexRadioGroup = requireView().findViewById(R.id.sex_radio_group)
+        submitButton = requireView().findViewById(R.id.submit_button_update_profile)
+        changePasswordButton = requireView().findViewById(R.id.button_change_password)
+        deleteProfileButton = requireView().findViewById(R.id.button_delete_profile)
 
         submitButton.setOnClickListener {
                 profileUtils.updateProfile(

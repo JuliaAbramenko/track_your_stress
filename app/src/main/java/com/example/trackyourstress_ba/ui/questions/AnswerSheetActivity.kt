@@ -3,6 +3,7 @@ package com.example.trackyourstress_ba.ui.questions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,6 @@ import com.android.volley.VolleyError
 import com.example.trackyourstress_ba.QuestionElements.*
 import com.example.trackyourstress_ba.kotlin.AnswersheetUtils
 import com.example.trackyourstress_ba.ui.home.HomeActivity
-import com.example.trackyourstress_ba.ui.login.LoginActivity
 
 
 open class AnswerSheetActivity : AppCompatActivity() {
@@ -66,6 +66,18 @@ open class AnswerSheetActivity : AppCompatActivity() {
             if (current.has("question") && current.getString("question").isNotEmpty()) {
                 question = current.getString("question")
                 val label = current.getString("label")
+
+                if (current.getString("questiontype") == "TextDate") {
+                    val label = current.getString("label")
+                    val dateElement = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        DateElement(question, label, this)
+                    } else {
+                        TODO("VERSION.SDK_INT < N")
+                    }
+                    guiList.add(dateElement)
+                }
+
+
                 if (current.getString("questiontype") == "Slider") {
                     val sliderMin = current.getJSONObject("values").getString("min").toInt()
                     val sliderMax = current.getJSONObject("values").getString("max").toInt()

@@ -20,8 +20,7 @@ class Text(text: String, caller: AnswerSheetActivity) :
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.text = Html.fromHtml(text)
-        }
-        //textView.text = text
+        } else textView.text = text
         val separator = View(caller)
         separator.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,

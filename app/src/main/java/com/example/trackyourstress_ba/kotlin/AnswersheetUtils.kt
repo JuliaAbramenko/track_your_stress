@@ -34,8 +34,8 @@ open class AnswersheetUtils {
             when (item) {
                 is SingleAnswerElement -> {
                     answerJSON.add(
-                        if (item is SingleChoice) {
-                            JSONObject(
+                        when (item) {
+                            is SingleChoice -> JSONObject(
                                 mapOf(
                                     "collected_at" to item.timestamp,
                                     "label" to item.label,
@@ -43,8 +43,14 @@ open class AnswersheetUtils {
                                         item.selectedValue else item.selectedValue.toInt()
                                 )
                             )
-                        } else {
-                            JSONObject(
+                            is DateElement -> JSONObject(
+                                mapOf(
+                                    "collected_at" to item.timestamp,
+                                    "label" to item.label,
+                                    "value" to item.selectedValue
+                                )
+                            )
+                            else -> JSONObject(
                                 mapOf(
                                     "collected_at" to item.timestamp,
                                     "label" to item.label,

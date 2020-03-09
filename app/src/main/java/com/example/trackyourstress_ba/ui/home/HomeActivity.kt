@@ -90,6 +90,7 @@ class HomeActivity : AppCompatActivity() {
         val activitiesFragment = ActivitiesFragment()
         val questionnairesFragment = QuestionnairesFragment()
         val impressumFragment = ImpressumFragment()
+        val aboutFragment = AboutFragment()
 
 
         navView.setNavigationItemSelectedListener { item ->
@@ -100,7 +101,6 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, homeFragment)
                     transact.commit()
-                    deleteAllViews()
                     drawer.closeDrawers()
                     true
                 }
@@ -110,7 +110,6 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, profileFragment)
                     transact.commit()
-                    deleteAllViews()
                     drawer.closeDrawers()
                     true
                 }
@@ -120,7 +119,6 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, activitiesFragment)
                     transact.commit()
-                    deleteAllViews()
                     drawer.closeDrawers()
                     true
                 }
@@ -130,7 +128,6 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, questionnairesFragment)
                     transact.commit()
-                    deleteAllViews()
                     drawer.closeDrawers()
                     true
                 }
@@ -140,7 +137,14 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, notificationsFragment)
                     transact.commit()
+                    drawer.closeDrawers()
+                    true
+                }
+                R.id.nav_about_us -> {
+                    val transact = supportFragmentManager.beginTransaction()
                     deleteAllViews()
+                    transact.replace(R.id.fragment_container, aboutFragment)
+                    transact.commit()
                     drawer.closeDrawers()
                     true
                 }
@@ -150,7 +154,6 @@ class HomeActivity : AppCompatActivity() {
                     deleteAllViews()
                     transact.replace(R.id.fragment_container, impressumFragment)
                     transact.commit()
-                    deleteAllViews()
                     drawer.closeDrawers()
                     true
                 }
