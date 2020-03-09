@@ -43,6 +43,7 @@
     <string name="title_questionnaire">Titel</string>
     <string name="running">Laufend</string>
     <string name="repeatable">Wiederholbar</string>
+    <string name="type">Fragetyp</string>
     <string name="do_you_really_want_to_delete_your_profile">Möchten Sie Ihr Profil sicher löschen?</string>
     <string name="ok">Ok</string>
     <string name="cancel">Abbruch</string>
@@ -60,18 +61,110 @@
     <string name="home_text">Mit TrackYourStress können Sie Ihre individuellen Schwankungen des Stress-Levels mittels einer Smartphone App erfassen. Mit Hilfe ihres Smartphones können Sie die Schwankungen Ihres Stress-Levels systematisch erfassen und herausfinden womit diese zusammenhängen.</string>
     <string name="confirmSaveData">Ich bin einverstanden, dass die App TrackYourStress Daten auf meinem Gerät speichert</string>
     <string name="impressum">Impressum</string>
-    <string name="impressumText">
-        <h2>Impressum</h2>
-        <h1>Herausgeber</h1>
-        <p>Tinnitus Research Initiative </p>
-        Foundation
-        Universitätsstrasse 84
-        93053 Regensburg
-    phone: +49 941 941 2096
-    fax: +49 941 941 2925
-        e-mail: foundation@tinnitusresearch.org
-        Umsatzsteueridentifikationsnummer DE133714227
-        Die Stiftung Tinnitus Research Initiative ist mit Urkunde vom 01.02.2010 Nr. B 1.1-1222.184-1 gemäß §§ 80, 81 des Bürgerlichen Gesetzbuches eine rechtsfähige Stiftung des bürgerlichen Rechts mit Sitz in Regensburg. Aufgrund ihrer Satzungsbestimmungen und den entsprechenden stiftungsrechtlichen Vorschriften (Art. 10 Abs. 1 BayStG) der staatlichen Stiftungsaufsicht, Regierung der Oberpfalz. Die Körperschaft dient ausschließlich und unmittelbar steuerbegünstigten Zwecken.<h1> Vertretungsberechtigt ist der Stiftungsvorstand: </h1> Dr. med. Berthold Langguth, Regensburg, Deutschland (Vorsitzender)Prof. Ana Belén Elgoyhen, Buenos Aires, ArgentinenProf. Dirk De Ridder, Antwerpen, Belgien <h1>Zuständige Aufsichtsbehörde: </h1> Regierung der Oberpfalz <br />Emmeramsplatz 893047 Regensburg Deutschland <h1>Inhalt</h1> Verantwortlich im Sinne des §5 TMG: Dr. Winfried Schlee Tinnitus Research Initiative Foundation Universitätsstrasse 84 93053 Regensburg phone: +49 941 941 2096 e-mail: winfried.schlee@tinnitusresearch.org Konzeption und technische Umsetzung Pascal Damasch Institut für Datenbanken und Informationssysteme der Universität Ulm email: Pascal.Damasch@uni-ulm.de Jochen Herrmann Institut für Datenbanken und Informationssysteme der Universität Ulm email: Jochen.Herrmann@uni-ulm.de Rüdiger Pryss Institut für Datenbanken und Informationssysteme der Universität Ulm email: Rüdiger.Pryss@uni-ulm.de Haftungsausschluss Mit Trackyourstress.com wird ein Service zur Messung der individuellen Tinnitusbelastung angeboten. Sie haben die Möglichkeiten Ihre Daten einzusehen und mit ihrem behandelnden Arzt oder Therapeuten zu besprechen. Eine Garantie für die Richtigkeit und juristische Verwertbarkeit der Daten kann weder von Seiten der Tinnitus Research Initiative noch von Mitarbeitern des Trackyourtinnitus Projektes gegeben werden. Trackyourstress.com ist kein Medizinprodukt Wir möchten ausdrücklich darauf hinweisen, dass wir mit Trackyourstress.com kein Medizinprodukt bereitstellen. Eine Behandlung von Stress ist nicht intendiert. Eine Verschlechterung des Stresses ist nicht zu erwarten. Sollten Sie dennoch negative Veränderungen bemerken, beenden sie bitte unverzüglich die Teilnahme und suchen Ihren Arzt oder Therapeuten auf. Haftungsausschluss bei Links zu externen Inhalten Wir sind als Inhaltsanbieter für die eigenen Inhalte, die sie zur Nutzung bereithält, nach den allgemeinen Gesetzen verantwortlich. Von diesen eigenen Inhalten sind Querverweise auf die von anderen Anbietern bereitgehaltenen Inhalte zu unterscheiden. Diese fremden Inhalte stammen weder von uns, noch haben wir die Möglichkeit, den Inhalt von Seiten Dritter zu beeinflussen. Die Inhalte fremder Seiten, spiegeln nicht unsere Meinung wider, sondern dienen lediglich der Information und der Darstellung von Zusammenhängen. Datenschutz Wir sind uns bewusst, dass wir mit dem Service von Trackyourstress.com hochsensible Daten speichern und verwenden daher die höchsten Standards des Datenschutzes um die Sicherheit und Diskretion ihrer Daten zu gewährleisten. Ihre Daten werden vollständig anonymisiert verarbeitet und gespeichert. Ein Rückschluss auf ihre Identität ist zu keinem Zeitpunkt möglich. Wir werden sie nie nach Ihrem vollständigen Namen, Ihrer Telefonnummer, Ihrer Adresse oder anderen Kontaktdaten fragen. Die IP-Adresse Ihres Computers wird nicht gespeichert und jeder Datenaustausch über das Internet ist mit SSL-Verschlüsselung gesichert. Das Angeben einer Email-Adresse ist nicht notwendig, wird aber ausdrücklich empfohlen. Die Email-Adresse wird nur zur Wiederherstellung des Passwortes verwendet, wenn Sie ihre Zugangsdaten vergessen haben. Wenn sie ihre Email-Adresse nicht angeben wollen, können sie dennoch den kompletten Service von Trackyourstress.com uneingeschränkt verwenden. Die wissenschaftlichen Erkenntnisse aus diesem Forschungsprojekt können in wissenschaftlichen Fachzeitschriften veröffentlich werden. Dabei wird es jedoch nicht möglich sein, Ihre persönlichen Informationen zu identifizieren.</string>
+    <string name="impressum_text"><![CDATA[
+    <h2>Impressum</h2>
+    <h3>Herausgeber</h3>
+Tinnitus Research Initiative <br>
+Foundation <br>
+Universitätsstrasse 84 <br>
+93053 Regensburg <br>
+phone: +49 941 941 2096 <br>
+fax: +49 941 941 2925 <br>
+e-mail: foundation@tinnitusresearch.org <br>
+Umsatzsteueridentifikationsnummer DE133714227 <br>
+
+<p>Die Stiftung Tinnitus Research Initiative ist mit Urkunde vom 01.02.2010 Nr. B 1.1-1222.184-1 gemäß §§ 80, 81 des Bürgerlichen Gesetzbuches eine rechtsfähige Stiftung des bürgerlichen Rechts mit Sitz in Regensburg. Aufgrund ihrer Satzungsbestimmungen und den entsprechenden stiftungsrechtlichen Vorschriften (Art. 10 Abs. 1 BayStG) der staatlichen Stiftungsaufsicht, Regierung der Oberpfalz. Die Körperschaft dient ausschließlich und unmittelbar steuerbegünstigten Zwecken. </p>
+<h2>Vertretungsberechtigt ist der Stiftungsvorstand:</h2>
+
+Dr. med. Berthold Langguth, Regensburg, Deutschland (Vorsitzender) <br>
+Prof. Ana Belén Elgoyhen, Buenos Aires, Argentinen <br>
+Prof. Dirk De Ridder, Antwerpen, Belgien <br>
+<h2>Zuständige Aufsichtsbehörde: </h2>
+
+Regierung der Oberpfalz <br>
+Emmeramsplatz 8 <br>
+93047 Regensburg <br>
+Deutschland <br>
+
+<h2>Inhalt</h2>
+
+Verantwortlich im Sinne des §5 TMG: <br>
+Dr. Winfried Schlee<br>
+Tinnitus Research Initiative <br>
+Foundation <be>
+Universitätsstrasse 84 <br>
+93053 Regensburg <br>
+phone: +49 941 941 2096 <br>
+e-mail: winfried.schlee@tinnitusresearch.org<br>
+<h2>Konzeption und technische Umsetzung </h2>
+
+Julia Abramenko <br>
+Insitut für Datenbanken und Informationssystem der Universität Ulm<br>
+email: julia.abramenko@uni-ulm.de<br>
+<br>
+
+Rüdiger Pryss<br>
+Institut für Datenbanken und Informationssysteme der Universität Ulm<br>
+email: Rüdiger.Pryss@uni-ulm.de<br>
+<h2>Haftungsausschluss</h2>
+
+<p>Mit Trackyourstress.com wird ein Service zur Messung der individuellen Tinnitusbelastung angeboten. Sie haben die Möglichkeiten Ihre Daten einzusehen und mit ihrem behandelnden Arzt oder Therapeuten zu besprechen. Eine Garantie für die Richtigkeit und juristische Verwertbarkeit der Daten kann weder von Seiten der Tinnitus Research Initiative noch von Mitarbeitern des Trackyourtinnitus Projektes gegeben werden. </p>
+<h2>Trackyourstress.com ist kein Medizinprodukt </h2>
+
+<p>Wir möchten ausdrücklich darauf hinweisen, dass wir mit Trackyourstress.com kein Medizinprodukt bereitstellen. Eine Behandlung von Stress ist nicht intendiert. </p>
+
+<p>Eine Verschlechterung des Stresses ist nicht zu erwarten. Sollten Sie dennoch negative Veränderungen bemerken, beenden sie bitte unverzüglich die Teilnahme und suchen Ihren Arzt oder Therapeuten auf. </p>
+<h2>Haftungsausschluss bei Links zu externen Inhalten </h2>
+
+<p>Wir sind als Inhaltsanbieter für die eigenen Inhalte, die sie zur Nutzung bereithält, nach den allgemeinen Gesetzen verantwortlich. Von diesen eigenen Inhalten sind Querverweise auf die von anderen Anbietern bereitgehaltenen Inhalte zu unterscheiden. Diese fremden Inhalte stammen weder von uns, noch haben wir die Möglichkeit, den Inhalt von Seiten Dritter zu beeinflussen. </p>
+
+<p>Die Inhalte fremder Seiten, spiegeln nicht unsere Meinung wider, sondern dienen lediglich der Information und der Darstellung von Zusammenhängen.</p>
+<h2>Datenschutz </h2>
+
+<p>Wir sind uns bewusst, dass wir mit dem Service von Trackyourstress.com hochsensible Daten speichern und verwenden daher die höchsten Standards des Datenschutzes um die Sicherheit und Diskretion Ihrer Daten zu gewährleisten. </p>
+
+<p>Ihre Daten werden vollständig anonymisiert verarbeitet und gespeichert. Ein Rückschluss auf ihre Identität ist zu keinem Zeitpunkt möglich. Wir werden sie nie nach Ihrem vollständigen Namen, Ihrer Telefonnummer, Ihrer Adresse oder anderen Kontaktdaten fragen. Die IP-Adresse Ihres Computers wird nicht gespeichert und jeder Datenaustausch über das Internet ist mit SSL-Verschlüsselung gesichert. </p>
+
+<p>Das Angeben einer Email-Adresse ist nicht notwendig, wird aber ausdrücklich empfohlen. Die Email-Adresse wird nur zur Wiederherstellung des Passwortes verwendet, wenn Sie ihre Zugangsdaten vergessen haben. </p>
+
+<p>Wenn sie ihre Email-Adresse nicht angeben wollen, können sie dennoch den kompletten Service von Trackyourstress.com uneingeschränkt verwenden. </p>
+
+<p>Die wissenschaftlichen Erkenntnisse aus diesem Forschungsprojekt können in wissenschaftlichen Fachzeitschriften veröffentlich werden. Dabei wird es jedoch nicht möglich sein, Ihre persönlichen Informationen zu identifizieren. </p>
+]]>
+    </string>
+
+
+    <string name="about_text"> <![CDATA[<h2>Über uns</h2>
+
+<p>Unter Stress versteht man die Antwort des Organismus auf eine Anforderung. Unterschiedliche Menschen können auf ein und dieselbe Anforderung unterschiedliche Stressreaktionen zeigen. Aber auch eine Person kann auf ein und dieselbe Anforderung in unterschiedlichen Situationen / Kontexten eine unterschiedliche Stressreaktion zeigen. Welche Stressreaktion auf eine Anforderung folgt, hängt z. B. von den Bewältigungsmechanismen einer Person ab. Diese Bewältigungsmechanismen werden auch als Coping bezeichnet. </p>
+
+<p>Mit diesem Forschungsprojekt wollen wir eine Möglichkeit bieten, die individuellen Schwankungen von Stress und Coping mittels einer Smartphone App zu erfassen. Mit Hilfe ihres Smartphones können sie diese Schwankungen systematisch messen und herausfinden wie diese mit Ihrem Tagesablauf und Aktivitäten zusammenhängen. Über die Internetseite können sie den Verlauf ihrer eigenen Daten einsehen und gegebenenfalls mit ihrem behandelten Arzt oder Therapeuten besprechen. </p>
+<p>Mit Ihrer Teilnahme unterstützen sie unser Forschungsprojekt, die Schwankungen von Stress und Coping besser zu verstehen. </p>
+<h2>TrackYourStress eignet sich nicht zur Therapie von Stress</h2>
+
+<p>Wir möchten ausdrücklich darauf hinweisen, dass wir mit TrackYourStress kein Medizinprodukt bereitstellen. TrackYourStress bietet eine gute Möglichkeit den Verlauf des Stress zu messen und festzustellen unter welchen Bedingungen der Stress stärker oder schwächer ist. </p>
+
+<p>Eine Verschlechterung des Stress ist nicht zu erwarten. Sollten Sie dennoch negative Veränderungen bemerken, beenden sie bitte unverzüglich die Teilnahme und suchen Ihren Arzt oder Therapeuten auf. </p>
+<h2>Über das Team<h2>
+<p>TrackYourStress ist ein Kooperationsprojekt zwischen folgenden Personen und Universitäten: <br>
+Prof. Dr. Thomas Probst (Department für Psychotherapie und Biopsychosoziale Gesundheit, Donau-Universität Krems, Österreich)<br>
+Prof. Dr. Dennis John (Evangelische Hochschule Nürnberg)<br>
+B.Sc. Pascal Damasch (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+B.Sc. Michael Schrempp (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+M.Sc. Johannes Schobel (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+PD Dr. Winfried Schlee (Klinik für Psychiatrie und Psychotherapie, Universitätsklinikum Regensburg, Deutschland)<br>
+B.Sc. Teresa O\'Rourke (Department für Psychotherapie und Biopsychosoziale Gesundheit, Donau-Universität Krems, Österreich)<br>
+M.Sc. Robin Kraft (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+B.Sc. Julian Haug (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+B.Sc. Fabian Haug (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+M.Sc. Viktoria Elsässer (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+Prof. Dr. Berthold Langguth (Klinik für Psychiatrie und Psychotherapie, Universitätsklinikum Regensburg, Deutschland)<br>
+Prof. Dr. Myra Spiliopoulou (Knowledge Management and Discovery Lab, Otto-von-Guericke-Universität Magdeburg, Deutschland)<br>
+Prof. Dr. Manfred Reichert (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br> </p>
+
+<p>Wenn Sie Fragen, Feedback oder Anregungen zu dem Projekt haben, kontaktieren sie uns bitte unter <a href="info@trackyourstress.org."</a> </p>]]>
+    </string>
     <string name="home">Home</string>
     <string name="Back">Zurück</string>
 </resources>

@@ -23,4 +23,17 @@ class AboutFragment : Fragment() {
         currentContext = container!!.context
         return view
     }
+
+    override fun onStart() {
+        super.onStart()
+        val textView = TextView(currentContext)
+        val text = currentContext.getString(R.string.about_text)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textView.text = Html.fromHtml(text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+        } else {
+            textView.text = text
+        }
+        val root = view!!.findViewById<LinearLayout>(R.id.impressum_root)
+        root.addView(textView)
+    }
 }

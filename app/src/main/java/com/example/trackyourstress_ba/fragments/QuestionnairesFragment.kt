@@ -3,13 +3,16 @@ package com.example.trackyourstress_ba.fragments
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
@@ -21,9 +24,7 @@ import org.json.JSONObject
 class QuestionnairesFragment : Fragment() {
 
     lateinit var questionnaireUtils: QuestionnaireUtils
-    var hasLoaded: Boolean = false
     lateinit var associatedQuestionnaires: HashMap<Int, String>
-
     private lateinit var tableQuestionnaires: TableLayout
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
@@ -39,47 +40,43 @@ class QuestionnairesFragment : Fragment() {
         sharedPreferences =
             currentContext.getSharedPreferences(currentContext.packageName, Context.MODE_PRIVATE)
 
-        val firstRow = TableRow(activity)
-        val textTitle = TextView(activity)
-        val testRunning = TextView(activity)
-        val testRepeatable = TextView(activity)
-        firstRow.layoutParams =
-            TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT
-            )
-        // TODO firstRow.background = "00000ff"
-        textTitle.text = getString(R.string.title_questionnaire)
-        testRunning.text = getString(R.string.running)
-        testRepeatable.text = getString(R.string.repeatable)
-        firstRow.addView(textTitle)
-        firstRow.addView(testRunning)
-        firstRow.addView(testRepeatable)
-        tableQuestionnaires.addView(firstRow, 0)
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        if (!hasLoaded) {
-            associatedQuestionnaires = HashMap()
-            questionnaireUtils = QuestionnaireUtils()
-            questionnaireUtils.getMyQuestionnaires(this)
-            hasLoaded = true
-        }
-    }
+        addFirstRow(currentContext)
+        associatedQuestionnaires = HashMap()
+        questionnaireUtils = QuestionnaireUtils()
+        questionnaireUtils.getMyQuestionnaires(this)
 
-    override fun onResume() {
-        super.onResume()
-        if (!hasLoaded) {
-            associatedQuestionnaires = HashMap()
-            questionnaireUtils = QuestionnaireUtils()
-            //TODO hasLoaded = true
-        }
 
     }
 
-    fun getRelevantValues(current: JSONObject) {
+    private fun addFirstRow(currentContext: Context?) {
+        val firstRow = TableRow(currentContext)
+        val textTitle = TextView(currentContext)
+        textTitle.background = resources.getDrawable(R.drawable.border)
+        val testRunning = TextView(currentContext)
+        testRunning.background = resources.getDrawable(R.drawable.border)
+        val testRepeatable = TextView(currentContext)
+        testRepeatable.background = resources.getDrawable(R.drawable.border)
+        firstRow.layoutParams =
+            TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.WRAP_CONTENT
+            )
+        textTitle.text = getString(R.string.title_questionnaire)
+        testRunning.text = getString(R.string.running)
+        testRepeatable.text = getString(R.string.type)
+        firstRow.addView(textTitle)
+        firstRow.addView(testRunning)
+        firstRow.addView(testRepeatable)
+        tableQuestionnaires.addView(firstRow, 0)
+    }
+
+
+    private fun getRelevantValues(current: JSONObject) {
         if (current.getString("is_filled_out") == "false") {
             val name = current["name"].toString()
             val title = current["title"].toString()
@@ -104,13 +101,26 @@ class QuestionnairesFragment : Fragment() {
         running: Boolean,
         repeat: Boolean
     ) {
-        val newRow = TableRow(activity)
-        val title = TextView(activity)
-        val isRunning = TextView(activity)
-        val isRepeatable = TextView(activity)
+        val newRow = TableRow(currentContext)
+
+        val title = TextView(currentContext)
+        title.background = resources.getDrawable(R.drawable.border)
+        val isRunning = TextView(currentContext)
+        isRunning.background = resources.getDrawable(R.drawable.border)
+        val isRepeatable = TextView(currentContext)
+        isRepeatable.background = resources.getDrawable(R.drawable.border)
         title.text = titleName.substring(20)
-        isRunning.text = if (running) "YES" else "NO"
-        isRepeatable.text = if (repeat) "YES" else "NO"
+
+        if (running) {
+            isRunning.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check24dp, 0, 0, 0)
+        } else {
+            isRunning.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross24dp, 0, 0, 0)
+        }
+        if (repeat) {
+            isRepeatable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_repeat24dp, 0, 0, 0)
+        } else {
+            isRepeatable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross24dp, 0, 0, 0)
+        }
         newRow.addView(title)
         newRow.addView(isRunning)
         newRow.addView(isRepeatable)

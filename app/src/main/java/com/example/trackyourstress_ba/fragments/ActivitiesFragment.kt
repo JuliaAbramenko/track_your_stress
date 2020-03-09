@@ -50,8 +50,7 @@ class ActivitiesFragment : Fragment() {
         pages = response.getJSONObject("meta").getJSONObject("pagination").getString("total_pages")
             .toInt()
         currentPage = page
-        val newContext = ContextThemeWrapper(currentContext, R.style.textViewStyleTYS)
-        val headline = TextView(newContext)
+        val headline = TextView(context)
         headline.text = getString(R.string.myActivities)
         headline.textSize = 24F
         root.addView(headline)

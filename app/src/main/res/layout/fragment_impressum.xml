@@ -9,18 +9,18 @@
 
     <LinearLayout
         android:id="@+id/impressum_root"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/impressumText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            android:textAlignment="center"
-            android:text="@string/impressumText" />
-    </LinearLayout>
+    <!--        <TextView
+                android:id="@+id/impressumText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:textAlignment="center"/>
+        </LinearLayout> -->
 
 
 </ScrollView>

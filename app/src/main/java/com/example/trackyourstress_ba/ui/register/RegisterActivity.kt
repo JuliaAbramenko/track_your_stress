@@ -44,12 +44,7 @@ class RegisterActivity : AppCompatActivity() {
                 passwordsNotMatching()
             } else if (!checkBox.isChecked) {
                 needCheck()
-            } else
-            /*(editEmail.text.contains("@") && editEmail.text.contains(".") &&
-                editPassword.text.length > 7 && editPassword.text == editPasswordConfirmation.text &&
-                editPasswordConfirmation.text.length > 7 &&
-                editUsername.text.length > 7
-            ) */ {
+            } else {
                 conUtils.registerUser(
                     editEmail.text.toString(), editPassword.text.toString(),
                     editPasswordConfirmation.text.toString(), editUsername.text.toString(), this
