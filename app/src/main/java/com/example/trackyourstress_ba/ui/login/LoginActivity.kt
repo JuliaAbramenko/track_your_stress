@@ -91,13 +91,9 @@ class LoginActivity : AppCompatActivity() {
 
     fun profileResponseReceived(response: JSONObject) {
         val userId = response.getJSONObject("data").getString("id")
-        if (!sharedPreferences.contains("userId")) {
-            sharedPreferences.edit().putString("userId", userId).apply()
-        }
+        sharedPreferences.edit().putString("userId", userId).apply()
         val username = response.getJSONObject("data").getJSONObject("attributes").getString("name")
-        if (!sharedPreferences.contains("userName")) {
-            sharedPreferences.edit().putString("userName", username).apply() //default german
-        }
+        sharedPreferences.edit().putString("userName", username).apply() //default german
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)
     }
@@ -105,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
     fun notifyMissingData() {
         Toast.makeText(
             applicationContext,
-            "Profildaten können nicht geladen werden. Bitte starten Sie die App neu",
+            R.string.profile_not_loaded,
             Toast.LENGTH_LONG
         ).show()
     }
