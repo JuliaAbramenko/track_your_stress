@@ -41,11 +41,14 @@ class ConnectionUtils {
             Response.Listener { response ->
                 caller.loginResponseReceived(email, response)
             }, Response.ErrorListener{error ->
-                if (error.networkResponse.statusCode == 401) {
+                if (error.networkResponse == null) {
+                    caller.notifyNetworkError()
+                } else if (error.networkResponse.statusCode == 401) {
                     caller.notify401()
-                }
-                if (error.networkResponse.statusCode == 403) {
+                } else if (error.networkResponse.statusCode == 403) {
                     caller.notify403()
+                } else {
+                    caller.notifyNetworkError()
                 }
             })
         requestQueue.add(request)

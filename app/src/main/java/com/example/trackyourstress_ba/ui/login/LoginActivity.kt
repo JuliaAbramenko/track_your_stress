@@ -53,11 +53,10 @@ class LoginActivity : AppCompatActivity() {
                 if (editPassword.text.length < 8) {
                     Toast.makeText(
                         applicationContext,
-                        "Passwort zu kurz. Bitte versuchen Sie es noch einmal",
+                        R.string.password_short,
                         Toast.LENGTH_LONG
                     ).show()
                 }
-
             }
         }
         backButton.setOnClickListener {
@@ -69,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
     fun notify401() {
         Toast.makeText(
             applicationContext,
-            "Zugangsdaten ungültig. Bitte überprüfen Sie Ihre Eingaben",
+            R.string.notify401,
             Toast.LENGTH_LONG
         ).show()
     }
@@ -77,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
     fun notify403() {
         Toast.makeText(
             applicationContext,
-            "Nutzer wurde noch nicht verifiziert.",
+            R.string.notify403,
             Toast.LENGTH_LONG
         ).show()
     }
@@ -107,6 +106,14 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(
             applicationContext,
             "Profildaten können nicht geladen werden. Bitte starten Sie die App neu",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun notifyNetworkError() {
+        Toast.makeText(
+            applicationContext,
+            R.string.network_error,
             Toast.LENGTH_LONG
         ).show()
     }

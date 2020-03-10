@@ -167,4 +167,8 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     </string>
     <string name="home">Home</string>
     <string name="Back">Zurück</string>
+    <string name="notify401"> Zugangsdaten ungültig. Bitte überprüfen Sie Ihre Eingaben </string>
+    <string name="notify403">Nutzer wurde noch nicht verifiziert.</string>
+    <string name="password_short">Passwort zu kurz. Bitte versuchen Sie es noch einmal</string>
+    <string name="network_error">Netzwerk-Fehler aufgetreten. Überprüfen Sie Ihre Internetverbindung</string>
 </resources>
