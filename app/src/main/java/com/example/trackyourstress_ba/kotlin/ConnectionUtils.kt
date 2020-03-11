@@ -41,14 +41,11 @@ class ConnectionUtils {
             Response.Listener { response ->
                 caller.loginResponseReceived(email, response)
             }, Response.ErrorListener{error ->
-                if (error.networkResponse == null) {
-                    caller.notifyNetworkError()
-                } else if (error.networkResponse.statusCode == 401) {
-                    caller.notify401()
-                } else if (error.networkResponse.statusCode == 403) {
-                    caller.notify403()
-                } else {
-                    caller.notifyNetworkError()
+                when {
+                    error.networkResponse == null -> caller.notifyNetworkError()
+                    error.networkResponse.statusCode == 401 -> caller.notify401()
+                    error.networkResponse.statusCode == 403 -> caller.notify403()
+                    else -> caller.notifyNetworkError()
                 }
             })
         requestQueue.add(request)
@@ -144,18 +141,18 @@ class ConnectionUtils {
     }
 
     fun logoutUser(caller: HomeActivity) {
-        val sharedPrefs = caller.getSharedPreferences(
+        val sharedPreferences = caller.getSharedPreferences(
             caller.packageName, Context.MODE_PRIVATE
         )
-        val apiEndpoint = sharedPrefs.getString("apiEndpoint", null)
-        val token = sharedPrefs.getString("token", null)
+        val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
+        val token = sharedPreferences.getString("token", null)
         val url = "$apiEndpoint/api/v1/auth/logout?token=$token"
         val request = StringRequest(
             Request.Method.DELETE, url,
-            Response.Listener<String> { _: String ->
+            Response.Listener<String> {
+                sharedPreferences.edit().putString("token", null).apply()
 
-
-            }, Response.ErrorListener { _ ->
+            }, Response.ErrorListener {
                 caller.notify500()
             })
 

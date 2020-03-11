@@ -33,13 +33,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.trackyourstress_ba.MainActivity" />
         </activity>-->
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".LaunchActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".ui.questions.AnswerSheetActivity" />
 
         <receiver android:name=".kotlin.NotificationPublisher" />

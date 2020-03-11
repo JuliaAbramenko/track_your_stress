@@ -2,6 +2,8 @@ package com.example.trackyourstress_ba.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -17,6 +19,7 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.HomeUtils
+import com.example.trackyourstress_ba.kotlin.TokenReceiver
 import com.example.trackyourstress_ba.kotlin.TokenUtils
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
@@ -33,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
     lateinit var notifications: BooleanArray
+    lateinit var tokenReceiver: TokenReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +58,12 @@ class HomeActivity : AppCompatActivity() {
         }
         notifications = homeUtils.getNotificationSettings(this)
         homeUtils.initiateScheduling(this, notifications)
+        tokenReceiver = TokenReceiver()
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
+            addAction(Intent.ACTION_SYNC)
+        }
+        registerReceiver(tokenReceiver, filter)
+
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()
