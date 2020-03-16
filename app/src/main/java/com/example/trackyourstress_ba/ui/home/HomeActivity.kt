@@ -41,12 +41,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        homeUtils = HomeUtils()
+        homeUtils.initiateTokenRefresher(this)
     }
 
     override fun onStart() {
         super.onStart()
-        homeUtils = HomeUtils()
-        homeUtils.initiateTokenRefresher(this)
         val preferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
@@ -59,11 +59,6 @@ class HomeActivity : AppCompatActivity() {
         notifications = homeUtils.getNotificationSettings(this)
         homeUtils.initiateScheduling(this, notifications)
         tokenReceiver = TokenReceiver()
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-            addAction(Intent.ACTION_SYNC)
-        }
-        registerReceiver(tokenReceiver, filter)
-
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()

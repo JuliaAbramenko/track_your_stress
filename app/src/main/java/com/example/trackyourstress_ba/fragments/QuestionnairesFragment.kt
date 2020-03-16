@@ -39,18 +39,16 @@ class QuestionnairesFragment : Fragment() {
         tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table)
         sharedPreferences =
             currentContext.getSharedPreferences(currentContext.packageName, Context.MODE_PRIVATE)
+        addFirstRow(currentContext)
+        associatedQuestionnaires = HashMap()
+        questionnaireUtils = QuestionnaireUtils()
+        questionnaireUtils.getMyQuestionnaires(this)
 
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        addFirstRow(currentContext)
-        associatedQuestionnaires = HashMap()
-        questionnaireUtils = QuestionnaireUtils()
-        questionnaireUtils.getMyQuestionnaires(this)
-
-
     }
 
     private fun addFirstRow(currentContext: Context?) {
