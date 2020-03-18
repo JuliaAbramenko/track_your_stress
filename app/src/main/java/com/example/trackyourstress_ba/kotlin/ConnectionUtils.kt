@@ -1,6 +1,8 @@
 package com.example.trackyourstress_ba.kotlin
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -155,6 +157,11 @@ class ConnectionUtils {
             }, Response.ErrorListener {
                 caller.notify500()
             })
+        val intent = Intent(caller, TokenReceiver::class.java)
+        PendingIntent.getBroadcast(
+            caller as Context, 10, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        ).cancel()
 
         requestQueue.add(request)
     }

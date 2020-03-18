@@ -23,20 +23,20 @@ class TokenUtils {
         alarmMgr = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val alarmUp = PendingIntent.getBroadcast(
-            activity, 0,
+            activity, 10,
             notificationIntent,
-            PendingIntent.FLAG_NO_CREATE
+            PendingIntent.FLAG_IMMUTABLE
         ) != null
 
         if (alarmUp) {
             Log.w("TokenUtils", "refresher is already active")
         } else {
             alarmIntent = PendingIntent.getBroadcast(
-                activity, 0, notificationIntent,
+                activity, 10, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
             alarmMgr?.setRepeating(
-                AlarmManager.RTC_WAKEUP,
+                AlarmManager.RTC,
                 System.currentTimeMillis(),
                 1000 * 60 * 30, //all 30 minutes refresh
                 alarmIntent

@@ -1,9 +1,7 @@
 package com.example.trackyourstress_ba
 
-import androidx.core.content.ContextCompat.startActivity
 import android.content.Intent
 import com.example.trackyourstress_ba.ui.home.HomeActivity
-import android.R
 import android.os.Bundle
 import android.app.Activity
 import android.content.Context
@@ -11,6 +9,7 @@ import android.content.Context
 
 class LaunchActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        Runtime.getRuntime().exec("logcat -f" + " /sdcard/Logcat.txt")
         super.onCreate(savedInstanceState)
 
         val sharedPreferences = this.getSharedPreferences(

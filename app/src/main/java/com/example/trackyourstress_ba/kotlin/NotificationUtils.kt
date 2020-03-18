@@ -47,6 +47,7 @@ class NotificationUtils {
         builder.setContentTitle("TrackYourStress")
         builder.setContentText(content)
         builder.setSmallIcon(R.drawable.ic_lock_idle_alarm)
+        //builder.setFullScreenIntent()
         return builder.build()
     }
 
