@@ -152,16 +152,16 @@ class ConnectionUtils {
         val request = StringRequest(
             Request.Method.DELETE, url,
             Response.Listener<String> {
-                sharedPreferences.edit().putString("token", null).apply()
+                sharedPreferences.edit().remove("token").apply()
 
             }, Response.ErrorListener {
                 caller.notify500()
             })
-        val intent = Intent(caller, TokenReceiver::class.java)
+        /*val intent = Intent(caller, TokenReceiver::class.java)
         PendingIntent.getBroadcast(
             caller as Context, 10, intent,
             PendingIntent.FLAG_UPDATE_CURRENT
-        ).cancel()
+        ).cancel()*/
 
         requestQueue.add(request)
     }

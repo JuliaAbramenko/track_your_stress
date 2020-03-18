@@ -9,19 +9,18 @@ import android.content.Context
 
 class LaunchActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        Runtime.getRuntime().exec("logcat -f" + " /sdcard/Logcat.txt")
         super.onCreate(savedInstanceState)
 
         val sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
         if (!sharedPreferences.contains("token")) {
-            sharedPreferences.edit().putString("token", null).apply()
+            sharedPreferences.edit().putString("token", "").commit()
         }
         if (sharedPreferences.contains("token") && sharedPreferences.getString(
                 "token",
                 null
-            ) != null
+            ) != ""
         ) {
             val intent = Intent(this, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

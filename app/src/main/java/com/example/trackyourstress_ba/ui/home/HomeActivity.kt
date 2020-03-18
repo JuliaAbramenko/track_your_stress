@@ -19,8 +19,8 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.HomeUtils
-import com.example.trackyourstress_ba.kotlin.TokenReceiver
-import com.example.trackyourstress_ba.kotlin.TokenUtils
+//import com.example.trackyourstress_ba.kotlin.TokenReceiver
+//import com.example.trackyourstress_ba.kotlin.TokenUtils
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
 
@@ -36,13 +36,13 @@ class HomeActivity : AppCompatActivity() {
     lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
     lateinit var notifications: BooleanArray
-    lateinit var tokenReceiver: TokenReceiver
+    //lateinit var tokenReceiver: TokenReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         homeUtils = HomeUtils()
-        homeUtils.initiateTokenRefresher(this)
+        //homeUtils.initiateTokenRefresher(this)
     }
 
     override fun onStart() {
@@ -58,7 +58,7 @@ class HomeActivity : AppCompatActivity() {
         }
         notifications = homeUtils.getNotificationSettings(this)
         homeUtils.initiateScheduling(this, notifications)
-        tokenReceiver = TokenReceiver()
+        //tokenReceiver = TokenReceiver()
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()

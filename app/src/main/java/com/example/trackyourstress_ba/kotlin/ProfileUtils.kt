@@ -66,7 +66,7 @@ class ProfileUtils(caller: ProfileFragment) {
             Response.Listener { response ->
                 caller.responseReceived(response)
             }, Response.ErrorListener{error ->
-                throw Exception("error occurred: $error")
+            throw Exception("Profile update error: $error")
             })
         requestQueue.add(request)
 
@@ -79,17 +79,17 @@ class ProfileUtils(caller: ProfileFragment) {
             mapOf(
                 "data" to mapOf(
                     "type" to "users",
-                    "attributes" to mapOf("reset_token" to token, "password" to password)
+                        "attributes" to mapOf("password" to password)
                 )
             )
         )
-        val url = "$apiEndpoint/api/v1/auth/password/reset?token=$token"
+        val url = "$apiEndpoint/api/v1/my/profile/password?token=$token"
         val request = JsonObjectRequest(
-            Request.Method.POST, url, jsonObject,
+                Request.Method.PATCH, url, jsonObject,
             Response.Listener { response ->
                 caller.updatePasswordReceived(response)
             }, Response.ErrorListener{error ->
-                throw Exception("error occurred: $error")
+            throw Exception("Password update error: $error")
             })
         requestQueue.add(request)
 
@@ -104,7 +104,7 @@ class ProfileUtils(caller: ProfileFragment) {
             Response.Listener { response ->
                 caller.profileDeleted(response)
             }, Response.ErrorListener{error ->
-                throw Exception("error occurred: $error")
+            throw Exception("Profile delete error: $error")
             })
         requestQueue.add(request)
     }
@@ -128,9 +128,13 @@ class ProfileUtils(caller: ProfileFragment) {
             Request.Method.POST, url, jsonObject,
             Response.Listener { response ->
                 caller.callNewPasswordDialog()
+                val newToken = response.getJSONObject("data").getJSONObject("attributes").getString("token")
+                sharedPreferences.edit().putString("token", newToken).apply()
             }, Response.ErrorListener { error ->
                 if (error.networkResponse.statusCode != 200) {
                     caller.abortPasswordChange()
+                } else {
+                    caller.continuePasswordChange()
                 }
 
             })

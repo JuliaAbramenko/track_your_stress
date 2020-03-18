@@ -12,7 +12,7 @@ import kotlin.random.Random
 class HomeUtils {
     var requestQueue: RequestQueue
     lateinit var notificationUtils: NotificationUtils
-    lateinit var tokenUtils: TokenUtils
+    //lateinit var tokenUtils: TokenUtils
 
     init {
         val cache = NoCache()
@@ -22,10 +22,10 @@ class HomeUtils {
         }
     }
 
-    fun initiateTokenRefresher(activity: HomeActivity) {
+    /*fun initiateTokenRefresher(activity: HomeActivity) {
         tokenUtils = TokenUtils()
         tokenUtils.scheduleTokenRefresher(activity)
-    }
+    }*/
 
     fun initiateScheduling(activity: HomeActivity, notifications: BooleanArray) {
         notificationUtils = NotificationUtils()
@@ -66,18 +66,18 @@ class HomeUtils {
     }
 
     private fun getRandomMilliSecondDaily(): Long {
-        val milliSecondsDay = 60L * 60L * 24L * 1000L
+        val milliSecondsDay = 1000L * 10L//60L * 60L * 24L * 1000L
         return Random.nextLong((0L until milliSecondsDay + 1).random())
     }
 
     private fun getRandomMilliSecondWeekly(): Long {
-        val milliSecondsWeek = 60L * 60L * 24L * 1000L * 7L
+        val milliSecondsWeek = 1000L * 20L //60L * 60L * 24L * 1000L * 7L
         return Random.nextLong((0L until milliSecondsWeek + 1).random())
 
     }
 
     private fun getRandomMilliSecondMonthly(): Long {
-        val milliSecondsMonth = 60L * 60L * 24L * 1000L * 30L
+        val milliSecondsMonth = 1000L * 30L//60L * 60L * 24L * 1000L * 30L
         return Random.nextLong((0L until milliSecondsMonth + 1).random())
     }
 

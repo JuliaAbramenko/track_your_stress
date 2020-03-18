@@ -149,13 +149,13 @@ class ProfileFragment: Fragment(){
         alert.show()
     }
 
-    fun getCurrentSexId(): Int {
-        when (sexRadioGroup.checkedRadioButtonId) {
-            R.id.profile_sex_not_known -> return 0
-            R.id.profile_male -> return 1
-            R.id.profile_female -> return 2
-            R.id.profile_not_applicable -> return 9
-            else -> return 0
+    private fun getCurrentSexId(): Int {
+        return when (sexRadioGroup.checkedRadioButtonId) {
+            R.id.profile_sex_not_known -> 0
+            R.id.profile_male -> 1
+            R.id.profile_female -> 2
+            R.id.profile_not_applicable -> 9
+            else -> 0
         }
     }
 
@@ -203,5 +203,9 @@ class ProfileFragment: Fragment(){
 
     fun abortPasswordChange() {
 
+    }
+
+    fun continuePasswordChange() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

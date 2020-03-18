@@ -40,10 +40,10 @@ class TokenReceiver : BroadcastReceiver() {
         )
         Log.e("TokenReceiver", "getting new token")
         val oldToken = preferences.getString("token", null)
-        if (oldToken != null) {
-            refreshToken(context, oldToken)
+        if (oldToken != "") {
+            refreshToken(context, oldToken!!)
         } else {
-            Log.e("TokenReceiver", "Token was null on refresh")
+            Log.e("TokenReceiver", "Token was empty on refresh")
         }
     }
 
@@ -96,6 +96,7 @@ class TokenReceiver : BroadcastReceiver() {
             context.packageName, Context.MODE_PRIVATE
         )
         sharedPrefs.edit().putString("token", newToken).apply()
+        Log.e("tokenReceiver", "new token saved:$newToken")
 
     }
 
