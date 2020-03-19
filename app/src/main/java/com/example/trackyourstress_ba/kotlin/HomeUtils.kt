@@ -11,8 +11,6 @@ import kotlin.random.Random
 
 class HomeUtils {
     var requestQueue: RequestQueue
-    lateinit var notificationUtils: NotificationUtils
-    //lateinit var tokenUtils: TokenUtils
 
     init {
         val cache = NoCache()
@@ -25,7 +23,7 @@ class HomeUtils {
     /*fun initiateTokenRefresher(activity: HomeActivity) {
         tokenUtils = TokenUtils()
         tokenUtils.scheduleTokenRefresher(activity)
-    }*/
+    }
 
     fun initiateScheduling(activity: HomeActivity, notifications: BooleanArray) {
         notificationUtils = NotificationUtils()
@@ -106,5 +104,5 @@ class HomeUtils {
         }
         return notifications
 
-    }
+    }*/
 }

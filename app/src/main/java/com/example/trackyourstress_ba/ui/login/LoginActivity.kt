@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
     fun loginResponseReceived(email: String, response: JSONObject) {
         sharedPreferences.edit().putString("userEmail", email).apply()
         val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
-        sharedPreferences.edit().putString("token", token).apply()
+        sharedPreferences.edit().putString("token", token).commit()
         conUtils.getProfileData(this)
 
     }

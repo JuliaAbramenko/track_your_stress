@@ -2,8 +2,6 @@ package com.example.trackyourstress_ba.ui.home
 
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -22,7 +20,12 @@ import com.example.trackyourstress_ba.kotlin.HomeUtils
 //import com.example.trackyourstress_ba.kotlin.TokenReceiver
 //import com.example.trackyourstress_ba.kotlin.TokenUtils
 import com.google.android.material.navigation.NavigationView
-import org.json.JSONObject
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.SharedPreferences
+import android.util.Log
+import com.example.trackyourstress_ba.kotlin.TokenReceiver
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -35,22 +38,24 @@ class HomeActivity : AppCompatActivity() {
     lateinit var emailText: TextView
     lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
-    lateinit var notifications: BooleanArray
+    lateinit var sharedPreferences: SharedPreferences
+    //lateinit var notificationManager : NotificationManager
+    //lateinit var notifications: BooleanArray
     //lateinit var tokenReceiver: TokenReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         homeUtils = HomeUtils()
-        //homeUtils.initiateTokenRefresher(this)
+        /*notificationManager = NotificationManager(this, sharedPreferences)*/
     }
 
     override fun onStart() {
         super.onStart()
-        val preferences = this.getSharedPreferences(
+        sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
-        if (!preferences.contains("dailyNotification") && !preferences.contains("weeklyNotification") && !preferences.contains(
+        /*if (!preferences.contains("dailyNotification") && !preferences.contains("weeklyNotification") && !preferences.contains(
                 "monthlyNotification"
             )
         ) {
@@ -58,8 +63,12 @@ class HomeActivity : AppCompatActivity() {
         }
         notifications = homeUtils.getNotificationSettings(this)
         homeUtils.initiateScheduling(this, notifications)
-        //tokenReceiver = TokenReceiver()
-
+        //tokenReceiver = TokenReceiver()*/
+        val token = sharedPreferences.getString("token", "")
+        /*while(!sharedPreferences.contains("token")) {
+            Thread.sleep(100)
+        }*/
+        startAlarmManager()
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()
         toolbar = findViewById(R.id.toolbar)
@@ -172,6 +181,21 @@ class HomeActivity : AppCompatActivity() {
                 else -> true
             }
         }
+    }
+
+    private fun startAlarmManager() {
+        val intent = Intent(this, TokenReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this.applicationContext, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        Log.w("token refresher", "token refresher active")
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis(),
+            AlarmManager.INTERVAL_HALF_HOUR,
+            pendingIntent
+        )
     }
 
     private fun returnToLogin() {

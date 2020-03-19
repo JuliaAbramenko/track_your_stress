@@ -7,7 +7,9 @@
         android:name="android.hardware.wifi"
         android:required="true" />
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -51,8 +53,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.questions.AnswerSheetActivity" />
 
-        <receiver android:name=".kotlin.NotificationPublisher" />
-        <receiver android:name=".kotlin.TokenReceiver"></receiver>
+        <receiver android:name=".kotlin.TokenReceiver" />
+
+        <!--<receiver android:name=".kotlin.TokenReceiver"></receiver> -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
