@@ -1,8 +1,15 @@
 package com.example.trackyourstress_ba.ui.home
 
+//import com.example.trackyourstress_ba.kotlin.TokenReceiver
+//import com.example.trackyourstress_ba.kotlin.TokenUtils
+import android.app.*
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -10,6 +17,8 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trackyourstress_ba.MainActivity
@@ -17,14 +26,9 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.kotlin.HomeUtils
-//import com.example.trackyourstress_ba.kotlin.TokenReceiver
-//import com.example.trackyourstress_ba.kotlin.TokenUtils
-import com.google.android.material.navigation.NavigationView
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.SharedPreferences
-import android.util.Log
+import com.example.trackyourstress_ba.kotlin.NotificationManagement
 import com.example.trackyourstress_ba.kotlin.TokenReceiver
+import com.google.android.material.navigation.NavigationView
 
 
 class HomeActivity : AppCompatActivity() {
@@ -39,36 +43,31 @@ class HomeActivity : AppCompatActivity() {
     lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
     lateinit var sharedPreferences: SharedPreferences
-    //lateinit var notificationManager : NotificationManager
+    lateinit var notificationManagement: NotificationManagement
     //lateinit var notifications: BooleanArray
-    //lateinit var tokenReceiver: TokenReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        homeUtils = HomeUtils()
-        /*notificationManager = NotificationManager(this, sharedPreferences)*/
+
     }
 
     override fun onStart() {
         super.onStart()
+        notificationManagement = NotificationManagement(this)
         sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
-        /*if (!preferences.contains("dailyNotification") && !preferences.contains("weeklyNotification") && !preferences.contains(
-                "monthlyNotification"
-            )
+        if (!sharedPreferences.contains("dailyNotification") &&
+            !sharedPreferences.contains("weeklyNotification") &&
+            !sharedPreferences.contains("monthlyNotification")
         ) {
-            homeUtils.initiateNotificationSettings(this)
+            notificationManagement.initiateNotificationSettings(this)
+        } else {
+            notificationManagement.initiateScheduling(this)
         }
-        notifications = homeUtils.getNotificationSettings(this)
-        homeUtils.initiateScheduling(this, notifications)
-        //tokenReceiver = TokenReceiver()*/
-        val token = sharedPreferences.getString("token", "")
-        /*while(!sharedPreferences.contains("token")) {
-            Thread.sleep(100)
-        }*/
-        startAlarmManager()
+        startTokenRefresher()
+
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()
         toolbar = findViewById(R.id.toolbar)
@@ -183,20 +182,51 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun startAlarmManager() {
+    private fun test() {
+        val builder = NotificationCompat.Builder(this, "999")
+            .setSmallIcon(R.drawable.ic_notifications_24dp)
+            .setContentTitle("My notification")
+            .setContentText("Much longer text that cannot fit one line...")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("Much longer text that cannot fit one line...")
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "trackyourstress"
+            val descriptionText = "shitty channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("999", name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(0, builder.build())
+        }
+
+    }
+
+    private fun startTokenRefresher() {
         val intent = Intent(this, TokenReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
-            this.applicationContext, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT
+            this.applicationContext, 111, intent, FLAG_UPDATE_CURRENT
         )
         Log.w("token refresher", "token refresher active")
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis(),
+            System.currentTimeMillis() + AlarmManager.INTERVAL_HALF_HOUR,
             AlarmManager.INTERVAL_HALF_HOUR,
             pendingIntent
         )
     }
+
 
     private fun returnToLogin() {
         val intent = Intent(this@HomeActivity, MainActivity::class.java)
