@@ -2,13 +2,18 @@ package com.example.trackyourstress_ba.ui.home
 
 //import com.example.trackyourstress_ba.kotlin.TokenReceiver
 //import com.example.trackyourstress_ba.kotlin.TokenUtils
-import android.app.*
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_CANCEL_CURRENT
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -24,11 +29,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trackyourstress_ba.MainActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
-import com.example.trackyourstress_ba.kotlin.ConnectionUtils
-import com.example.trackyourstress_ba.kotlin.HomeUtils
-import com.example.trackyourstress_ba.kotlin.NotificationManagement
-import com.example.trackyourstress_ba.kotlin.TokenReceiver
+import com.example.trackyourstress_ba.kotlin.*
 import com.google.android.material.navigation.NavigationView
+import java.util.*
 
 
 class HomeActivity : AppCompatActivity() {
@@ -40,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var conUtils: ConnectionUtils
     lateinit var usernameText: TextView
     lateinit var emailText: TextView
-    lateinit var homeUtils: HomeUtils
+    //lateinit var homeUtils: HomeUtils
     lateinit var root: LinearLayout
     lateinit var sharedPreferences: SharedPreferences
     lateinit var notificationManagement: NotificationManagement
@@ -67,6 +70,7 @@ class HomeActivity : AppCompatActivity() {
             notificationManagement.initiateScheduling(this)
         }
         startTokenRefresher()
+        test()
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()
@@ -185,7 +189,7 @@ class HomeActivity : AppCompatActivity() {
     private fun test() {
         val builder = NotificationCompat.Builder(this, "999")
             .setSmallIcon(R.drawable.ic_notifications_24dp)
-            .setContentTitle("My notification")
+            .setContentTitle("TrackYourStress")
             .setContentText("Much longer text that cannot fit one line...")
             .setStyle(
                 NotificationCompat.BigTextStyle()
@@ -195,7 +199,7 @@ class HomeActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "trackyourstress"
-            val descriptionText = "shitty channel"
+            val descriptionText = "strange channel"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel("999", name, importance).apply {
                 description = descriptionText
@@ -204,7 +208,6 @@ class HomeActivity : AppCompatActivity() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-
         with(NotificationManagerCompat.from(this)) {
             // notificationId is a unique int for each notification that you must define
             notify(0, builder.build())
@@ -212,17 +215,43 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    /*private fun startAlarm(isRepeat: Boolean) {
+        val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        /*val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 17)
+        calendar.set(Calendar.MINUTE, 24)*/
+
+        val intent = Intent(this, NotificationPublisher::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 999, intent, 0)
+        Log.w("notification manager", "notifier active")
+
+        if (!isRepeat)
+            manager.set(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis(),
+                pendingIntent
+            )
+        else
+            manager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis(),
+                60L*1000L*2,
+                pendingIntent
+            )
+    }*/
+
     private fun startTokenRefresher() {
         val intent = Intent(this, TokenReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
-            this.applicationContext, 111, intent, FLAG_UPDATE_CURRENT
+            this.applicationContext, 111, intent, FLAG_CANCEL_CURRENT // FLAG_UPDATE_CURRENT
         )
         Log.w("token refresher", "token refresher active")
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setInexactRepeating(
+            //alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis() + AlarmManager.INTERVAL_HALF_HOUR,
-            AlarmManager.INTERVAL_HALF_HOUR,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             pendingIntent
         )
     }
