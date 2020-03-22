@@ -37,11 +37,11 @@ class TokenReceiver : BroadcastReceiver() {
         refresher = Refresher(sharedPreferences, this)
         val oldToken = sharedPreferences.getString("token", "")
         refresher.refreshToken(oldToken!!)
-        /*val vibrator : Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val vibratePattern = longArrayOf(0, 400, 100, 200)
             vibrator.vibrate(vibratePattern, -1)
-        }*/
+        }
     }
 }
 

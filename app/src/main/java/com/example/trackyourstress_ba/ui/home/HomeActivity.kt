@@ -247,13 +247,40 @@ class HomeActivity : AppCompatActivity() {
         )
         Log.w("token refresher", "token refresher active")
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val clockInfo = AlarmManager.AlarmClockInfo(
+                System.currentTimeMillis() + 1000L * 30L * 60L,
+                pendingIntent
+            )
+            alarmManager.setAlarmClock(clockInfo, pendingIntent)
+        } else {
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + 1000L * 60L * 60L,
+                    pendingIntent
+                )
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) -> alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + 1000L * 60L * 60L,
+                    pendingIntent
+                )
+                else -> alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + 1000L * 60L * 60L,
+                    pendingIntent
+                )
+            }
+        }
+
+
+        /*alarmManager.setInexactRepeating(
             //alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis() + AlarmManager.INTERVAL_HALF_HOUR,
             AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             pendingIntent
-        )
+        )*/
     }
 
 
