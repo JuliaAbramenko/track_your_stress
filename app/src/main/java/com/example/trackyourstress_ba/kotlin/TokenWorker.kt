@@ -139,9 +139,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun showNotification() {
-        val cid =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationChannel.DEFAULT_CHANNEL_ID else "777"
-        val builder = NotificationCompat.Builder(currentContext, cid)
+        val builder = NotificationCompat.Builder(currentContext, "777")
             .setSmallIcon(R.drawable.ic_notifications_24dp)
             .setContentTitle("TrackYourStress")
             .setContentText("your token has been refreshed")

@@ -8,7 +8,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.home.HomeActivity
-import kotlin.random.Random
 
 class NotificationManagement(calling: HomeActivity) {
     var caller = calling
@@ -109,9 +108,9 @@ class NotificationUtils(calling: HomeActivity) {
         id: Int,
         activity: HomeActivity
     ) {
-        val notificationIntent = Intent(activity, NotificationPublisher::class.java)
-        notificationIntent.putExtra(NotificationPublisher.notificationID, id)
-        notificationIntent.putExtra(NotificationPublisher.notification, notification)
+        val notificationIntent = Intent(activity, OLDNotificationPublisher::class.java)
+        notificationIntent.putExtra(OLDNotificationPublisher.notificationID, id)
+        notificationIntent.putExtra(OLDNotificationPublisher.notification, notification)
         val pendingIntent = PendingIntent.getBroadcast(
             activity,
             id,

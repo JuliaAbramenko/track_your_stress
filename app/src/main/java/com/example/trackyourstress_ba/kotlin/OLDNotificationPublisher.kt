@@ -8,7 +8,7 @@ import android.content.SharedPreferences
 import androidx.core.app.NotificationCompat
 
 
-class NotificationPublisher : BroadcastReceiver() {
+class OLDNotificationPublisher : BroadcastReceiver() {
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
 
