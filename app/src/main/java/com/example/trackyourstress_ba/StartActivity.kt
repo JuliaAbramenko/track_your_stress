@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegisterActivity
 
-class MainActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() {
     lateinit var loginButton: Button
     lateinit var registerButton: Button
 

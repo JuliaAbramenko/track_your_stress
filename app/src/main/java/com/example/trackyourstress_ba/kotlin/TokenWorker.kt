@@ -1,15 +1,17 @@
 package com.example.trackyourstress_ba.kotlin
 
-import android.content.BroadcastReceiver
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
-import android.os.Vibrator
 import android.util.Log
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -17,36 +19,17 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
+import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import org.json.JSONObject
 import kotlin.system.exitProcess
 
-class TokenReceiver : BroadcastReceiver() {
-    lateinit var refresher: Refresher
-    lateinit var currentContext: Context
-    lateinit var sharedPreferences: SharedPreferences
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun onReceive(context: Context?, intent: Intent?) {
-        currentContext = context!!
-        sharedPreferences = context.getSharedPreferences(
-            context.packageName, Context.MODE_PRIVATE
-        )
-        refresher = Refresher(sharedPreferences, this)
-        val oldToken = sharedPreferences.getString("token", "")
-        refresher.refreshToken(oldToken!!)
-        val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val vibratePattern = longArrayOf(0, 400, 100, 200)
-            vibrator.vibrate(vibratePattern, -1)
-        }
-    }
-}
-
-class Refresher(preferences: SharedPreferences, caller: TokenReceiver) {
+class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
+    Worker(appContext, workerParams) {
     var requestQueue: RequestQueue
     var currentContext: Context
     var sharedPreferences: SharedPreferences
+    var notificationID = 1
 
     init {
         val cache = NoCache()
@@ -54,9 +37,17 @@ class Refresher(preferences: SharedPreferences, caller: TokenReceiver) {
         requestQueue = RequestQueue(cache, network).apply {
             start()
         }
-        sharedPreferences = preferences
-        currentContext = caller.currentContext
+        currentContext = appContext
+        sharedPreferences = currentContext.getSharedPreferences(
+            currentContext.packageName, Context.MODE_PRIVATE
+        )
+    }
 
+    override fun doWork(): Result {
+        val oldToken = sharedPreferences.getString("token", "")!!
+        refreshToken(oldToken)
+        notificationID++
+        return Result.success()
     }
 
     fun refreshToken(oldToken: String) {
@@ -73,16 +64,16 @@ class Refresher(preferences: SharedPreferences, caller: TokenReceiver) {
                         finishRefreshToken(oldToken)
                     }
                     error.networkResponse.statusCode == 400 -> {
-                        sharedPreferences.edit().remove("token").apply()
-                        Log.w("token refresher", "400 error")
+                        sharedPreferences.edit().remove("token").commit()
+                        Log.w("token refresher", "400 error on options")
                     }
                     error.networkResponse.statusCode == 409 -> {
-                        sharedPreferences.edit().remove("token").apply()
-                        Log.w("token refresher", "409 error")
+                        sharedPreferences.edit().remove("token").commit()
+                        Log.w("token refresher", "409 error on options")
                     }
                     else -> {
-                        sharedPreferences.edit().remove("token").apply()
-                        Log.w("token refresher", "unknown error")
+                        sharedPreferences.edit().remove("token").commit()
+                        Log.w("token refresher", "unknown error on options")
                     }
                 }
             })
@@ -118,26 +109,28 @@ class Refresher(preferences: SharedPreferences, caller: TokenReceiver) {
             Request.Method.POST, url, json,
             Response.Listener { response ->
                 Log.w("token refresher", "token really refreshed")
-                notifyRefresh(response, currentContext)
-
+                val newToken =
+                    response.getJSONObject("data").getJSONObject("attributes").getString("token")
+                sharedPreferences.edit().putString("token", newToken).apply()
+                showNotification()
             }, Response.ErrorListener { error ->
                 when {
                     error.networkResponse.statusCode == 400 -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "400 error")
-                        finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         exitProcess(0)
                     }
                     error.networkResponse.statusCode == 409 -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "409 error")
-                        finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         exitProcess(0)
                     }
                     else -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "unknown error")
-                        finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         exitProcess(0)
                     }
                 }
@@ -145,15 +138,35 @@ class Refresher(preferences: SharedPreferences, caller: TokenReceiver) {
         requestQueue.add(request)
     }
 
-    private fun notifyRefresh(response: JSONObject, currentContext: Context) {
-        val newToken =
-            response.getJSONObject("data").getJSONObject("attributes").getString("token")
-        sharedPreferences.edit().putString("token", newToken).apply()
-        Toast.makeText(
-            currentContext,
-            "Token refreshed",
-            Toast.LENGTH_LONG
-        ).show()
+    private fun showNotification() {
+        val cid =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationChannel.DEFAULT_CHANNEL_ID else "777"
+        val builder = NotificationCompat.Builder(currentContext, cid)
+            .setSmallIcon(R.drawable.ic_notifications_24dp)
+            .setContentTitle("TrackYourStress")
+            .setContentText("your token has been refreshed")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("your token has been refreshed")
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "trackyourstress"
+            val descriptionText = "strange channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("777", name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                currentContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+            notificationManager.notify(notificationID, builder.build())
+        } else {
+            with(NotificationManagerCompat.from(currentContext)) {
+                // notificationId is a unique int for each notification that you must define
+                notify(notificationID, builder.build())
+            }
+        }
     }
 }

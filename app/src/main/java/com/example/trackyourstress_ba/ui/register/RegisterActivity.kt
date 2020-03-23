@@ -7,7 +7,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.trackyourstress_ba.MainActivity
+import com.example.trackyourstress_ba.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
@@ -53,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+            val intent = Intent(this@RegisterActivity, StartActivity::class.java)
             startActivity(intent)
         }
     }
@@ -90,16 +90,9 @@ class RegisterActivity : AppCompatActivity() {
         ).show()
     }
 
-    fun registrationSuccessful() {
+
+    fun nextStep() {
         val intent = Intent(this@RegisterActivity, RegistrationConfirmationActivity::class.java)
         startActivity(intent)
-    }
-
-    fun registrationError() {
-        Toast.makeText(
-            applicationContext,
-            "Fehler bei der Registrierung. Bitte versuchen Sie es später erneut",
-            Toast.LENGTH_LONG
-        ).show()
     }
 }

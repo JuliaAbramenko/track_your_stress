@@ -12,10 +12,10 @@ import org.junit.Rule
 import org.junit.Test
 
 
-class MainActivityTest {
+class StartActivityTest {
 
     @get:Rule
-    var mActivityRule: IntentsTestRule<MainActivity> = IntentsTestRule(MainActivity::class.java)
+    var mActivityRule: IntentsTestRule<StartActivity> = IntentsTestRule(StartActivity::class.java)
 
     @Test
     fun testLoginButton() {

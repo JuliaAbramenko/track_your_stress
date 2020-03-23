@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/nicePadding"
-    tools:context=".MainActivity">
+    tools:context=".StartActivity">
 
     <ImageView
         android:id="@+id/Welcome_Logo"

@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.kotlin
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -33,6 +34,8 @@ class ProfileUtils(caller: ProfileFragment) {
             Response.Listener { response ->
                 caller.responseReceived(response)
             }, Response.ErrorListener{ error ->
+                sharedPreferences.edit().remove("token").commit()
+                Log.e("getProfile", error.toString())
                 throw Exception("shit happened: $error")
             })
         requestQueue.add(request)

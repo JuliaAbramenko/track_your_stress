@@ -31,11 +31,11 @@
         <!--<activity
             android:name=".Login"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".StartActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.trackyourstress_ba.MainActivity" />
+                android:value="com.example.trackyourstress_ba.StartActivityy" />
         </activity>-->
 
         <activity
@@ -50,15 +50,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".StartActivity" />
         <activity android:name=".ui.questions.AnswerSheetActivity" />
 
         <receiver android:name=".kotlin.TokenReceiver" />
 
-        <!--<receiver android:name=".kotlin.TokenReceiver"></receiver> -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 
 </manifest>

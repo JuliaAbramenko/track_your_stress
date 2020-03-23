@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.trackyourstress_ba.MainActivity
+import com.example.trackyourstress_ba.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
@@ -37,7 +37,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            val intent = Intent(this@RegistrationConfirmationActivity, MainActivity::class.java)
+            val intent = Intent(this@RegistrationConfirmationActivity, StartActivity::class.java)
             startActivity(intent)
         }
     }
