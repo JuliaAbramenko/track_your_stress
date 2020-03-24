@@ -64,15 +64,15 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                         finishRefreshToken(oldToken)
                     }
                     error.networkResponse.statusCode == 400 -> {
-                        sharedPreferences.edit().remove("token").commit()
+                        sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "400 error on options")
                     }
                     error.networkResponse.statusCode == 409 -> {
-                        sharedPreferences.edit().remove("token").commit()
+                        sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "409 error on options")
                     }
                     else -> {
-                        sharedPreferences.edit().remove("token").commit()
+                        sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "unknown error on options")
                     }
                 }
@@ -150,8 +150,8 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "trackyourstress"
-            val descriptionText = "strange channel"
+            val name = "TrackYourStress - Token refresher"
+            val descriptionText = "token refresher channel"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel("777", name, importance).apply {
                 description = descriptionText

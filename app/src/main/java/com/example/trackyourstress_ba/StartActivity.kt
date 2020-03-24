@@ -20,12 +20,16 @@ class StartActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            finishActivity(0)
         }
 
         registerButton.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            finishActivity(0)
         }
     }
 }

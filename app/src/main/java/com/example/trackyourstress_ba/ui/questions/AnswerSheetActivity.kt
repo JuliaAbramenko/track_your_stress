@@ -166,6 +166,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             answersheetUtils.submitAnswersheet(guiList, questionnaireID, this)
+            finishActivity(0) //TODO?
         }
     }
 
@@ -176,6 +177,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
     }
 
     fun submitFail(response: VolleyError) {
-        Toast.makeText(this, "AnswerSheet could not be submitted!", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Fragebogen konnte nicht abgeschickt werden!", Toast.LENGTH_LONG)
+            .show()
     }
 }

@@ -53,7 +53,7 @@
         <activity android:name=".StartActivity" />
         <activity android:name=".ui.questions.AnswerSheetActivity" />
 
-        <receiver android:name=".kotlin.TokenReceiver" />
+        <receiver android:name=".kotlin.NotificationPublisher" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -25,6 +25,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -48,6 +49,8 @@ class HomeActivity : AppCompatActivity() {
     lateinit var emailText: TextView
     lateinit var root: LinearLayout
     lateinit var sharedPreferences: SharedPreferences
+    var tokenWorkerRunning = false
+    var notificationWorkerRunning = false
     //lateinit var notifications: BooleanArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,40 +60,40 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        /*notificationManagement = NotificationManagement(this)
         sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
-        if (!sharedPreferences.contains("dailyNotification") &&
-            !sharedPreferences.contains("weeklyNotification") &&
-            !sharedPreferences.contains("monthlyNotification")
-        ) {
-            notificationManagement.initiateNotificationSettings(this)
-        } else {
-            notificationManagement.initiateScheduling(this)
-        }*/
-        //startTokenRefresher()
-        //test()
-        //TODO daily worker that checks newMonth, newWeek -> schedules alarmManager? and save next notification date in sharedPrefs?
-        /*val notificationRequest =
-            PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
 
-        WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork(
-                "TokenRequest",
-                ExistingPeriodicWorkPolicy.REPLACE, //or .APPEND?
-                notificationRequest
-            )*/
+        if (!notificationWorkerRunning) {
+            val notificationRequest =
+                //PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
+                PeriodicWorkRequestBuilder<NotificationWorker>(10, TimeUnit.MINUTES).build()
 
-        val tokenRequest =
-            PeriodicWorkRequestBuilder<TokenWorker>(25, TimeUnit.MINUTES).build()
+            WorkManager.getInstance(this)
+                .enqueueUniquePeriodicWork(
+                    "NotificationRequest",
+                    ExistingPeriodicWorkPolicy.REPLACE, //or .APPEND?
+                    notificationRequest
+                )
+            notificationWorkerRunning = true
+        }
 
-        WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork(
-                "TokenRequest",
-                ExistingPeriodicWorkPolicy.REPLACE,
-                tokenRequest
-            )
+        if (!tokenWorkerRunning) {
+            val tokenRequest =
+                PeriodicWorkRequestBuilder<TokenWorker>(50, TimeUnit.MINUTES).setInitialDelay(
+                    50,
+                    TimeUnit.MINUTES
+                ).build()
+
+            WorkManager.getInstance(this)
+                .enqueueUniquePeriodicWork(
+                    "TokenRequest",
+                    ExistingPeriodicWorkPolicy.REPLACE,
+                    tokenRequest
+                )
+
+            tokenWorkerRunning = true
+        }
 
         root = findViewById(R.id.homeRoot)
         conUtils = ConnectionUtils()

@@ -24,14 +24,12 @@ class LaunchActivity : Activity() {
             ) != ""
         ) {
             val intent = Intent(this, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            finish()
             startActivity(intent)
+            finish()
         } else {
             val intent = Intent(this, StartActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            finish()
             startActivity(intent)
+            finish()
         }
     }
 }
