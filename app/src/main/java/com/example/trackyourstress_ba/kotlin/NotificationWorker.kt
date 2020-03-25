@@ -1,18 +1,20 @@
 package com.example.trackyourstress_ba.kotlin
 
+import android.app.*
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.util.*
 import kotlin.random.Random
-import android.app.AlarmManager
 import android.os.SystemClock
-import android.app.PendingIntent
 import android.content.Intent
 import android.media.RingtoneManager
 import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
+import android.os.Parcelable
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
@@ -45,13 +47,14 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
 
         val date = Calendar.getInstance()
          if (notificationSettings[0]) {
-             if (sharedPreferences.getLong(
+             /*if (sharedPreferences.getLong(
                      "nextDailyNotification",
                      0
                  ) > date.timeInMillis || !sharedPreferences.contains("nextDailyNotification")
              ) {
                  createNewDailyNotification()
-             }
+             }*/
+             createNewDailyNotification()
          }
 
         val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
@@ -93,7 +96,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              applicationContext,
              "Es ist Zeit für einen täglichen Fragebogen!",
              nextDailyNotificationIn,
-             100
+             800
          )
          sharedPreferences.edit().putLong("nextDailyNotification", nextDailyNotificationIn).apply()
      }
@@ -158,28 +161,29 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
          delay: Long,
          notificationId: Int
      ) {
-         val builder = NotificationCompat.Builder(context)
+
+         val notifyIntent = Intent(context, HomeActivity::class.java).apply {
+             flags = Intent.FLAG_ACTIVITY_NEW_TASK
+         }
+         val notifyPendingIntent = PendingIntent.getActivity(
+             context, 1111, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+         )
+
+         val channelId = "333"
+         val builder = NotificationCompat.Builder(currentContext, channelId)
+             .setSmallIcon(R.drawable.ic_notifications_24dp)
              .setContentTitle("TrackYourStress")
              .setContentText(text)
-             .setAutoCancel(true)
-             .setSmallIcon(R.drawable.ic_notifications_24dp)
-         //.setLargeIcon((context.resources.getDrawable(R.drawable.ic_questionnaire_24dp) as BitmapDrawable).bitmap)
-         //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-
-         val intent = Intent(context, HomeActivity::class.java)
-         val activity = PendingIntent.getActivity(
-             context,
-             notificationId,
-             intent,
-             PendingIntent.FLAG_CANCEL_CURRENT //cancel?
-         )
-         builder.setContentIntent(activity)
-
-         val notification = builder.build()
+             .setStyle(
+                 NotificationCompat.BigTextStyle()
+                     .bigText(text)
+             )
+             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+             .setContentIntent(notifyPendingIntent)
 
          val notificationIntent = Intent(context, NotificationPublisher::class.java)
          notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
-         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification)
+         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, builder.build())
          val pendingIntent = PendingIntent.getBroadcast(
              context,
              notificationId,
@@ -187,10 +191,29 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              PendingIntent.FLAG_CANCEL_CURRENT //cancel?
          )
 
+
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+             val name = "TrackYourStress - NotificationManager"
+             val descriptionText = "Notification channel"
+             val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+             val channel = NotificationChannel(channelId, name, importance).apply {
+                 description = descriptionText
+             }
+             val notificationManager: NotificationManager =
+                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+             notificationManager.createNotificationChannel(channel)
+             builder.setChannelId(channelId)
+
+             //notificationManager.notify(notificationId, builder.build())
+         } else {
+             with(NotificationManagerCompat.from(context)) {
+                 // notificationId is a unique int for each notification that you must define
+                 //notify(notificationId, builder.build())
+             }
+         }
          val futureInMillis = SystemClock.elapsedRealtime() + delay
          val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
          alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent)
      }
-
-
  }
