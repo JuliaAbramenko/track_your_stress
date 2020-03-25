@@ -48,10 +48,6 @@ class QuestionnairesFragment : Fragment() {
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     private fun addFirstRow(currentContext: Context?) {
         val firstRow = TableRow(currentContext)
         val textTitle = TextView(currentContext)

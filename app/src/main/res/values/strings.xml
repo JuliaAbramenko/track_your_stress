@@ -45,7 +45,7 @@
     <string name="repeatable">Wiederholbar</string>
     <string name="type">Fragetyp</string>
     <string name="do_you_really_want_to_delete_your_profile">Möchten Sie Ihr Profil sicher löschen?</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Abbruch</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
