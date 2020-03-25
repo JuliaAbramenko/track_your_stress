@@ -15,6 +15,7 @@ import android.os.Build
 import android.os.Parcelable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.trackyourstress_ba.LaunchActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
@@ -58,28 +59,30 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
          }
 
         val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
-         if (isNewWeek && notificationSettings[1]) {
-             if (sharedPreferences.getLong(
+         if (/*isNewWeek &&*/ notificationSettings[1]) {
+             /*if (sharedPreferences.getLong(
                      "nextWeeklyNotification",
                      0
                  ) > date.timeInMillis || !sharedPreferences.contains(("nextWeeklyNotification"))
              ) {
                  createNewWeeklyNotification()
-             }
+             }*/
+             createNewWeeklyNotification()
          }
 
         val isNewMonth = date.get(Calendar.DAY_OF_MONTH) == 1
          sharedPreferences.edit().putInt("currentMonth", date.get(Calendar.MONTH)).apply()
 
          val daysInMonth = date.getActualMaximum(Calendar.DAY_OF_MONTH)
-         if (isNewMonth && notificationSettings[2]) {
-             if (sharedPreferences.getLong(
+         if (/*isNewMonth &&*/ notificationSettings[2]) {
+             /*if (sharedPreferences.getLong(
                      "nextMonthlyNotification",
                      0
                  ) > date.timeInMillis || !sharedPreferences.contains("nextMonthlyNotification")
              ) {
                  createNewMonthlyNotification(daysInMonth)
-             }
+             }*/
+             createNewMonthlyNotification(daysInMonth)
          }
         return Result.success()
     }
@@ -96,7 +99,8 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              applicationContext,
              "Es ist Zeit für einen täglichen Fragebogen!",
              nextDailyNotificationIn,
-             800
+             100,
+             "10000"
          )
          sharedPreferences.edit().putLong("nextDailyNotification", nextDailyNotificationIn).apply()
      }
@@ -107,7 +111,8 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              applicationContext,
              "Es ist Zeit für einen wöchentlichen Fragebogen!",
              nextWeeklyNotificationIn,
-             101
+             101,
+             "10001"
          )
          sharedPreferences.edit().putLong("nextWeeklyNotification", nextWeeklyNotificationIn)
              .apply()
@@ -119,7 +124,8 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              applicationContext,
              "Es ist Zeit für einen monatlichen Fragebogen!",
              nextMonthlyNotificationIn,
-             102
+             102,
+             "10002"
          )
          sharedPreferences.edit().putLong("nextMonthlyNotification", nextMonthlyNotificationIn)
              .apply()
@@ -140,46 +146,53 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
     }
 
     private fun getRandomMilliSecondDaily(): Long {
-        val milliSecondsDay = 60 * 1000L//60L * 60L * 24L * 1000L
-        return Random.nextLong((0L until milliSecondsDay + 1).random())
+        /*val milliSecondsDay = 60L * 60L * 24L * 1000L
+        return Random.nextLong((0L until milliSecondsDay + 1).random())*/
+        return 60000
     }
 
     private fun getRandomMilliSecondWeekly(): Long {
-        val milliSecondsWeek = 120 * 1000L//60L * 60L * 24L * 1000L * 7L
-        return Random.nextLong((0L until milliSecondsWeek + 1).random())
+        /*val milliSecondsWeek = 60L * 60L * 24L * 1000L * 7L
+        return Random.nextLong((0L until milliSecondsWeek + 1).random()) */
+        return 120000
     }
 
      private fun getRandomMilliSecondMonthly(daysInMonth: Int): Long {
-
-         val milliSecondsMonth = 180 * 1000L//60L * 60L * 24L * 1000L * daysInMonth
-        return Random.nextLong((0L until milliSecondsMonth + 1).random())
+         /*val milliSecondsMonth = 60 * 15 * 1000L//60L * 60L * 24L * 1000L * daysInMonth
+         return Random.nextLong((0L until milliSecondsMonth + 1).random())*/
+         return 180000
     }
 
      private fun scheduleNotification(
          context: Context,
          text: String,
          delay: Long,
-         notificationId: Int
+         notificationId: Int,
+         channelId: String
      ) {
 
-         val notifyIntent = Intent(context, HomeActivity::class.java).apply {
+         val notifyIntent = Intent(context, LaunchActivity::class.java).apply {
              flags = Intent.FLAG_ACTIVITY_NEW_TASK
          }
          val notifyPendingIntent = PendingIntent.getActivity(
              context, 1111, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
          )
 
-         val channelId = "333"
+         val futureInMillis = SystemClock.elapsedRealtime() + delay
+
          val builder = NotificationCompat.Builder(currentContext, channelId)
              .setSmallIcon(R.drawable.ic_notifications_24dp)
              .setContentTitle("TrackYourStress")
              .setContentText(text)
+             .setAutoCancel(true)
+             .setDefaults(NotificationCompat.DEFAULT_ALL)
              .setStyle(
                  NotificationCompat.BigTextStyle()
                      .bigText(text)
              )
              .setPriority(NotificationCompat.PRIORITY_DEFAULT)
              .setContentIntent(notifyPendingIntent)
+             .setWhen(System.currentTimeMillis() + delay)
 
          val notificationIntent = Intent(context, NotificationPublisher::class.java)
          notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
@@ -188,7 +201,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              context,
              notificationId,
              notificationIntent,
-             PendingIntent.FLAG_CANCEL_CURRENT //cancel?
+             PendingIntent.FLAG_CANCEL_CURRENT
          )
 
 
@@ -212,8 +225,8 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
                  //notify(notificationId, builder.build())
              }
          }
-         val futureInMillis = SystemClock.elapsedRealtime() + delay
+
          val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-         alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent)
+         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent)
      }
  }

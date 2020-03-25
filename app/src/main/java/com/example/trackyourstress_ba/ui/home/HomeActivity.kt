@@ -67,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
         if (!notificationWorkerRunning) {
             val notificationRequest =
                 //PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
-                PeriodicWorkRequestBuilder<NotificationWorker>(15, TimeUnit.MINUTES).build()
+                PeriodicWorkRequestBuilder<NotificationWorker>(30, TimeUnit.MINUTES).build()
 
             WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork(
