@@ -14,7 +14,7 @@ class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_start)
         loginButton = findViewById(R.id.login_button)
         registerButton = findViewById(R.id.register_button)
 

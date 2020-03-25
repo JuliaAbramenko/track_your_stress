@@ -20,6 +20,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.title = "Registrierung"
         setContentView(R.layout.activity_registration__confirmation)
         registrationLinkSent = findViewById(R.id.registration_confirm_text)
         backButton = findViewById(R.id.register_back)

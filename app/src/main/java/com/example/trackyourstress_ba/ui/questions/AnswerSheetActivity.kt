@@ -31,6 +31,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answersheet)
+        this.title = "Fragebogen"
         linearLayout = findViewById(R.id.answersheetMainView)
     }
 
@@ -41,7 +42,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
         )
         try {
             response = JSONObject(intent.getStringExtra("response")!!)
-            questionnaireID = intent.getStringExtra("id").toInt()
+            questionnaireID = intent.getStringExtra("id")!!.toInt()
             answersheetUtils = AnswersheetUtils()
 
         } catch (e: JSONException) {

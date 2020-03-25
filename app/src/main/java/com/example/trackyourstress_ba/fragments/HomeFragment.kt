@@ -16,7 +16,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        this.activity?.title = "Home"
         currentContext = view!!.context
+
         return view
     }
 

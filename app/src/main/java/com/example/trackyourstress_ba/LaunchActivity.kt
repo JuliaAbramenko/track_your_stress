@@ -15,12 +15,12 @@ class LaunchActivity : Activity() {
             this.packageName, Context.MODE_PRIVATE
         )
         //sharedPreferences.edit().clear().apply()
-        if (!sharedPreferences.contains("token")) {
+        /*if (!sharedPreferences.contains("token")) {
             sharedPreferences.edit().putString("token", "").apply()
-        }
+        }*/
         if (sharedPreferences.contains("token") && sharedPreferences.getString(
                 "token",
-                null
+                ""
             ) != ""
         ) {
             val intent = Intent(this, HomeActivity::class.java)

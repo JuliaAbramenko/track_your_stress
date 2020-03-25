@@ -66,13 +66,12 @@ class HomeActivity : AppCompatActivity() {
 
         if (!notificationWorkerRunning) {
             val notificationRequest =
-                //PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
-                PeriodicWorkRequestBuilder<NotificationWorker>(30, TimeUnit.MINUTES).build()
+                PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
 
             WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork(
                     "NotificationRequest",
-                    ExistingPeriodicWorkPolicy.REPLACE, //or .APPEND?
+                    ExistingPeriodicWorkPolicy.KEEP, //or .APPEND? or cancel?
                     notificationRequest
                 )
             notificationWorkerRunning = true
@@ -88,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
             WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork(
                     "TokenRequest",
-                    ExistingPeriodicWorkPolicy.REPLACE,
+                    ExistingPeriodicWorkPolicy.KEEP, //sure?
                     tokenRequest
                 )
 
@@ -200,6 +199,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_logout -> {
                     conUtils.logoutUser(this)
                     drawer.closeDrawers()
+                    ClearingUtils.clearSharedPreferences(this)
                     returnToLogin()
                     true
                 }
@@ -209,40 +209,11 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun test() {
-        val builder = NotificationCompat.Builder(this, "999")
-            .setSmallIcon(R.drawable.ic_notifications_24dp)
-            .setContentTitle("TrackYourStress")
-            .setContentText("Much longer text that cannot fit one line...")
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText("Much longer text that cannot fit one line...")
-            )
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "trackyourstress"
-            val descriptionText = "strange channel"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("999", name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-        with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(0, builder.build())
-        }
-
-    }
 
     private fun returnToLogin() {
         val intent = Intent(this@HomeActivity, StartActivity::class.java)
         startActivity(intent)
     }
-
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -251,7 +222,6 @@ class HomeActivity : AppCompatActivity() {
         }
         else super.onBackPressed()
     }
-
 
     private fun deleteAllViews() {
         root.removeAllViews()

@@ -35,6 +35,7 @@ class QuestionnairesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_questionnaires, container, false)
+        this.activity?.title = "Fragebögen"
         currentContext = container!!.context
         tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table)
         sharedPreferences =
