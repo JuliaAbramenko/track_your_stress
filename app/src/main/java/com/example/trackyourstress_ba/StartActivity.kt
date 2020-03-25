@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
-import com.example.trackyourstress_ba.ui.register.RegisterActivity
+import com.example.trackyourstress_ba.ui.register.RegistrationActivity
 
 class StartActivity : AppCompatActivity() {
     lateinit var loginButton: Button
@@ -26,7 +26,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         registerButton.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, RegistrationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finishActivity(0)

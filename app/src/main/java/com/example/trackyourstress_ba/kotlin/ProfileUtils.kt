@@ -34,7 +34,7 @@ class ProfileUtils(caller: ProfileFragment) {
             Response.Listener { response ->
                 caller.responseReceived(response)
             }, Response.ErrorListener{ error ->
-                sharedPreferences.edit().remove("token").commit()
+                sharedPreferences.edit().remove("token").apply()
                 Log.e("getProfile", error.toString())
                 throw Exception("shit happened: $error")
             })

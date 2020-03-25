@@ -1,15 +1,13 @@
 package com.example.trackyourstress_ba.kotlin
 
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.*
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
-import com.example.trackyourstress_ba.ui.register.RegisterActivity
+import com.example.trackyourstress_ba.ui.register.RegistrationActivity
 import com.example.trackyourstress_ba.ui.register.RegistrationConfirmationActivity
 import org.json.JSONObject
 
@@ -72,7 +70,7 @@ class ConnectionUtils {
         password: String,
         password_confirmation: String,
         username: String,
-        caller: RegisterActivity
+        caller: RegistrationActivity
     ) {
         val jsonObject = JSONObject(
             mapOf(

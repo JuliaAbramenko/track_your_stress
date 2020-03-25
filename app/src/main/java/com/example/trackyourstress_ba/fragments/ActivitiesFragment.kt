@@ -2,7 +2,6 @@ package com.example.trackyourstress_ba.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
@@ -11,9 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ActivitiesUtils
-import com.example.trackyourstress_ba.kotlin.HomeUtils
 import org.json.JSONObject
-import org.w3c.dom.Text
 
 class ActivitiesFragment : Fragment() {
 

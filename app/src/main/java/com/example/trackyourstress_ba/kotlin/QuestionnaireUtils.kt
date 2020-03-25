@@ -10,7 +10,7 @@ import com.android.volley.toolbox.NoCache
 import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 
 class QuestionnaireUtils {
-    var requestQueue: RequestQueue
+    private var requestQueue: RequestQueue
     init {
         val cache = NoCache()
         val network = BasicNetwork(HurlStack())

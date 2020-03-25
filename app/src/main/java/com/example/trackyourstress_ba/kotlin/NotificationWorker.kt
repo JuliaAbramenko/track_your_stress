@@ -55,7 +55,6 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              ) {
                  createNewDailyNotification()
              }
-             createNewDailyNotification()
          }
 
         val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
@@ -67,11 +66,10 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              ) {
                  createNewWeeklyNotification()
              }
-             createNewWeeklyNotification()
          }
 
         val isNewMonth = date.get(Calendar.DAY_OF_MONTH) == 1
-         sharedPreferences.edit().putInt("currentMonth", date.get(Calendar.MONTH)).apply()
+         //sharedPreferences.edit().putInt("currentMonth", date.get(Calendar.MONTH)).apply()
 
          val daysInMonth = date.getActualMaximum(Calendar.DAY_OF_MONTH)
          if (isNewMonth && notificationSettings[2]) {
@@ -82,7 +80,6 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              ) {
                  createNewMonthlyNotification(daysInMonth)
              }
-             createNewMonthlyNotification(daysInMonth)
          }
         return Result.success()
     }
@@ -164,7 +161,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
     }
 
      private fun getRandomMilliSecondMonthly(daysInMonth: Int): Long {
-         val milliSecondsMonth = 60 * 15 * 1000L//60L * 60L * 24L * 1000L * daysInMonth
+         val milliSecondsMonth = 60L * 60L * 24L * 1000L * daysInMonth
          return Random.nextLong((0L until milliSecondsMonth + 1).random())
     }
 

@@ -7,7 +7,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.trackyourstress_ba.ui.login.LoginActivity
-import com.example.trackyourstress_ba.ui.register.RegisterActivity
+import com.example.trackyourstress_ba.ui.register.RegistrationActivity
 import org.junit.Rule
 import org.junit.Test
 
@@ -26,6 +26,6 @@ class StartActivityTest {
     @Test
     fun testRegisterButton() {
         onView(withId(R.id.register_button)).perform(click())
-        intended(hasComponent(RegisterActivity::class.java.name))
+        intended(hasComponent(RegistrationActivity::class.java.name))
     }
 }

@@ -1,5 +1,6 @@
 package com.example.trackyourstress_ba.ui.register
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -11,7 +12,7 @@ import com.example.trackyourstress_ba.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
-class RegisterActivity : AppCompatActivity() {
+class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var editEmail: EditText
     private lateinit var editPassword: EditText
@@ -26,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.title = "Registrierung"
         setContentView(R.layout.activity_register)
+
 
         editEmail = findViewById(R.id.register_email_field)
         editPassword = findViewById(R.id.register_password_field)
@@ -46,6 +48,10 @@ class RegisterActivity : AppCompatActivity() {
             } else if (!checkBox.isChecked) {
                 needCheck()
             } else {
+                val preferences = this.getSharedPreferences(
+                    this.packageName, Context.MODE_PRIVATE
+                )
+                preferences.edit().putString("email", editEmail.text.toString()).apply()
                 conUtils.registerUser(
                     editEmail.text.toString(), editPassword.text.toString(),
                     editPasswordConfirmation.text.toString(), editUsername.text.toString(), this
@@ -54,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, StartActivity::class.java)
+            val intent = Intent(this@RegistrationActivity, StartActivity::class.java)
             startActivity(intent)
         }
     }
@@ -93,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
     fun nextStep() {
-        val intent = Intent(this@RegisterActivity, RegistrationConfirmationActivity::class.java)
+        val intent = Intent(this@RegistrationActivity, RegistrationConfirmationActivity::class.java)
         startActivity(intent)
     }
 }
