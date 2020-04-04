@@ -2,6 +2,5 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/alegreya_sc</item>
-        <item>@font/advent_pro</item>
     </array>
 </resources>

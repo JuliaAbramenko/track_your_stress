@@ -185,5 +185,7 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="german_flag_description">Deutsche Flagge zur Sprachauswahl</string>
     <string name="english_flag_description">Englische Flagge zur Sprachauswahl</string>
     <string name="error_logout">Fehler bei Logout</string>
+    <string name="language_settings">Spracheinstellungen</string>
+    <string name="settings">Einstellungen</string>
 
 </resources>
