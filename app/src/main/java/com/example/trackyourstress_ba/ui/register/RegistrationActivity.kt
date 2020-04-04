@@ -25,7 +25,7 @@ class RegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.title = "Registrierung"
+        this.title = getString(R.string.Registration)
         setContentView(R.layout.activity_register)
 
 
@@ -68,7 +68,7 @@ class RegistrationActivity : AppCompatActivity() {
     private fun passwordsNotMatching() {
         Toast.makeText(
             applicationContext,
-            "Die Passwörter stimmen nicht überein",
+            getString(R.string.password_not_match),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -76,7 +76,7 @@ class RegistrationActivity : AppCompatActivity() {
     private fun passwordTooShort() {
         Toast.makeText(
             applicationContext,
-            "Das Passwort ist zu kurz",
+            getString(R.string.password_too_short),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -84,7 +84,7 @@ class RegistrationActivity : AppCompatActivity() {
     private fun emailNotValid() {
         Toast.makeText(
             applicationContext,
-            "Die Email ist nicht gültig. Prüfen Sie Ihre Eingabe",
+            getString(R.string.email_invalid),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -92,7 +92,7 @@ class RegistrationActivity : AppCompatActivity() {
     private fun needCheck() {
         Toast.makeText(
             applicationContext,
-            "Bitte bestätigen Sie die Bedingung",
+            getString(R.string.confirm_requirement),
             Toast.LENGTH_LONG
         ).show()
     }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TrackYourStress</string>
     <string name="welcome_text">Herzlich willkommen bei TrackYourStress!</string>
@@ -171,19 +172,17 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="navigation_drawer_open">Navigation öffnen</string>
     <string name="not_applicable">Nicht zutreffend</string>
     <string name="prefer_not_to_say">Keine Angabe</string>
-    <string name="link_send_not_possible">Link konnte nicht gesendet werden. Nutzer nicht gefunden oder bereits verifiziert</string>
-    <string name="link_sent_check_email">Link wurde erneut gesendet. Prüfen Sie Ihre Emails</string>
-    <string name="imprint">Impressum</string>
-    <string name="home" translatable="false">Home</string>
-    <string name="go_on">Weiter</string>
     <string name="Registration">Registrierung</string>
-    <string name="activities_not_loaded">Aktivitäten konnten nicht geladen werden</string>
-    <string name="confirm_requirement">Bitte bestätigen Sie die Bedingung</string>
-    <string name="email_invalid">Die Email ist nicht gültig. Prüfen Sie Ihre Eingabe</string>
-    <string name="password_too_short">Das Passwort ist zu kurz</string>
     <string name="password_not_match">Die Passwörter stimmen nicht überein</string>
+    <string name="password_too_short">Das Passwort ist zu kurz</string>
+    <string name="email_invalid">Die Email ist nicht gültig. Prüfen Sie Ihre Eingabe</string>
+    <string name="confirm_requirement">Bitte bestätigen Sie die Bedingung</string>
+    <string name="link_sent_check_email">Link wurde erneut gesendet. Prüfen Sie Ihre Emails</string>
+    <string name="link_send_not_possible">Link konnte nicht gesendet werden. Nutzer nicht gefunden oder bereits verifiziert</string>
+    <string name="imprint">Impressum</string>
+    <string name="go_on">Weiter</string>
+    <string name="activities_not_loaded">Aktivitäten konnten nicht geladen werden</string>
     <string name="german_flag_description">Deutsche Flagge zur Sprachauswahl</string>
     <string name="english_flag_description">Englische Flagge zur Sprachauswahl</string>
     <string name="error_logout">Fehler bei Logout</string>
-
 </resources>

@@ -58,4 +58,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.817" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+
+        <ImageView
+            android:id="@+id/germanyFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/german_flag_description"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/flag_germany" />
+
+        <ImageView
+            android:id="@+id/britainFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/english_flag_description"
+            app:srcCompat="@drawable/flag_britain" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

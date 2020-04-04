@@ -20,7 +20,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.title = "Registrierung"
+        this.title = getString(R.string.Registration)
         setContentView(R.layout.activity_registration__confirmation)
         registrationLinkSent = findViewById(R.id.registration_confirm_text)
         backButton = findViewById(R.id.register_back)
@@ -46,7 +46,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
     fun linkResent() {
         Toast.makeText(
             applicationContext,
-            "Link wurde erneut gesendet. Prüfen Sie Ihre Emails",
+            getString(R.string.link_sent_check_email),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -54,7 +54,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
     fun notify400() {
         Toast.makeText(
             applicationContext,
-            "Link konnte nicht gesendet werden. Nutzer nicht gefunden oder bereits verifiziert",
+            getString(R.string.link_send_not_possible),
             Toast.LENGTH_LONG
         ).show()
     }

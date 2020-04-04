@@ -20,7 +20,7 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_impressum, container, false)
-        this.activity?.title = "Über uns"
+        this.activity?.title = getString(R.string.about_us)
         currentContext = container!!.context
         return view
     }

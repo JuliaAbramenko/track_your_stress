@@ -36,7 +36,7 @@ class ProfileFragment: Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         currentContext = container!!.context
         profileUtils = ProfileUtils(this)
-        this.activity?.title = "Profil"
+        this.activity?.title = getString(R.string.profile)
         return inflater.inflate(R.layout.fragment_profile,container,false)
     }
 

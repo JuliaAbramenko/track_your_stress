@@ -8,6 +8,7 @@ import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 
 import com.example.trackyourstress_ba.R
+import com.example.trackyourstress_ba.kotlin.ClearingUtils
 import kotlinx.android.synthetic.main.activity_home.*
 
 class LogoutFragment : Fragment() {
@@ -17,6 +18,9 @@ class LogoutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        if (container != null) {
+            ClearingUtils.clearSharedPreferences(container.context)
+        }
         return inflater.inflate(R.layout.fragment_logout, container, false)
     }
 }

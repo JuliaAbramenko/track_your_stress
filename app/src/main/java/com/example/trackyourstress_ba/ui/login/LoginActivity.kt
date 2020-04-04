@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
                 .apply()
         }
         if (!sharedPreferences.contains("currentLanguage")) {
-            sharedPreferences.edit().putString("currentLanguage", "de").apply() //default german
+            sharedPreferences.edit().putString("currentLanguage", "de").apply() //default germanFlag
         }
 
         editUsername = findViewById(R.id.username)
@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
         val userId = response.getJSONObject("data").getString("id")
         sharedPreferences.edit().putString("userId", userId).apply()
         val username = response.getJSONObject("data").getJSONObject("attributes").getString("name")
-        sharedPreferences.edit().putString("userName", username).apply() //default german
+        sharedPreferences.edit().putString("userName", username).apply() //default germanFlag
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)
     }

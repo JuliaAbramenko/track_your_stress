@@ -230,7 +230,7 @@ class HomeActivity : AppCompatActivity() {
     fun notify500() {
         Toast.makeText(
             applicationContext,
-            "Fehler bei Logout",
+            getString(R.string.error_logout),
             Toast.LENGTH_LONG
         ).show()
         sharedPreferences.edit().remove("token").apply()

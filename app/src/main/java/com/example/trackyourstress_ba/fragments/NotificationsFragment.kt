@@ -23,7 +23,7 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         currentContext = container!!.context
-        this.activity?.title = "Benachrichtigungen"
+        this.activity?.title = getString(R.string.notifications)
         return inflater.inflate(R.layout.fragment_notifications, container, false)
     }
 

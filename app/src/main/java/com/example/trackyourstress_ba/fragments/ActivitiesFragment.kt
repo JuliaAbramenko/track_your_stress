@@ -27,7 +27,7 @@ class ActivitiesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_activities, container, false)
-        this.activity?.title = "Aktivitäten"
+        this.activity?.title = getString(R.string.activities)
         currentContext = view!!.context
         sharedPreferences = currentContext.getSharedPreferences(
             currentContext.packageName, Context.MODE_PRIVATE
@@ -57,7 +57,7 @@ class ActivitiesFragment : Fragment() {
             val entry = entries.getJSONObject(i)
             val date =
                 entry.getJSONObject("attributes").getJSONObject("created_at").getString("date")
-                    .substring(0, 17)
+                    .substring(0, 16)
             var message = entry.getJSONObject("attributes").getString("text")
             val potentialName = entry.getJSONObject("attributes").getString("name")
             if (potentialName != "null") {
@@ -93,8 +93,8 @@ class ActivitiesFragment : Fragment() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE)
-            buttonBack.text = "Zurück"
-            buttonForward.text = "Weiter"
+            buttonBack.text = getString(R.string.Back)
+            buttonForward.text = getString(R.string.go_on)
             buttonForward.layoutParams = paramsRight
             buttonBack.layoutParams = paramsLeft
             relativeLayout.addView(buttonBack)
@@ -108,7 +108,7 @@ class ActivitiesFragment : Fragment() {
     fun retrievalFailed() {
         Toast.makeText(
             currentContext,
-            "Aktivitäten konnten nicht geladen werden",
+            getString(R.string.activities_not_loaded),
             Toast.LENGTH_LONG
         ).show()
     }

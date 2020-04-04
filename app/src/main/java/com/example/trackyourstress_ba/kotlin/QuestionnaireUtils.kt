@@ -32,7 +32,7 @@ class QuestionnaireUtils {
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
-                val language = caller.sharedPreferences.getString("currentLanguage", null)
+                val language = caller.sharedPreferences.getString("locale", "de")
                 header["Accept-language"] = language!!
                 return header
             }
@@ -55,7 +55,7 @@ class QuestionnaireUtils {
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
-                val language = caller.sharedPreferences.getString("currentLanguage", null)
+                val language = caller.sharedPreferences.getString("locale", "de")
                 header["Accept-language"] = language!!
                 return header
             }

@@ -34,8 +34,9 @@ class ActivitiesUtils {
                 caller.retrievalFailed()
             }) {
             override fun getHeaders(): MutableMap<String, String> {
+                val language = sharedPrefs.getString("locale", "de")
                 val header = mutableMapOf<String, String>()
-                val language = sharedPrefs.getString("currentLanguage", "de")
+                //val language = sharedPrefs.getString("currentLanguage", "de")
                 header["Accept-language"] = language!!
                 return header
             }

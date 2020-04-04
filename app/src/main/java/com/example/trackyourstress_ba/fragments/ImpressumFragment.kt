@@ -23,7 +23,7 @@ class ImpressumFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_impressum, container, false)
-        this.activity?.title = "Impressum"
+        this.activity?.title = getString(R.string.imprint)
         currentContext = container!!.context
         return view
     }

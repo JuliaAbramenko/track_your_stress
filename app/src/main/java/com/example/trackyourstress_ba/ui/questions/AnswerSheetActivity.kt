@@ -31,7 +31,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answersheet)
-        this.title = "Fragebogen"
+        this.title = getString(R.string.questionnaires)
         linearLayout = findViewById(R.id.answersheetMainView)
     }
 
