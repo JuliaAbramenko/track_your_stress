@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.InputType
 import android.text.method.PasswordTransformationMethod
+import android.text.method.TransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +30,6 @@ class ProfileFragment: Fragment(){
     lateinit var sexRadioGroup: RadioGroup
     lateinit var submitButton: Button
     lateinit var changePasswordButton: Button
-    lateinit var deleteProfileButton: Button
     lateinit var profileUtils: ProfileUtils
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
@@ -50,8 +51,6 @@ class ProfileFragment: Fragment(){
         sexRadioGroup = requireView().findViewById(R.id.sex_radio_group)
         submitButton = requireView().findViewById(R.id.submit_button_update_profile)
         changePasswordButton = requireView().findViewById(R.id.button_change_password)
-        deleteProfileButton = requireView().findViewById(R.id.button_delete_profile)
-
         submitButton.setOnClickListener {
                 profileUtils.updateProfile(
                     editUsername.text.toString(), editFirstName.text.toString(),
@@ -62,58 +61,34 @@ class ProfileFragment: Fragment(){
             profileUpdated()
         }
         changePasswordButton.setOnClickListener {
-            val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
-            val oldPassword = EditText(currentContext)
-            oldPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            alert.setTitle("Passwort ändern")
-            alert.setMessage("Altes Passwort")
-            alert.setView(oldPassword)
-            alert.setPositiveButton(
-                "Weiter"
-            ) { _, _ ->
-                checkOldPassword(oldPassword.text.toString())
-            }
-            alert.setNegativeButton(
-                "Abbrechen",
-                { dialog, whichButton ->
-                    Toast.makeText(currentContext, "Would not change", Toast.LENGTH_LONG).show()
-                })
-
-            alert.show()
+            callOldPasswordDialog()
         }
-
-        deleteProfileButton.setOnClickListener {
-            val builder = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
-            builder.setTitle("DELETE PROFILE")
-            builder.setMessage("Do you want to delete your profile?")
-            builder.setPositiveButton("YES") { dialog, which ->
-                Toast.makeText(
-                    currentContext,
-                    "This would delete your profile.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                //TODO and to test
-                //profileUtils.deleteProfile(this)
-
-            }
-            builder.setNegativeButton("No") { dialog, which ->
-                Toast.makeText(currentContext, "Your profile was not deleted", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            builder.setNeutralButton("Cancel") { _, _ ->
-            }
-            val dialog: AlertDialog = builder.create()
-
-            // Display the alert dialog on app interface
-            dialog.show()
-        }
-
-
     }
 
-    private fun notifyRedo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun callOldPasswordDialog() {
+        val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
+        val oldPassword = EditText(currentContext)
+        oldPassword.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        oldPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+        alert.setTitle(getString(R.string.change_password))
+        alert.setMessage(getString(R.string.old_password))
+        alert.setView(oldPassword)
+        alert.setPositiveButton(
+            getString(R.string.go_on)
+        ) { _, _ ->
+            checkOldPassword(oldPassword.text.toString())
+        }
+        alert.setNegativeButton(
+            getString(R.string.cancel)
+        ) { _, _ ->
+            Toast.makeText(
+                currentContext,
+                getString(R.string.password_has_not_been_changed),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        alert.show()
     }
 
     private fun checkOldPassword(oldPassword: String) {
@@ -121,33 +96,58 @@ class ProfileFragment: Fragment(){
     }
 
     private fun profileUpdated() {
-        Toast.makeText(context, "updated profile", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, getString(R.string.profile_updated), Toast.LENGTH_LONG).show()
     }
 
     fun callNewPasswordDialog() {
         val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
         val newPassword = EditText(currentContext)
+        val newPasswordConfirmation = EditText(currentContext)
+        newPassword.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
         newPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-        alert.setTitle("Passwort ändern")
-        alert.setMessage("Neues Passwort")
-
-        alert.setView(newPassword)
-
+        newPasswordConfirmation.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        newPasswordConfirmation.transformationMethod = PasswordTransformationMethod.getInstance()
+        val confirmTextView = TextView(currentContext)
+        confirmTextView.text = getString(R.string.password_confirm)
+        val linearLayout = LinearLayout(currentContext)
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.addView(newPassword)
+        linearLayout.addView(confirmTextView)
+        linearLayout.addView(newPasswordConfirmation)
+        alert.setTitle(getString(R.string.change_password))
+        alert.setMessage(getString(R.string.new_password))
+        alert.setView(linearLayout)
         alert.setPositiveButton(
-            "Weiter"
+            getString(R.string.go_on)
 
-        ) { dialog, whichButton ->
-            val new = newPassword.text.toString()
-            profileUtils.updatePassword(new, alert.show(), this)
-
+        ) { _, _ ->
+            if (newPassword.text.toString().equals(newPasswordConfirmation.text.toString())) {
+                profileUtils.updatePasswordOptions(newPassword.text.toString(), this)
+            } else {
+                showNotMatching()
+                callNewPasswordDialog()
+            }
         }
 
-        alert.setNegativeButton("Cancel",
-            DialogInterface.OnClickListener { dialog, whichButton ->
-                Toast.makeText(currentContext, "Would not change", Toast.LENGTH_LONG).show()
-            })
+        alert.setNegativeButton(
+            getString(R.string.cancel)
+        ) { _, _ ->
+            Toast.makeText(
+                currentContext,
+                getString(R.string.password_has_not_been_changed),
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
         alert.show()
+    }
+
+    private fun showNotMatching() {
+        Toast.makeText(
+            currentContext,
+            getString(R.string.password_not_match),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun getCurrentSexId(): Int {
@@ -177,7 +177,7 @@ class ProfileFragment: Fragment(){
 
     }
 
-    fun fillDataFields(sharedPrefs: SharedPreferences) {
+    private fun fillDataFields(sharedPrefs: SharedPreferences) {
         editUsername.setText(sharedPrefs.getString("userName", null))
         editEmail.setText(sharedPrefs.getString("userEmail", null))
         editFirstName.setText(sharedPrefs.getString("firstName", null))
@@ -190,23 +190,24 @@ class ProfileFragment: Fragment(){
         }
     }
 
-    fun updatePasswordReceived(response: JSONObject) {
-
-
+    fun updatePasswordReceived() {
+        Toast.makeText(
+            currentContext,
+            getString(R.string.password_has_been_changed),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
-    fun profileDeleted(response: JSONObject) {
-        try {
-            //GlobalVariables.localStorage.clear()
-        } catch (except: Exception) {}
-
+    fun updatePasswordOptionsReceived(newPassword: String) {
+        profileUtils.updatePassword(newPassword, this)
     }
 
     fun abortPasswordChange() {
-
+        Toast.makeText(
+            currentContext,
+            getString(R.string.please_retry),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
-    fun continuePasswordChange() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

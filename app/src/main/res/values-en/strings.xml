@@ -84,4 +84,9 @@
     <string name="settings">Settings</string>
     <string name="language_settings">Language settings</string>
     <string name="error_logout">Logout error</string>
+    <string name="new_password">New password</string>
+    <string name="password_has_not_been_changed">Password has not been changed</string>
+    <string name="password_has_been_changed">Password has been changed</string>
+    <string name="please_retry">Please retry</string>
+    <string name="old_password">Old password</string>
 </resources>

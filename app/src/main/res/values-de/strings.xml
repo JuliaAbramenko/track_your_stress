@@ -187,4 +187,10 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="error_logout">Fehler bei Logout</string>
     <string name="language_settings">Spracheinstellungen</string>
     <string name="settings">Einstellungen</string>
+    <string name="old_password">Altes Passwort</string>
+    <string name="password_has_not_been_changed">Passwort wurde nicht verändert</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="password_has_been_changed">Passwort geändert</string>
+    <string name="please_retry">Bitte versuchen Sie es erneut</string>
+    <string name="profile_updated">Profil wurde aktualisiert</string>
 </resources>

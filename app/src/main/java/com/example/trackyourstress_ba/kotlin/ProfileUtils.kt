@@ -75,14 +75,36 @@ class ProfileUtils(caller: ProfileFragment) {
 
     }
 
-    fun updatePassword(password: String, alert: AlertDialog, caller: ProfileFragment) {
+    fun updatePasswordOptions(newPassword: String, caller: ProfileFragment) {
+        val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
+        val token = sharedPreferences.getString("token", null)
+        val url = "$apiEndpoint/api/v1/my/profile/password?token=$token"
+        val request = JsonObjectRequest(
+            Request.Method.OPTIONS, url, null,
+            Response.Listener { _ ->
+                Log.e("password options", "you should never get here")
+            }, Response.ErrorListener { error ->
+
+                if (error.networkResponse == null) {
+                    caller.updatePasswordOptionsReceived(newPassword)
+                    Log.e("password options", error.toString())
+                }
+
+            })
+        requestQueue.add(request)
+    }
+
+    fun updatePassword(password: String, caller: ProfileFragment) {
         val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
         val token = sharedPreferences.getString("token", null)
         val jsonObject = JSONObject(
             mapOf(
                 "data" to mapOf(
                     "type" to "users",
-                        "attributes" to mapOf("password" to password)
+                    "attributes" to mapOf(
+                        "password" to password,
+                        "password_confirmation" to password
+                    )
                 )
             )
         )
@@ -90,26 +112,15 @@ class ProfileUtils(caller: ProfileFragment) {
         val request = JsonObjectRequest(
                 Request.Method.PATCH, url, jsonObject,
             Response.Listener { response ->
-                caller.updatePasswordReceived(response)
+
             }, Response.ErrorListener{error ->
-            throw Exception("Password update error: $error")
+                if (error.networkResponse == null) {
+                    Log.e("password updater", "success")
+                    caller.updatePasswordReceived()
+                }
             })
         requestQueue.add(request)
 
-    }
-
-    fun deleteProfile(caller: ProfileFragment) {
-        val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
-        val token = sharedPreferences.getString("token", null)
-        val url = "$apiEndpoint/api/v1/my/profile?token=$token"
-        val request = JsonObjectRequest(
-            Request.Method.DELETE, url, null,
-            Response.Listener { response ->
-                caller.profileDeleted(response)
-            }, Response.ErrorListener{error ->
-            throw Exception("Profile delete error: $error")
-            })
-        requestQueue.add(request)
     }
 
     fun repeatLogin(password: String, caller: ProfileFragment) {
@@ -130,16 +141,14 @@ class ProfileUtils(caller: ProfileFragment) {
         val request = JsonObjectRequest(
             Request.Method.POST, url, jsonObject,
             Response.Listener { response ->
-                caller.callNewPasswordDialog()
                 val newToken = response.getJSONObject("data").getJSONObject("attributes").getString("token")
                 sharedPreferences.edit().putString("token", newToken).apply()
+                caller.callNewPasswordDialog()
             }, Response.ErrorListener { error ->
                 if (error.networkResponse.statusCode != 200) {
+                    caller.callOldPasswordDialog()
                     caller.abortPasswordChange()
-                } else {
-                    caller.continuePasswordChange()
                 }
-
             })
         requestQueue.add(request)
     }
