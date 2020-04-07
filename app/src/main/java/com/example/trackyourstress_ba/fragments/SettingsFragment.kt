@@ -161,7 +161,6 @@ class SettingsFragment : Fragment() {
         navView?.menu?.getItem(5)?.title = getString(R.string.options)
         navView?.menu?.getItem(5)?.subMenu?.getItem(0)?.title = getString(R.string.imprint)
         navView?.menu?.getItem(5)?.subMenu?.getItem(1)?.title = getString(R.string.about_us)
-
     }
 
     private fun dailyTrue() {

@@ -1,6 +1,5 @@
 package com.example.trackyourstress_ba.kotlin
 
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.BasicNetwork
@@ -11,6 +10,7 @@ import com.example.trackyourstress_ba.fragments.QuestionnairesFragment
 
 class QuestionnaireUtils {
     private var requestQueue: RequestQueue
+
     init {
         val cache = NoCache()
         val network = BasicNetwork(HurlStack())
@@ -28,7 +28,8 @@ class QuestionnaireUtils {
             Response.Listener { response ->
                 caller.allQuestionnairesReceived(response)
             }, Response.ErrorListener { error ->
-                throw Exception("shit happened: $error")
+                if (error.networkResponse == null) caller.notifyNetworkError()
+                else caller.notifyServerError()
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
@@ -37,10 +38,8 @@ class QuestionnaireUtils {
                 return header
             }
         }
-
         requestQueue.add(request)
     }
-
 
     fun getQuestionnaireStructure(questionnaireId: Int, caller: QuestionnairesFragment) {
         val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
@@ -51,7 +50,8 @@ class QuestionnaireUtils {
             Response.Listener { response ->
                 caller.startAnswerSheetActivity(response, questionnaireId)
             }, Response.ErrorListener { error ->
-                throw Exception("shit happened: $error")
+                if (error.networkResponse == null) caller.notifyNetworkError()
+                else caller.notifyServerError()
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
@@ -62,4 +62,6 @@ class QuestionnaireUtils {
         }
         requestQueue.add(request)
     }
+
+
 }

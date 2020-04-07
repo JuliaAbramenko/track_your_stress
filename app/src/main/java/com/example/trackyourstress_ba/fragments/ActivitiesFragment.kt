@@ -40,9 +40,7 @@ class ActivitiesFragment : Fragment() {
         super.onStart()
         activitiesUtils = ActivitiesUtils()
         activitiesUtils.getActivities(1, this)
-
     }
-
 
     fun activitiesReceived(page: Int, response: JSONObject) {
         pages = response.getJSONObject("meta").getJSONObject("pagination").getString("total_pages")
@@ -168,5 +166,13 @@ class ActivitiesFragment : Fragment() {
 
     private fun clearView() {
         root.removeAllViews()
+    }
+
+    fun notifyNetworkError() {
+        Toast.makeText(
+            currentContext,
+            getString(R.string.network_error),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

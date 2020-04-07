@@ -3,16 +3,18 @@ package com.example.trackyourstress_ba.kotlin
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.toolbox.*
+import com.android.volley.toolbox.BasicNetwork
+import com.android.volley.toolbox.HurlStack
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.NoCache
 import com.example.trackyourstress_ba.fragments.ProfileFragment
 import org.json.JSONObject
 
 class ProfileUtils(caller: ProfileFragment) {
-    var requestQueue: RequestQueue
+    private var requestQueue: RequestQueue
     var sharedPreferences: SharedPreferences = caller.currentContext.getSharedPreferences(
         caller.currentContext.packageName, Context.MODE_PRIVATE
     )
@@ -34,9 +36,8 @@ class ProfileUtils(caller: ProfileFragment) {
             Response.Listener { response ->
                 caller.responseReceived(response)
             }, Response.ErrorListener{ error ->
-                sharedPreferences.edit().remove("token").apply()
-                Log.e("getProfile", error.toString())
-                throw Exception("shit happened: $error")
+                if (error.networkResponse == null) caller.notifyNetworkError()
+                else caller.notifyServerError()
             })
         requestQueue.add(request)
     }
@@ -69,7 +70,8 @@ class ProfileUtils(caller: ProfileFragment) {
             Response.Listener { response ->
                 caller.responseReceived(response)
             }, Response.ErrorListener{error ->
-            throw Exception("Profile update error: $error")
+                if (error.networkResponse == null) caller.notifyNetworkError()
+                else caller.notifyServerError()
             })
         requestQueue.add(request)
 
@@ -81,15 +83,11 @@ class ProfileUtils(caller: ProfileFragment) {
         val url = "$apiEndpoint/api/v1/my/profile/password?token=$token"
         val request = JsonObjectRequest(
             Request.Method.OPTIONS, url, null,
-            Response.Listener { _ ->
+            Response.Listener {
                 Log.e("password options", "you should never get here")
             }, Response.ErrorListener { error ->
-
-                if (error.networkResponse == null) {
-                    caller.updatePasswordOptionsReceived(newPassword)
-                    Log.e("password options", error.toString())
-                }
-
+                if (error.networkResponse == null) caller.updatePasswordOptionsReceived(newPassword)
+                else caller.notifyServerError()
             })
         requestQueue.add(request)
     }
@@ -111,13 +109,14 @@ class ProfileUtils(caller: ProfileFragment) {
         val url = "$apiEndpoint/api/v1/my/profile/password?token=$token"
         val request = JsonObjectRequest(
                 Request.Method.PATCH, url, jsonObject,
-            Response.Listener { response ->
-
+            Response.Listener {
+                Log.e("password updater", "with the current API state you should not get here")
             }, Response.ErrorListener{error ->
                 if (error.networkResponse == null) {
                     Log.e("password updater", "success")
                     caller.updatePasswordReceived()
-                }
+                } else caller.notifyServerError()
+
             })
         requestQueue.add(request)
 
@@ -152,5 +151,4 @@ class ProfileUtils(caller: ProfileFragment) {
             })
         requestQueue.add(request)
     }
-
 }

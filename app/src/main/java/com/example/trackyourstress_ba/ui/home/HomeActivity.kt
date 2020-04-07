@@ -39,7 +39,6 @@ class HomeActivity : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
     var tokenWorkerRunning = false
     var notificationWorkerRunning = false
-    //lateinit var notifications: BooleanArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
         if (!tokenWorkerRunning) {
             val tokenRequest =
                 PeriodicWorkRequestBuilder<TokenWorker>(50, TimeUnit.MINUTES).setInitialDelay(
-                    50,
+                    55,
                     TimeUnit.MINUTES
                 ).build()
 
@@ -188,7 +187,7 @@ class HomeActivity : AppCompatActivity() {
                     conUtils.logoutUser(this)
                     drawer.closeDrawers()
                     ClearingUtils.clearSharedPreferences(this)
-                    returnToLogin()
+                    ClearingUtils.returnToLogin(this as Context)
                     true
                 }
 
@@ -198,10 +197,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    private fun returnToLogin() {
+    /*private fun returnToLogin() {
         val intent = Intent(this@HomeActivity, StartActivity::class.java)
         startActivity(intent)
-    }
+    }*/
 
     override fun onBackPressed() {
         super.onBackPressed()

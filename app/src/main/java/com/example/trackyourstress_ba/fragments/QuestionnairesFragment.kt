@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
@@ -168,5 +169,21 @@ class QuestionnairesFragment : Fragment() {
             associatedQuestionnaires[questionnaireId] = questionnaireName
             getRelevantValues(item.getJSONObject("attributes"))
         }
+    }
+
+    fun notifyNetworkError() {
+        Toast.makeText(
+            currentContext,
+            R.string.profile_not_loaded,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun notifyServerError() {
+        Toast.makeText(
+            currentContext,
+            getString(R.string.server_error_occured),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

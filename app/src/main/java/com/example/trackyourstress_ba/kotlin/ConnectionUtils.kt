@@ -154,11 +154,6 @@ class ConnectionUtils {
             }, Response.ErrorListener {
                 caller.notify500()
             })
-        /*val intent = Intent(caller, TokenReceiver::class.java)
-        PendingIntent.getBroadcast(
-            caller as Context, 10, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        ).cancel()*/
 
         requestQueue.add(request)
     }

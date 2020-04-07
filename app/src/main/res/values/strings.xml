@@ -193,5 +193,7 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="password_has_been_changed">Passwort geändert</string>
     <string name="please_retry">Bitte versuchen Sie es erneut</string>
     <string name="profile_updated">Profil wurde aktualisiert</string>
+    <string name="logout_successful">Logout erfolgreich</string>
+    <string name="server_error_occured">Ein Serverfehler ist aufgetreten</string>
 
 </resources>

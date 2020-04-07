@@ -121,7 +121,7 @@ class ProfileFragment: Fragment(){
             getString(R.string.go_on)
 
         ) { _, _ ->
-            if (newPassword.text.toString().equals(newPasswordConfirmation.text.toString())) {
+            if (newPassword.text.toString() == newPasswordConfirmation.text.toString()) {
                 profileUtils.updatePasswordOptions(newPassword.text.toString(), this)
             } else {
                 showNotMatching()
@@ -161,20 +161,16 @@ class ProfileFragment: Fragment(){
     }
 
     fun responseReceived(response: JSONObject) {
-        try {
-            val profileJSON = response.getJSONObject("data").getJSONObject("attributes")
-            val sharedPrefs = currentContext.getSharedPreferences(
-                currentContext.packageName, Context.MODE_PRIVATE
-            )
-            sharedPrefs.edit().putString("userName", profileJSON.getString("name")).apply()
-            sharedPrefs.edit().putString("userEmail", profileJSON.getString("email")).apply()
-            sharedPrefs.edit().putString("firstName", profileJSON.getString("firstname")).apply()
-            sharedPrefs.edit().putString("lastName", profileJSON.getString("lastname")).apply()
-            sharedPrefs.edit().putString("sex", profileJSON.getString("sex")).apply()
-            fillDataFields(sharedPrefs)
-        } catch (except : Exception) {
-        }
-
+        val profileJSON = response.getJSONObject("data").getJSONObject("attributes")
+        val sharedPrefs = currentContext.getSharedPreferences(
+            currentContext.packageName, Context.MODE_PRIVATE
+        )
+        sharedPrefs.edit().putString("userName", profileJSON.getString("name")).apply()
+        sharedPrefs.edit().putString("userEmail", profileJSON.getString("email")).apply()
+        sharedPrefs.edit().putString("firstName", profileJSON.getString("firstname")).apply()
+        sharedPrefs.edit().putString("lastName", profileJSON.getString("lastname")).apply()
+        sharedPrefs.edit().putString("sex", profileJSON.getString("sex")).apply()
+        fillDataFields(sharedPrefs)
     }
 
     private fun fillDataFields(sharedPrefs: SharedPreferences) {
@@ -206,6 +202,22 @@ class ProfileFragment: Fragment(){
         Toast.makeText(
             currentContext,
             getString(R.string.please_retry),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun notifyNetworkError() {
+        Toast.makeText(
+            currentContext,
+            R.string.profile_not_loaded,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun notifyServerError() {
+        Toast.makeText(
+            currentContext,
+            getString(R.string.server_error_occured),
             Toast.LENGTH_LONG
         ).show()
     }

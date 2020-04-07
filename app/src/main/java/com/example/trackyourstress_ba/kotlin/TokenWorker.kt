@@ -103,17 +103,20 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                 sharedPreferences.edit().putString("token", newToken).apply()
             }, Response.ErrorListener { error ->
                 when {
+                    error.networkResponse == null -> ClearingUtils.logoutUser(currentContext)
                     error.networkResponse.statusCode == 400 -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "400 error")
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         ClearingUtils.clearSharedPreferences(applicationContext)
+                        ClearingUtils.logoutUser(currentContext)
                         exitProcess(0)
                     }
                     error.networkResponse.statusCode == 409 -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "409 error")
                         ClearingUtils.clearSharedPreferences(applicationContext)
+                        ClearingUtils.logoutUser(currentContext)
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         exitProcess(0)
                     }
@@ -121,6 +124,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "unknown error")
                         ClearingUtils.clearSharedPreferences(applicationContext)
+                        ClearingUtils.logoutUser(currentContext)
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         exitProcess(0)
                     }
