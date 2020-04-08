@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ActivitiesUtils
 import org.json.JSONObject
 
+@Suppress("DEPRECATION")
 class ActivitiesFragment : Fragment() {
 
     lateinit var root: LinearLayout
@@ -46,10 +48,6 @@ class ActivitiesFragment : Fragment() {
         pages = response.getJSONObject("meta").getJSONObject("pagination").getString("total_pages")
             .toInt()
         currentPage = page
-        val headline = TextView(context)
-        headline.text = getString(R.string.myActivities)
-        headline.textSize = 24F
-        root.addView(headline)
         val entries = response.getJSONArray("data")
         for (i in 0 until entries.length()) {
             val entry = entries.getJSONObject(i)

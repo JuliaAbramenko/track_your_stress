@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
@@ -53,10 +54,13 @@ class QuestionnairesFragment : Fragment() {
         val firstRow = TableRow(currentContext)
         val textTitle = TextView(currentContext)
         textTitle.background = resources.getDrawable(R.drawable.border)
+        textTitle.setTypeface(null, Typeface.BOLD)
         val testRunning = TextView(currentContext)
         testRunning.background = resources.getDrawable(R.drawable.border)
+        testRunning.setTypeface(null, Typeface.BOLD)
         val testRepeatable = TextView(currentContext)
         testRepeatable.background = resources.getDrawable(R.drawable.border)
+        testRepeatable.setTypeface(null, Typeface.BOLD)
         firstRow.layoutParams =
             TableLayout.LayoutParams(
                 TableLayout.LayoutParams.MATCH_PARENT,
@@ -65,12 +69,12 @@ class QuestionnairesFragment : Fragment() {
         textTitle.text = getString(R.string.title_questionnaire)
         testRunning.text = getString(R.string.running)
         testRepeatable.text = getString(R.string.type)
+
         firstRow.addView(textTitle)
         firstRow.addView(testRunning)
         firstRow.addView(testRepeatable)
         tableQuestionnaires.addView(firstRow, 0)
     }
-
 
     private fun getRelevantValues(current: JSONObject) {
         if (current.getString("is_filled_out") == "false") {
