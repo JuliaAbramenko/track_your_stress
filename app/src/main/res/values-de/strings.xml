@@ -24,11 +24,11 @@
     <string name="submit">Abschicken</string>
     <string name="change_password">Password ändern</string>
     <string name="delete_profile">Profil löschen</string>
-    <string name="turn_on_all_notifcations">Alle Benachrichtigungen abstellen</string>
+    <string name="turn_on_all_notifications">Alle Benachrichtigungen</string>
     <string name="turn_on_daily_notifications">Tägliche Benachrichtigungen</string>
     <string name="turn_on_weekly_notifications">Wöchentliche Benachrichtigungen</string>
     <string name="manage_notifications">Benachrichtigungen verwalten</string>
-    <string name="turn_on_monthly_notifcations">Monatliche Benachrichtigungen</string>
+    <string name="turn_on_monthly_notifications">Monatliche Benachrichtigungen</string>
     <string name="off">AUS</string>
     <string name="on">AN</string>
     <string name="daily_notifications_on">Tägliche Benachrichtigungen AN</string>
@@ -55,7 +55,6 @@
     <string name="options">Optionen</string>
     <string name="home_text">Mit TrackYourStress können Sie Ihre individuellen Schwankungen des Stress-Levels mittels einer Smartphone App erfassen. Mit Hilfe ihres Smartphones können Sie die Schwankungen Ihres Stress-Levels systematisch erfassen und herausfinden womit diese zusammenhängen.</string>
     <string name="confirmSaveData">Ich bin einverstanden, dass die App TrackYourStress Daten auf meinem Gerät speichert</string>
-    <string name="impressum">Impressum</string>
     <string name="impressum_text"><![CDATA[
     <h2>Impressum</h2>
     <h3>Herausgeber</h3>
@@ -93,14 +92,22 @@ phone: +49 941 941 2096 <br>
 e-mail: winfried.schlee@tinnitusresearch.org<br>
 <h2>Konzeption und technische Umsetzung </h2>
 
+Pascal Damasch <be>
+Institut für Datenbanken und Informationssysteme der Universität Ulm<br>
+email: Pascal.Damasch@uni-ulm.de <br>
+
+Jochen Herrmann <br>
+Institut für Datenbanken und Informationssysteme der Universität Ulm<br>
+email: Jochen.Herrmann@uni-ulm.de <br>
+
 Julia Abramenko <br>
-Insitut für Datenbanken und Informationssystem der Universität Ulm<br>
-email: julia.abramenko@uni-ulm.de<br>
-<br>
+Institut für Datenbanken und Informationssysteme der Universität Ulm<br>
+email: Julia.Abramenko@uni-ulm.de<br>
 
 Rüdiger Pryss<br>
 Institut für Datenbanken und Informationssysteme der Universität Ulm<br>
 email: Rüdiger.Pryss@uni-ulm.de<br>
+
 <h2>Haftungsausschluss</h2>
 
 <p>Mit Trackyourstress.com wird ein Service zur Messung der individuellen Tinnitusbelastung angeboten. Sie haben die Möglichkeiten Ihre Daten einzusehen und mit ihrem behandelnden Arzt oder Therapeuten zu besprechen. Eine Garantie für die Richtigkeit und juristische Verwertbarkeit der Daten kann weder von Seiten der Tinnitus Research Initiative noch von Mitarbeitern des Trackyourtinnitus Projektes gegeben werden. </p>
@@ -127,9 +134,8 @@ email: Rüdiger.Pryss@uni-ulm.de<br>
 <p>Die wissenschaftlichen Erkenntnisse aus diesem Forschungsprojekt können in wissenschaftlichen Fachzeitschriften veröffentlich werden. Dabei wird es jedoch nicht möglich sein, Ihre persönlichen Informationen zu identifizieren. </p>
 ]]>
     </string>
-
-
-    <string name="about_text"> <![CDATA[<h2>Über uns</h2>
+    <string name="about_text"> <![CDATA[
+    <h2>Über uns</h2>
 
 <p>Unter Stress versteht man die Antwort des Organismus auf eine Anforderung. Unterschiedliche Menschen können auf ein und dieselbe Anforderung unterschiedliche Stressreaktionen zeigen. Aber auch eine Person kann auf ein und dieselbe Anforderung in unterschiedlichen Situationen / Kontexten eine unterschiedliche Stressreaktion zeigen. Welche Stressreaktion auf eine Anforderung folgt, hängt z. B. von den Bewältigungsmechanismen einer Person ab. Diese Bewältigungsmechanismen werden auch als Coping bezeichnet. </p>
 
@@ -144,7 +150,7 @@ email: Rüdiger.Pryss@uni-ulm.de<br>
 <p>TrackYourStress ist ein Kooperationsprojekt zwischen folgenden Personen und Universitäten: <br>
 Prof. Dr. Thomas Probst (Department für Psychotherapie und Biopsychosoziale Gesundheit, Donau-Universität Krems, Österreich)<br>
 Prof. Dr. Dennis John (Evangelische Hochschule Nürnberg)<br>
-B.Sc. Pascal Damasch (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
+M.Sc. Pascal Damasch (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
 B.Sc. Michael Schrempp (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
 M.Sc. Johannes Schobel (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br>
 PD Dr. Winfried Schlee (Klinik für Psychiatrie und Psychotherapie, Universitätsklinikum Regensburg, Deutschland)<br>

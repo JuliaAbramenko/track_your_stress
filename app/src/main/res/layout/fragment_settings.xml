@@ -8,24 +8,26 @@
     android:orientation="vertical"
     android:padding="@dimen/nicePadding">
 
-    <Switch
-        android:id="@+id/switch_all_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/turn_on_all_notifcations"
-        android:checked="true"
-        android:textOff="@string/off"
-        android:textOn="@string/on" />
-
     <TextView
         android:id="@+id/manage_notifications_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="@string/manage_notifications"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
+        android:textSize="20sp" />
+
+    <Switch
+        android:id="@+id/switch_all_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_on_all_notifications"
         android:checked="true"
         android:textOff="@string/off"
         android:textOn="@string/on"
-        />
+        android:paddingLeft="@dimen/medium_sp"
+        android:paddingRight="@dimen/medium_sp" />
 
     <Switch
         android:id="@+id/switch_daily_notfications"
@@ -34,7 +36,9 @@
         android:text="@string/turn_on_daily_notifications"
         android:checked="true"
         android:textOff="@string/off"
-        android:textOn="@string/on" />
+        android:textOn="@string/on"
+        android:paddingLeft="@dimen/medium_sp"
+        android:paddingRight="@dimen/medium_sp" />
 
     <Switch
         android:id="@+id/switch_weekly_notifications"
@@ -43,16 +47,20 @@
         android:text="@string/turn_on_weekly_notifications"
         android:checked="true"
         android:textOff="@string/off"
-        android:textOn="@string/on" />
+        android:textOn="@string/on"
+        android:paddingLeft="@dimen/medium_sp"
+        android:paddingRight="@dimen/medium_sp" />
 
     <Switch
         android:id="@+id/switch_monthly_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/turn_on_monthly_notifcations"
+        android:text="@string/turn_on_monthly_notifications"
         android:checked="true"
         android:textOff="@string/off"
-        android:textOn="@string/on" />
+        android:textOn="@string/on"
+        android:paddingLeft="@dimen/medium_sp"
+        android:paddingRight="@dimen/medium_sp" />
 
     <TextView
         android:id="@+id/manage_language"
@@ -61,24 +69,32 @@
         android:checked="true"
         android:text="@string/language_settings"
         android:textOff="@string/off"
-        android:textOn="@string/on" />
+        android:textOn="@string/on"
+        android:textSize="20sp"
+        android:paddingBottom="@dimen/medium_sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="left">
 
         <ImageView
             android:id="@+id/germanFlag"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/flag_germany" />
+            app:srcCompat="@drawable/flag_germany"
+            android:paddingLeft="100sp"
+            android:paddingRight="@dimen/medium_sp" />
 
         <ImageView
             android:id="@+id/englishFlag"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/flag_britain" />
+            app:srcCompat="@drawable/flag_britain"
+            android:paddingLeft="@dimen/medium_sp"
+            android:paddingRight="@dimen/medium_sp" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -51,9 +51,9 @@
     <string name="submit">Submit</string>
     <string name="title_activity_login">Login</string>
     <string name="title_questionnaire">Title</string>
-    <string name="turn_on_all_notifcations">Turn off all notifications</string>
+    <string name="turn_on_all_notifications">All notifications</string>
     <string name="turn_on_daily_notifications">Daily notifications</string>
-    <string name="turn_on_monthly_notifcations">Monthly notifications</string>
+    <string name="turn_on_monthly_notifications">Monthly notifications</string>
     <string name="turn_on_weekly_notifications">Weekly notifications</string>
     <string name="type">Type</string>
     <string name="username">Username</string>
@@ -61,13 +61,108 @@
     <string name="weekly_notifications_off">Weekly notifications OFF</string>
     <string name="welcome_text">Welcome to TrackYourStress!</string>
     <string name="resend_verification_link">Resend verification link</string>
-    <string name="impressum">Imprint</string>
     <string name="not_known">Not known</string>
     <string name="prefer_not_to_say">Prefer not to say</string>
     <string name="profile_not_loaded">Profile could not be deleted</string>
     <string name="home_text">With TrackYourStress you can track your individual stress-level with modern smart phone applications. You can systematically track the variation of your stress-level and find out the factors associated with your stress-level.</string>
-    <string name="impressum_text">Imprint Publisher  Tinnitus Research Initiative Foundation Universitätsstrasse 84 93053 Regensburg phone: +49 941 941 2096 fax: +49 941 941 2925 e-mail: foundation@tinnitusresearch.org Sales tax identification number DE133714227  The foundation Tinnitus Research Initiative is with certificate of 01.02.2010 No. B 1.1-1222.184-1 according to §§ 80, 81 of the Civil Code a foundation with legal capacity under civil law with seat in Regensburg. Due to its statutory provisions and the corresponding foundation law regulations (Art. 10 para. 1 BayStG) of the state foundation supervisory authority, government of the Upper Palatinate. The corporation serves exclusively and directly tax-privileged purposes Authorized to represent is the foundation board:  Dr. med. Berthold Langguth, Regensburg, Germany (Chairman) Prof. Ana Belén Elgoyhen, Buenos Aires, Argentines Prof. Dirk De Ridder, Antwerp, Belgium Competent regulatory authority:  Government of the Upper Palatinate Emmeramsplatz 8 93047 Regensburg Germany Content  Responsible according to §5 TMG: Dr. Winfried Schlee Tinnitus Research Initiative Foundation Universitätsstrasse 84 93053 Regensburg phone: +49 941 941 2096 e-mail: winfried.schlee@tinnitusresearch.org Conception and technical implementation  Pascal Damasch Institute for Databases and Information Systems at the University of Ulm email: Pascal.Damasch@uni-ulm.de  Jochen Herrmann Institute for Databases and Information Systems at the University of Ulm email: Jochen.Herrmann@uni-ulm.de  Rüdiger Pryss Institute for Databases and Information Systems at the University of Ulm email: Rüdiger.Pryss@uni-ulm.de Disclaimer  Trackyourstress.com is a service for measuring the individual tinnitus load. You have the possibility to view your data and discuss it with your attending physician or therapist. Neither the Tinnitus Research Initiative nor the staff of the Trackyourtinnitus Project can guarantee the correctness and legal usability of the data Trackyourstress.com is not a medical device  We would like to expressly point out that we do not provide any medical device with Trackyourstress.com. A treatment of stress is not intended  A worsening of the stress is not to be expected. However, if you notice any negative changes, please stop participating immediately and consult your doctor or therapist Disclaimer for links to external content  As content providers, we are responsible for our own content which we make available for use in accordance with general laws. Cross-references to content provided by other providers are to be distinguished from our own content. These foreign contents originate neither from us, nor do we have the possibility to influence the contents of pages of third parties  The contents of external sites do not reflect our opinion, but serve only for information and the representation of connections. Data protection  We are aware that with Trackyourstress.com\'s service we store highly sensitive data and therefore use the highest standards of data protection to ensure the security and confidentiality of your data.  Your data will be processed and stored completely anonymously</string>
-    <string name="about_text">About Us  Stress is the response of the organism to any demand. Different individuals can show different stress responses to one and the same demand. Moreover, one individual can show a different stress response to one and the same demand in different situations / contexts. The stress response due to the demand depends for example on the coping strategies of the individual.  With this research project we want to offer a method to track the individual stress and coping with a smart phone application. Using the website in conjunction with your phone you can systematically track these variations and find out how they are associated with your daily life. Your answers will also help us learn to more about the variation of stress and coping. With your participation you support our research project to better understand the fluctuations of stress and coping. TrackYourStress cannot be used to treat stress  We would like to emphasize here that TrackYourStress is not a medical device. TrackYourStress is a good tool to measure your stress and to find out under which circumstances it goes up or down.  A worsening of the stress cannot be expected. However, if you feel that your stress is worsening, we want you to stop using TrackYourStress immediately and please get in contact with your medical doctor or therapist. About the Team TrackYourStress is a cooperation between the following individuals and universities: Prof. Dr. Thomas Probst (Department of Psychotherapy and Biopsychosocial Health, Danube University Krems, Austria) Prof. Dr. Dennis John (Evangelische Hochschule Nürnberg) B.Sc. Pascal Damasch (Institute for Databases and Information Systems, University of Ulm, Germany) B.Sc. Michael Schrempp (Institute for Databases and Information Systems, University of Ulm, Germany) M.Sc. Johannes Schobel (Institute for Databases and Information Systems, University of Ulm, Germany) PD Dr. Winfried Schlee (Clinic for Psychiatry and Psychotherapy, University Hospital Regensburg, Germany) B.Sc. Teresa O\'Rourke (Department of Psychotherapy and Biopsychosocial Health, Danube University Krems, Austria) M.Sc. Robin Kraft (Institute for Databases and Information Systems, University of Ulm, Germany) B.Sc. Julian Haug (Institute for Databases and Information Systems, University of Ulm, Germany) B.Sc. Fabian Haug (Institute for Databases and Information Systems, University of Ulm, Germany) M.Sc. Viktoria Elsässer (Institute for Databases and Information Systems, University of Ulm, Germany) Prof. Dr. Berthold Langguth (Clinic for Psychiatry and Psychotherapy, University Hospital Regensburg, Germany) Prof. Dr. Myra Spiliopoulou (Knowledge Management and Discovery Lab, Otto-von-Guericke-University Magdeburg, Germany) Prof. Dr. Manfred Reichert (Institute for Databases and Information Systems, University of Ulm, Germany) Dr. Rüdiger Pryss (Institute for Databases and Information Systems, University of Ulm, Germany)  If you have any questions, feedback or suggestions about the project, please contact us at info@trackyourstress.org</string>
+    <string name="impressum_text">
+    <![CDATA[
+    <h2>Imprint</h2>
+    <h3>Publisher</h3>
+    Tinnitus Research Initiative <br>
+    Foundation <br>
+    Universitätsstrasse 84 <br>
+    93053 Regensburg <br>
+    phone: +49 941 941 2096 <br>
+    fax: +49 941 941 2925 <br>
+    e-mail: foundation@tinnitusresearch.org <br>
+    Sales tax identification number DE133714227  <br>
+
+    <p>The foundation Tinnitus Research Initiative is with certificate of 01.02.2010 No. B 1.1-1222.184-1 according to §§ 80, 81 of the Civil Code a foundation with legal capacity under civil law with seat in Regensburg. Due to its statutory provisions and the corresponding foundation law regulations (Art. 10 para. 1 BayStG) of the state foundation supervisory authority, government of the Upper Palatinate. The corporation serves exclusively and directly tax-privileged purposes</p>
+
+    <h2>Authorized to represent is the foundation board: </h2>
+    Dr. med. Berthold Langguth, Regensburg, Germany (Chairman) <br>
+    Prof. Ana Belén Elgoyhen, Buenos Aires, Argentines <br>
+    Prof. Dirk De Ridder, Antwerp, Belgium <br>
+
+    <h2>Competent regulatory authority: </h2>
+    Government of the Upper Palatinate <br>
+    Emmeramsplatz 8 <br>
+    93047 Regensburg <br>
+    Germany <br>
+
+    <h2>Content</h2>
+    Responsible according to §5 TMG: <br>
+    Dr. Winfried Schlee <br>
+    Tinnitus Research Initiative <br>
+    Foundation <br>
+    Universitätsstrasse 84 <br>
+    93053 Regensburg <br>
+    phone: +49 941 941 2096 <br>
+    e-mail: winfried.schlee@tinnitusresearch.org <br>
+
+    <h2>Conception and technical implementation</h2>
+
+    Pascal Damasch <br>
+    Institute for Databases and Information Systems at the University of Ulm <br>
+    email: Pascal.Damasch@uni-ulm.de <br>
+
+    Jochen Herrmann <br>
+    Institute for Databases and Information Systems at the University of Ulm <br>
+    email: Jochen.Herrmann@uni-ulm.de <br>
+
+    Julia Abramenko <br>
+    Institute for Databases and Information Systems at the University of Ulm<br>
+    email: Julia.Abramenko@uni-ulm.de<br>
+
+    Rüdiger Pryss <br>
+    Institute for Databases and Information Systems at the University of Ulm <br>
+    email: Rüdiger.Pryss@uni-ulm.de <br>
+
+    <h3>Disclaimer</h3>
+    <p>Trackyourstress.com is a service for measuring the individual tinnitus load. You have the possibility to view your data and discuss it with your attending physician or therapist.</p>
+    <p>Neither the Tinnitus Research Initiative nor the staff of the Trackyourtinnitus Project can guarantee the correctness and legal usability of the data </p>
+    <h3>Trackyourstress.com is not a medical device </h3>
+    <p>We would like to expressly point out that we do not provide any medical device with Trackyourstress.com. A treatment of stress is not intended  </p>
+    <p>A worsening of the stress is not to be expected. However, if you notice any negative changes, please stop participating immediately and consult your doctor or therapist </p>
+    <h3>Disclaimer for links to external content  </h3>
+    <p>As content providers, we are responsible for our own content which we make available for use in accordance with general laws. Cross-references to content provided by other providers are to be distinguished from our own content. These foreign contents originate neither from us, nor do we have the possibility to influence the contents of pages of third parties  </p>
+    <p>The contents of external sites do not reflect our opinion, but serve only for information and the representation of connections. </p>
+    <h3>Data protection  <h3>
+    <p>We are aware that with Trackyourstress.com\'s service we store highly sensitive data and therefore use the highest standards of data protection to ensure the security and confidentiality of your data.  </p> <p>Your data will be processed and stored completely anonymously</string>
+    ]]>
+    </string>
+    <string name="about_text">
+        <![CDATA[
+        <h2>About Us</h2>
+        <p>Stress is the response of the organism to any demand. Different individuals can show different stress responses to one and the same demand. Moreover, one individual can show a different stress response to one and the same demand in different situations / contexts. The stress response due to the demand depends for example on the coping strategies of the individual. </p>
+        <p>With this research project we want to offer a method to track the individual stress and coping with a smart phone application. Using the website in conjunction with your phone you can systematically track these variations and find out how they are associated with your daily life. Your answers will also help us learn to more about the variation of stress and coping. </p>
+        <p>With your participation you support our research project to better understand the fluctuations of stress and coping. </p>
+        <hr>
+        <h2>TrackYourStress cannot be used to treat stress </h2>
+        <p>We would like to emphasize here that TrackYourStress is not a medical device. TrackYourStress is a good tool to measure your stress and to find out under which circumstances it goes up or down. </p>
+        <p>A worsening of the stress cannot be expected. However, if you feel that your stress is worsening, we want you to stop using TrackYourStress immediately and please get in contact with your medical doctor or therapist. </p>
+        <hr>
+        <h2> About the Team </h2>
+        <p>TrackYourStress is a cooperation between the following individuals and universities: <br>
+        Prof. Dr. Thomas Probst (Department of Psychotherapy and Biopsychosocial Health, Danube University Krems, Austria) <br>
+        Prof. Dr. Dennis John (Evangelische Hochschule Nürnberg) <br>
+        M.Sc. Pascal Damasch (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        B.Sc. Michael Schrempp (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        M.Sc. Johannes Schobel (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        PD Dr. Winfried Schlee (Clinic for Psychiatry and Psychotherapy, University Hospital Regensburg, Germany) <br>
+        B.Sc. Teresa O\'Rourke (Department of Psychotherapy and Biopsychosocial Health, Danube University Krems, Austria) <br>
+        M.Sc. Robin Kraft (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        B.Sc. Julian Haug (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        B.Sc. Fabian Haug (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        M.Sc. Viktoria Elsässer (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        Prof. Dr. Berthold Langguth (Clinic for Psychiatry and Psychotherapy, University Hospital Regensburg, Germany) <br>
+        Prof. Dr. Myra Spiliopoulou (Knowledge Management and Discovery Lab, Otto-von-Guericke-University Magdeburg, Germany) <br>
+        Prof. Dr. Manfred Reichert (Institute for Databases and Information Systems, University of Ulm, Germany) <br>
+        Dr. Rüdiger Pryss (Institute for Databases and Information Systems, University of Ulm, Germany)  <br>
+        <p>If you have any questions, feedback or suggestions about the project, please contact us at <a href = "mailto:info@trackyourstress.org>info@trackyourstress.org</a></p>
+    ]]>
+    </string>
     <string name="register_link_send">Registration completed. A verification link has been sent. Please verify your account by clicking on the link. After that you can login.</string>
     <string name="link_send_not_possible">Link could not be resend. User not found or validated</string>
     <string name="link_sent_check_email">Link was resent. Please check your emails</string>
@@ -92,4 +187,7 @@
     <string name="logout_successful">Logout successful</string>
     <string name="server_error_occured">A server error has occured</string>
     <string name="profile_updated">Profile has been updated</string>
+    <string name="time_daily_questionnaire">It\'s time for a daily questionnaire!</string>
+    <string name="time_monthly_questionnaire">It\'s time for a weekly questionnaire!</string>
+    <string name="time_weekly_questionnaire">It\'s time for a monthly questionnaire!</string>
 </resources>

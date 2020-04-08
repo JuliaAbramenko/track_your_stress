@@ -8,10 +8,8 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -138,10 +136,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun updateText() {
-        switchAllNotifications.text = getString(R.string.turn_on_all_notifcations)
+        switchAllNotifications.text = getString(R.string.turn_on_all_notifications)
         switchDaily.text = getString(R.string.turn_on_daily_notifications)
         switchWeekly.text = getString(R.string.turn_on_weekly_notifications)
-        switchMonthly.text = getString(R.string.turn_on_monthly_notifcations)
+        switchMonthly.text = getString(R.string.turn_on_monthly_notifications)
         val notificationTextView = view!!.findViewById<TextView>(R.id.manage_notifications_textview)
         notificationTextView.text = getString(R.string.manage_notifications)
         val languageTextView = view!!.findViewById<TextView>(R.id.manage_language)
