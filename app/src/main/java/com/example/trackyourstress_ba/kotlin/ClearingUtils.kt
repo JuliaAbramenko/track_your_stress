@@ -1,6 +1,5 @@
 package com.example.trackyourstress_ba.kotlin
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -12,7 +11,6 @@ import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.NoCache
 import com.android.volley.toolbox.StringRequest
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.StartActivity as StartActivity1
 
 class ClearingUtils {
@@ -31,7 +29,9 @@ class ClearingUtils {
             val sharedPreferences = context.getSharedPreferences(
                 context.packageName, Context.MODE_PRIVATE
             )
-            sharedPreferences.edit().clear().apply()
+            sharedPreferences.edit().remove("token").apply()
+            sharedPreferences.edit().remove("userId").apply()
+            sharedPreferences.edit().remove("userName").apply()
         }
 
         fun logoutUser(context: Context) {
@@ -44,12 +44,10 @@ class ClearingUtils {
             val request = StringRequest(
                 Request.Method.DELETE, url,
                 Response.Listener<String> {
-                    sharedPreferences.edit().remove("token").apply()
+                    clearSharedPreferences(context)
                 }, Response.ErrorListener {
-                    sharedPreferences.edit().remove("token").apply()
-
+                    clearSharedPreferences(context)
                 })
-
             requestQueue.add(request)
         }
 

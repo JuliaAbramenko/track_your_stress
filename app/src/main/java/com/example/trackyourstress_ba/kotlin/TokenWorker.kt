@@ -57,15 +57,15 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                         finishRefreshToken(oldToken)
                     }
                     error.networkResponse.statusCode == 400 -> {
-                        sharedPreferences.edit().remove("token").apply()
+                        ClearingUtils.logoutUser(currentContext)
                         Log.w("token refresher", "400 error on options")
                     }
                     error.networkResponse.statusCode == 409 -> {
-                        sharedPreferences.edit().remove("token").apply()
+                        ClearingUtils.logoutUser(currentContext)
                         Log.w("token refresher", "409 error on options")
                     }
                     else -> {
-                        sharedPreferences.edit().remove("token").apply()
+                        ClearingUtils.logoutUser(currentContext)
                         Log.w("token refresher", "unknown error on options")
                     }
                 }
@@ -110,23 +110,17 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                         ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 400 -> {
-                        sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "400 error")
-                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
-                        ClearingUtils.clearSharedPreferences(applicationContext)
                         ClearingUtils.logoutUser(currentContext)
+                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 409 -> {
-                        sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "409 error")
-                        ClearingUtils.clearSharedPreferences(applicationContext)
                         ClearingUtils.logoutUser(currentContext)
                         ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     else -> {
-                        sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "unknown error")
-                        ClearingUtils.clearSharedPreferences(applicationContext)
                         ClearingUtils.logoutUser(currentContext)
                         ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }

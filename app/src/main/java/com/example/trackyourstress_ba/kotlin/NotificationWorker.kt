@@ -26,14 +26,12 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
          lateinit var notificationSettings: BooleanArray
      }
 
-    val currentContext = appContext
+     val currentContext = appContext
      val sharedPreferences: SharedPreferences = currentContext.getSharedPreferences(
          currentContext.packageName, Context.MODE_PRIVATE
      )
 
-     //TODO first time?
      override fun doWork(): Result {
-
          notificationSettings =
              if (!sharedPreferences.contains("nextDailyNotification") && !sharedPreferences.contains(
                      "nextWeeklyNotification"
@@ -45,8 +43,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
                  getNotificationSettings()
              }
 
-
-        val date = Calendar.getInstance()
+         val date = Calendar.getInstance()
          if (notificationSettings[0]) {
              if (sharedPreferences.getLong(
                      "nextDailyNotification",
@@ -57,7 +54,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              }
          }
 
-        val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
+         val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
          if (isNewWeek && notificationSettings[1]) {
              if (sharedPreferences.getLong(
                      "nextWeeklyNotification",
@@ -68,9 +65,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
              }
          }
 
-        val isNewMonth = date.get(Calendar.DAY_OF_MONTH) == 1
-         //sharedPreferences.edit().putInt("currentMonth", date.get(Calendar.MONTH)).apply()
-
+         val isNewMonth = date.get(Calendar.DAY_OF_MONTH) == 1
          val daysInMonth = date.getActualMaximum(Calendar.DAY_OF_MONTH)
          if (isNewMonth && notificationSettings[2]) {
              if (sharedPreferences.getLong(
@@ -94,7 +89,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
          val nextDailyNotificationIn = getRandomMilliSecondDaily()
          scheduleNotification(
              applicationContext,
-             "Es ist Zeit für einen täglichen Fragebogen!",
+             currentContext.getString(R.string.time_daily_questionnaire),
              nextDailyNotificationIn,
              100,
              "10000"
@@ -108,7 +103,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
          val nextWeeklyNotificationIn = getRandomMilliSecondWeekly()
          scheduleNotification(
              applicationContext,
-             "Es ist Zeit für einen wöchentlichen Fragebogen!",
+             currentContext.getString(R.string.time_weekly_questionnaire),
              nextWeeklyNotificationIn,
              101,
              "10001"
@@ -124,7 +119,7 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
          val nextMonthlyNotificationIn = getRandomMilliSecondMonthly(daysInMonth)
          scheduleNotification(
              applicationContext,
-             "Es ist Zeit für einen monatlichen Fragebogen!",
+             currentContext.getString(R.string.time_monthly_questionnaire),
              nextMonthlyNotificationIn,
              102,
              "10002"

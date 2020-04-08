@@ -195,5 +195,8 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="profile_updated">Profil wurde aktualisiert</string>
     <string name="logout_successful">Logout erfolgreich</string>
     <string name="server_error_occured">Ein Serverfehler ist aufgetreten</string>
+    <string name="time_daily_questionnaire">Es ist Zeit für einen täglichen Fragebogen!</string>
+    <string name="time_weekly_questionnaire">Es ist Zeit für einen wöchentlichen Fragebogen!</string>
+    <string name="time_monthly_questionnaire">Es ist Zeit für einen monatlichen Fragebogen!</string>
 
 </resources>
