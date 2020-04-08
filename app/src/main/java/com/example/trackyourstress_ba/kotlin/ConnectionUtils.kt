@@ -150,8 +150,8 @@ class ConnectionUtils {
             Request.Method.DELETE, url,
             Response.Listener<String> {
                 sharedPreferences.edit().remove("token").apply()
-
             }, Response.ErrorListener {
+                sharedPreferences.edit().remove("token").apply()
                 caller.notify500()
             })
 

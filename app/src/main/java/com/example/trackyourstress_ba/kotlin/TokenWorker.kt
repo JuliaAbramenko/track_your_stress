@@ -3,6 +3,7 @@ package com.example.trackyourstress_ba.kotlin
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.android.volley.Request
@@ -12,6 +13,7 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
+import com.example.trackyourstress_ba.ui.home.HomeActivity
 import org.json.JSONObject
 import kotlin.system.exitProcess
 
@@ -88,7 +90,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                                 )
                             ), "headers" to emptyMap<String, String>(),
                             "lazyInit" to mapOf(
-                                "normalizedNames" to emptyMap<String, String>(),
+                                "normalizedNames" to emptyMap(),
                                 "lazyUpdate" to null, "headers" to emptyMap<String, String>()
                             )
                         )
@@ -103,30 +105,30 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                 sharedPreferences.edit().putString("token", newToken).apply()
             }, Response.ErrorListener { error ->
                 when {
-                    error.networkResponse == null -> ClearingUtils.logoutUser(currentContext)
+                    error.networkResponse == null -> {
+                        ClearingUtils.logoutUser(currentContext)
+                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
+                    }
                     error.networkResponse.statusCode == 400 -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "400 error")
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
+                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
                         ClearingUtils.clearSharedPreferences(applicationContext)
                         ClearingUtils.logoutUser(currentContext)
-                        exitProcess(0)
                     }
                     error.networkResponse.statusCode == 409 -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "409 error")
                         ClearingUtils.clearSharedPreferences(applicationContext)
                         ClearingUtils.logoutUser(currentContext)
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
-                        exitProcess(0)
+                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     else -> {
                         sharedPreferences.edit().remove("token").apply()
                         Log.w("token refresher", "unknown error")
                         ClearingUtils.clearSharedPreferences(applicationContext)
                         ClearingUtils.logoutUser(currentContext)
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
-                        exitProcess(0)
+                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                 }
             })

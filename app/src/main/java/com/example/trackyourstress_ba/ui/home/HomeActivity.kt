@@ -66,7 +66,7 @@ class HomeActivity : AppCompatActivity() {
 
         if (!tokenWorkerRunning) {
             val tokenRequest =
-                PeriodicWorkRequestBuilder<TokenWorker>(50, TimeUnit.MINUTES).setInitialDelay(
+                PeriodicWorkRequestBuilder<TokenWorker>(55, TimeUnit.MINUTES).setInitialDelay(
                     55,
                     TimeUnit.MINUTES
                 ).build()
@@ -187,7 +187,8 @@ class HomeActivity : AppCompatActivity() {
                     conUtils.logoutUser(this)
                     drawer.closeDrawers()
                     ClearingUtils.clearSharedPreferences(this)
-                    ClearingUtils.returnToLogin(this as Context)
+                    ClearingUtils.showLogout(this)
+                    ClearingUtils.returnToLogin(this) //surely in ClearinUtils?
                     true
                 }
 
@@ -195,7 +196,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-
 
     /*private fun returnToLogin() {
         val intent = Intent(this@HomeActivity, StartActivity::class.java)
@@ -220,7 +220,6 @@ class HomeActivity : AppCompatActivity() {
             getString(R.string.error_logout),
             Toast.LENGTH_LONG
         ).show()
-        sharedPreferences.edit().remove("token").apply()
     }
 
 }

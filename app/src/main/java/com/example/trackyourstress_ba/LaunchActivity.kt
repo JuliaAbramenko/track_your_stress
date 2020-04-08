@@ -9,6 +9,7 @@ import android.content.res.Configuration
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class LaunchActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

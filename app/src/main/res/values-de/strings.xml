@@ -165,7 +165,7 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="notify403">Nutzer wurde noch nicht verifiziert.</string>
     <string name="password_short">Passwort zu kurz. Bitte versuchen Sie es noch einmal</string>
     <string name="network_error">Netzwerk-Fehler aufgetreten. Überprüfen Sie Ihre Internetverbindung</string>
-    <string name="profile_not_loaded">Profildaten können nicht geladen werden. Bitte starten Sie die App neu</string>
+    <string name="profile_not_loaded">Profildaten können nicht geladen werden</string>
     <string name="daily_notifications_off">Tägliche Benachrichtigungen AUS</string>
     <string name="monthly_notifications_off">Monatliche Benachrichtigungen AUS</string>
     <string name="navigation_drawer_close">Navigation schließen</string>

@@ -1,5 +1,6 @@
 package com.example.trackyourstress_ba.kotlin
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.NoCache
 import com.android.volley.toolbox.StringRequest
 import com.example.trackyourstress_ba.R
+import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.StartActivity as StartActivity1
 
 class ClearingUtils {
@@ -43,17 +45,15 @@ class ClearingUtils {
                 Request.Method.DELETE, url,
                 Response.Listener<String> {
                     sharedPreferences.edit().remove("token").apply()
-                    showLogout(context)
-                    returnToLogin(context)
                 }, Response.ErrorListener {
-                    showLogout(context)
-                    returnToLogin(context)
+                    sharedPreferences.edit().remove("token").apply()
+
                 })
 
             requestQueue.add(request)
         }
 
-        private fun showLogout(context: Context) {
+        fun showLogout(context: Context) {
             Toast.makeText(
                 context,
                 context.getString(R.string.logout_successful),
