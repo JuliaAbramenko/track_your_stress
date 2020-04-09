@@ -13,14 +13,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/activitiesRootLayout"
             android:padding="@dimen/activity_horizontal_margin">
-
-                <TextView
-                    android:id="@+id/headlineActivities"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/alegreya_sc"
-                    android:textSize="@dimen/nicePadding"
-                    android:text="@string/activities" />
         </LinearLayout>
 
 </ScrollView>

@@ -14,8 +14,7 @@ class Headline(headlineText: String, caller: AnswerSheetActivity) :
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             headlineView.text = Html.fromHtml(text)
-        }
-        //headlineView.text = text
+        } else headlineView.text = text
         headlineView.textSize = 24F
         baseView.addView(headlineView)
     }

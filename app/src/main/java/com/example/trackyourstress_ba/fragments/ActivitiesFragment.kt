@@ -3,10 +3,12 @@ package com.example.trackyourstress_ba.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
@@ -77,7 +79,10 @@ class ActivitiesFragment : Fragment() {
                 R.style.buttonStyleTYS
             )
             val buttonForward = Button(newContext, null, R.style.buttonStyleTYS)
+            val font: Typeface? = ResourcesCompat.getFont(currentContext, R.font.alegreya_sc)
+            buttonForward.typeface = font
             val buttonBack = Button(newContext, null, R.style.buttonStyleTYS)
+            buttonBack.typeface = font
             val relativeLayout = RelativeLayout(currentContext)
             val paramsLeft: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

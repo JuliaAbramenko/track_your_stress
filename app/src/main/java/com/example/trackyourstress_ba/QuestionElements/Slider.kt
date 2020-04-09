@@ -28,8 +28,8 @@ class Slider(
     private val min = sliderValues[0]
     private val max = sliderValues[1]
     private val step = sliderValues[2]
-    override var selectedValue = "0"
-    override var timestamp = System.currentTimeMillis() / 1000L
+    override var selectedValue = ""
+    override var timestamp = 0L//System.currentTimeMillis() / 1000L
     private val minTextView = TextView(caller)
     private val maxTextView = TextView(caller)
 

@@ -17,7 +17,7 @@ class MultipleChoice(
 ) : MultiAnswerElement {
     override var text = questionText
     override var label = labelString
-    override var timestamp = System.currentTimeMillis() / 1000L
+    override var timestamp = 0L//System.currentTimeMillis() / 1000L
     private val questionTextView = TextView(caller)
 
     var hashMap = HashMap<CheckBox, String>()
@@ -28,17 +28,12 @@ class MultipleChoice(
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             questionTextView.text = Html.fromHtml(text)
-        }
-        //questionTextView.text = questionText
+        } else questionTextView.text = questionText
         baseView.addView(questionTextView)
-
-
         for (item in answers) {
             val checkBox = CheckBox(caller)
             checkBox.text = item.value
-            //checkBox.text = answers[i]
             hashMap[checkBox] = item.key
-            //hashMap.put(checkBox, answers[i])
             listen(checkBox)
             baseView.addView(checkBox)
 
@@ -57,10 +52,9 @@ class MultipleChoice(
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {
                 selectedValues.add(hashMap[checkBox]!!)
-                var newTimestamp = System.currentTimeMillis() / 1000L
+                val newTimestamp = System.currentTimeMillis() / 1000L
                 timestamps.add(newTimestamp)
                 timestamp = timestamps.max()!!
-
             }
             if (!checkBox.isChecked) {
                 selectedValues.remove(hashMap[checkBox])

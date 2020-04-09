@@ -166,9 +166,37 @@ open class AnswerSheetActivity : AppCompatActivity() {
         this.linearLayout.addView(submitButton)
 
         submitButton.setOnClickListener {
-            answersheetUtils.submitAnswersheet(guiList, questionnaireID, this)
-            finishActivity(0) //TODO?
+            val reduced = reduceToAnswerElements(guiList)
+            val allQuestionsHaveAnswers = checkIfAllQuestionsHaveAnswers(reduced)
+            if (allQuestionsHaveAnswers) {
+                answersheetUtils.submitAnswersheet(guiList, questionnaireID, this)
+                finishActivity(0)
+            } else showIncomplete()
         }
+    }
+
+    private fun checkIfAllQuestionsHaveAnswers(reducedGuiList: ArrayList<AnswerElement>): Boolean {
+        var result = false
+        for (item in reducedGuiList) {
+            if (item is SingleAnswerElement && item.selectedValue == "") {
+                result = false
+                break
+            } else if (item is MultiAnswerElement && item.timestamp == 0L) {
+                result = false
+                break
+            } else result = true
+        }
+        return result
+    }
+
+    private fun reduceToAnswerElements(guiList: ArrayList<AnswerElement>): ArrayList<AnswerElement> {
+        val elementsWithNecessaryAnswers = ArrayList<AnswerElement>()
+        for (item in guiList) {
+            if (item is SingleAnswerElement || item is MultiAnswerElement) {
+                elementsWithNecessaryAnswers.add(item)
+            }
+        }
+        return elementsWithNecessaryAnswers
     }
 
     fun submitSuccess(response: JSONObject) {
@@ -179,6 +207,15 @@ open class AnswerSheetActivity : AppCompatActivity() {
 
     fun submitFail(response: VolleyError) {
         Toast.makeText(this, "Fragebogen konnte nicht abgeschickt werden!", Toast.LENGTH_LONG)
+            .show()
+    }
+
+    private fun showIncomplete() {
+        Toast.makeText(
+            this,
+            "Alle Fragen brauchen eine Antwort um gesendet werden zu können!",
+            Toast.LENGTH_LONG
+        )
             .show()
     }
 }

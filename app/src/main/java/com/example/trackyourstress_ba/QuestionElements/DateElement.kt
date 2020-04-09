@@ -53,7 +53,6 @@ class DateElement(
     fun listen(editText: EditText, caller: AnswerSheetActivity) {
         editText.setOnClickListener {
             datePickerDialog = DatePickerDialog(caller, R.style.DatePickerDialogTheme)
-            //datePickerDialog.datePicker
             datePickerDialog.setOnDateSetListener { _, year, month, day ->
                 val myCalendar = Calendar.getInstance()
                 myCalendar.set(Calendar.YEAR, year)
