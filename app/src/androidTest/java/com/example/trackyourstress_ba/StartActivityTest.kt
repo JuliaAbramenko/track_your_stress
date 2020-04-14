@@ -8,6 +8,7 @@ import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegistrationActivity
+import com.example.trackyourstress_ba.ui.start.StartActivity
 import org.junit.Rule
 import org.junit.Test
 
@@ -15,7 +16,9 @@ import org.junit.Test
 class StartActivityTest {
 
     @get:Rule
-    var mActivityRule: IntentsTestRule<StartActivity> = IntentsTestRule(StartActivity::class.java)
+    var mActivityRule: IntentsTestRule<StartActivity> = IntentsTestRule(
+        StartActivity::class.java
+    )
 
     @Test
     fun testLoginButton() {

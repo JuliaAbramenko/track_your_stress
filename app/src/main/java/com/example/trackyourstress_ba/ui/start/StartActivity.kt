@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba
+package com.example.trackyourstress_ba.ui.start
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegistrationActivity
 import java.util.*

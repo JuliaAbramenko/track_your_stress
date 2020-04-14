@@ -11,7 +11,7 @@ import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.NoCache
 import com.android.volley.toolbox.StringRequest
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.StartActivity as StartActivity1
+import com.example.trackyourstress_ba.ui.start.StartActivity as StartActivity1
 
 class ClearingUtils {
 

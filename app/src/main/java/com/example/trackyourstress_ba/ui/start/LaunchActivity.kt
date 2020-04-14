@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba
+package com.example.trackyourstress_ba.ui.start
 
 import android.content.Intent
 import com.example.trackyourstress_ba.ui.home.HomeActivity

@@ -8,18 +8,13 @@ import java.util.*
 import kotlin.random.Random
 import android.os.SystemClock
 import android.content.Intent
-import android.media.RingtoneManager
 import android.content.SharedPreferences
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
-import android.os.Parcelable
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import com.example.trackyourstress_ba.LaunchActivity
+import com.example.trackyourstress_ba.ui.start.LaunchActivity
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.ui.home.HomeActivity
 
- class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
+class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
 
      companion object {

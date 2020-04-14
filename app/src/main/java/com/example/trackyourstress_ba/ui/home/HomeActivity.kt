@@ -3,7 +3,6 @@ package com.example.trackyourstress_ba.ui.home
 //import com.example.trackyourstress_ba.kotlin.TokenReceiver
 //import com.example.trackyourstress_ba.kotlin.TokenUtils
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -18,7 +17,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.trackyourstress_ba.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
 import com.example.trackyourstress_ba.kotlin.*

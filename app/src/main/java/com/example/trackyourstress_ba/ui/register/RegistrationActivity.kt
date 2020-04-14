@@ -9,7 +9,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.trackyourstress_ba.StartActivity
+import com.example.trackyourstress_ba.ui.start.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
@@ -120,7 +120,6 @@ class RegistrationActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
     }
-
 
     fun nextStep() {
         val intent = Intent(this@RegistrationActivity, RegistrationConfirmationActivity::class.java)
