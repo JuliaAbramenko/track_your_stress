@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.graphics.Color
 import android.os.Build
@@ -9,14 +9,17 @@ import android.widget.*
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-class SAMScaleBody(textOfQuestion: String, label: String, caller: AnswerSheetActivity) :
+class SAMScaleBody(
+    textOfQuestion: String,
+    override var label: String,
+    caller: AnswerSheetActivity
+) :
     SingleAnswerElement {
-    var images = arrayOf(
+    private var images = arrayOf(
         R.drawable.sambody1, R.drawable.empty, R.drawable.sambody2,
         R.drawable.empty, R.drawable.sambody3, R.drawable.empty, R.drawable.sambody4,
         R.drawable.empty, R.drawable.sambody5
     )
-    override var label = label
     private val radioGroup = RadioGroup(caller)
     private val questionTextView = TextView(caller)
     override var text = textOfQuestion
@@ -28,8 +31,7 @@ class SAMScaleBody(textOfQuestion: String, label: String, caller: AnswerSheetAct
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             questionTextView.text = Html.fromHtml(text)
-        }
-        //questionTextView.text = text
+        } else questionTextView.text = text
         baseView.addView(questionTextView)
         for (item in images) {
             val radioButton = RadioButton(caller)
@@ -64,11 +66,8 @@ class SAMScaleBody(textOfQuestion: String, label: String, caller: AnswerSheetAct
 
     private fun listen(radioButton: RadioButton) {
         radioButton.setOnClickListener {
-            //if (radioButton.isSelected) {
             timestamp = System.currentTimeMillis() / 1000L
             selectedValue = radioButton.tag.toString()
-            //}
-
         }
     }
 

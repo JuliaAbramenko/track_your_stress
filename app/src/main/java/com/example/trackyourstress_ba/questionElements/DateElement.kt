@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.app.DatePickerDialog
 import android.graphics.Color
@@ -6,18 +6,15 @@ import android.os.Build
 import android.text.Html
 import android.text.InputType
 import android.view.View
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import java.util.*
 import java.text.SimpleDateFormat
 
 
-@RequiresApi(Build.VERSION_CODES.N)
 class DateElement(
     override var text: String,
     override var label: String,
@@ -26,7 +23,6 @@ class DateElement(
     override var selectedValue = ""
     override var timestamp: Long = 0L
     private lateinit var datePickerDialog: DatePickerDialog
-
     private val textView = TextView(caller)
     private val editText = EditText(caller)
     private val baseView = caller.linearLayout
@@ -49,18 +45,33 @@ class DateElement(
         baseView.addView(separator)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun listen(editText: EditText, caller: AnswerSheetActivity) {
+    private fun listen(editText: EditText, caller: AnswerSheetActivity) {
         editText.setOnClickListener {
-            datePickerDialog = DatePickerDialog(caller, R.style.DatePickerDialogTheme)
-            datePickerDialog.setOnDateSetListener { _, year, month, day ->
-                val myCalendar = Calendar.getInstance()
-                myCalendar.set(Calendar.YEAR, year)
-                myCalendar.set(Calendar.MONTH, month)
-                myCalendar.set(Calendar.DAY_OF_MONTH, day)
-                updateLabel(editText, myCalendar)
+            val calendarDate = Calendar.getInstance()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                datePickerDialog = DatePickerDialog(caller, R.style.DatePickerDialogTheme)
+                datePickerDialog.setOnDateSetListener { _, year, month, day ->
+                    calendarDate.set(Calendar.YEAR, year)
+                    calendarDate.set(Calendar.MONTH, month)
+                    calendarDate.set(Calendar.DAY_OF_MONTH, day)
+                    updateLabel(editText, calendarDate)
+                }
+                datePickerDialog.show()
+            } else {
+                datePickerDialog = DatePickerDialog(
+                    caller,
+                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                        calendarDate.set(Calendar.MONTH, monthOfYear)
+                        calendarDate.set(Calendar.YEAR, year)
+                        calendarDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                        updateLabel(editText, calendarDate)
+                    },
+                    calendarDate.get(Calendar.YEAR),
+                    calendarDate.get(Calendar.MONTH),
+                    calendarDate.get(Calendar.DAY_OF_MONTH)
+                )
+                datePickerDialog.show()
             }
-            datePickerDialog.show()
         }
     }
 

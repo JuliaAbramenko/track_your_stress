@@ -1,13 +1,12 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.os.Build
 import android.text.Html
 import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-class Headline(headlineText: String, caller: AnswerSheetActivity) :
+class Headline(override var text: String, caller: AnswerSheetActivity) :
     AnswerElement {
-    override var text = headlineText
     private val headlineView = TextView(caller)
     private val baseView = caller.linearLayout
 

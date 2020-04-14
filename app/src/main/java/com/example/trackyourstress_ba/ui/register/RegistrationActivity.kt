@@ -2,6 +2,7 @@ package com.example.trackyourstress_ba.ui.register
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
@@ -22,6 +23,7 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var registerButton: Button
     private lateinit var conUtils: ConnectionUtils
     private lateinit var backButton: Button
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +40,20 @@ class RegistrationActivity : AppCompatActivity() {
         conUtils = ConnectionUtils()
         backButton = findViewById(R.id.tohome_button_reg)
 
+        sharedPreferences = this.getSharedPreferences(
+            this.packageName, Context.MODE_PRIVATE
+        )
+
+        if (!sharedPreferences.contains("apiEndpoint")) {
+            sharedPreferences.edit().putString("apiEndpoint", "https://api.trackyourstress.org")
+                .apply()
+        }
+        if (!sharedPreferences.contains("currentLanguage")) {
+            sharedPreferences.edit().putString("currentLanguage", "de").apply() //default germanFlag
+        }
+
         registerButton.setOnClickListener {
-            if (!editEmail.text.contains("@") && !editEmail.text.contains(".")) {
+            if (!editEmail.text.contains("@") || !editEmail.text.contains(".")) {
                 emailNotValid()
             } else if (editPassword.text.length <= 7) {
                 passwordTooShort()
@@ -47,11 +61,13 @@ class RegistrationActivity : AppCompatActivity() {
                 passwordsNotMatching()
             } else if (!checkBox.isChecked) {
                 needCheck()
+            } else if (editUsername.text.isEmpty()) {
+                userNameNeeded()
             } else {
                 val preferences = this.getSharedPreferences(
                     this.packageName, Context.MODE_PRIVATE
                 )
-                preferences.edit().putString("email", editEmail.text.toString()).apply()
+                preferences.edit().putString("userEmail", editEmail.text.toString()).apply()
                 conUtils.registerUser(
                     editEmail.text.toString(), editPassword.text.toString(),
                     editPasswordConfirmation.text.toString(), editUsername.text.toString(), this
@@ -63,6 +79,14 @@ class RegistrationActivity : AppCompatActivity() {
             val intent = Intent(this@RegistrationActivity, StartActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun userNameNeeded() {
+        Toast.makeText(
+            applicationContext,
+            getString(R.string.username_needed),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun passwordsNotMatching() {

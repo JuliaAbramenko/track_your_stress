@@ -205,4 +205,8 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="time_daily_questionnaire">Es ist Zeit für einen täglichen Fragebogen!</string>
     <string name="time_weekly_questionnaire">Es ist Zeit für einen wöchentlichen Fragebogen!</string>
     <string name="time_monthly_questionnaire">Es ist Zeit für einen monatlichen Fragebogen!</string>
+    <string name="quesitionnaire_submitted">Fragebogen abgeschickt</string>
+    <string name="answersheet_could_not_be_submitted">Fragebogen konnte nicht abgeschickt werden</string>
+    <string name="answers_missing">Es fehlen noch Antworten</string>
+    <string name="username_needed">Nutzername benötigt</string>
 </resources>

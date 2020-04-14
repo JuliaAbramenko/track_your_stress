@@ -1,17 +1,15 @@
 package com.example.trackyourstress_ba.kotlin
 
 import android.os.Build
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
-import com.example.trackyourstress_ba.QuestionElements.*
+import com.example.trackyourstress_ba.questionElements.*
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONObject
-import kotlin.reflect.typeOf
 
 open class AnswersheetUtils {
     var requestQueue: RequestQueue
@@ -106,15 +104,13 @@ open class AnswersheetUtils {
 
         val request = object : JsonObjectRequest(
             Method.POST, url, jsonObject,
-            Response.Listener { response ->
-                caller.submitSuccess(response)
+            Response.Listener {
+                caller.submitSuccess()
             }, Response.ErrorListener { error ->
                 if (error.networkResponse == null || error.networkResponse.statusCode == 422) {
-                    //TODO toast "unexpected network response, please check if sheet was submited"
-                    print("ERROR OCCURED: 422!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                    caller.submitSuccess(JSONObject())
+                    caller.submitSuccess()
                 } else {
-                    caller.submitFail(error)
+                    caller.submitFail()
                 }
 
             }) {

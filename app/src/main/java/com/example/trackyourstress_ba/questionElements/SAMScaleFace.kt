@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.graphics.Color
 import android.os.Build
@@ -10,7 +10,11 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 
-class SAMScaleFace(textOfQuestion: String, label: String, caller: AnswerSheetActivity) :
+class SAMScaleFace(
+    override var text: String,
+    override var label: String,
+    caller: AnswerSheetActivity
+) :
     SingleAnswerElement {
     private var images = arrayOf(
         R.drawable.samface1, R.drawable.empty, R.drawable.samface2,
@@ -22,16 +26,12 @@ class SAMScaleFace(textOfQuestion: String, label: String, caller: AnswerSheetAct
     override var selectedValue = ""
     override var timestamp = System.currentTimeMillis() / 1000L
     private var i = 1
-    override var text = textOfQuestion
-    override var label = label
     private val baseView = caller.linearLayout
-
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             questionTextView.text = Html.fromHtml(text)
-        }
-        //questionTextView.text = text
+        } else questionTextView.text = text
         baseView.addView(questionTextView)
         for (item in images) {
             val radioButton = RadioButton(caller)

@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
@@ -9,11 +9,8 @@ import android.text.Html
 import android.widget.LinearLayout
 
 
-class Text(text: String, caller: AnswerSheetActivity) :
+class Text(override var text: String, caller: AnswerSheetActivity) :
     AnswerElement {
-
-    override var text = text
-
     private val textView = TextView(caller)
     private val baseView = caller.linearLayout
 

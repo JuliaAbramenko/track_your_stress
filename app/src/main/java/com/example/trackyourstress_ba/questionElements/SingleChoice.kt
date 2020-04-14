@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.graphics.Color
 import android.os.Build
@@ -12,13 +12,11 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 
 class SingleChoice(
-    questionText: String,
-    label: String,
+    override var text: String,
+    override var label: String,
     answers: Map<String, String>,
     caller: AnswerSheetActivity
 ) : SingleAnswerElement {
-    override var text = questionText
-    override var label = label
     override var selectedValue = ""
     override var timestamp: Long = 0L
     private val questionTextView = TextView(caller)
@@ -27,9 +25,9 @@ class SingleChoice(
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            questionTextView.text = Html.fromHtml(questionText)
-        }
-        //questionTextView.text = questionText
+            questionTextView.text = Html.fromHtml(text)
+        } else questionTextView.text = text
+
         baseView.addView(questionTextView)
         for (item in answers) {
             val radioButton = RadioButton(caller)
@@ -38,7 +36,6 @@ class SingleChoice(
             listen(radioButton/*, answers*/)
             radioGroup.addView(radioButton)
         }
-
         baseView.addView(radioGroup)
 
         val separator = View(caller)
@@ -51,11 +48,10 @@ class SingleChoice(
         baseView.addView(separator)
     }
 
-    private fun listen(radioButton: RadioButton/*, answers: Map<String, String>*/) {
+    private fun listen(radioButton: RadioButton) {
         radioButton.setOnClickListener {
             selectedValue = radioButton.tag.toString()
             timestamp = System.currentTimeMillis() / 1000L
         }
     }
-
 }

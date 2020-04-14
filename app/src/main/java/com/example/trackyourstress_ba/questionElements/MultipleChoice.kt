@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.QuestionElements
+package com.example.trackyourstress_ba.questionElements
 
 import android.graphics.Color
 import android.os.Build
@@ -10,25 +10,22 @@ import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
 class MultipleChoice(
-    questionText: String,
-    labelString: String,
+    override var text: String,
+    override var label: String,
     answers: Map<String, String>,
     caller: AnswerSheetActivity
 ) : MultiAnswerElement {
-    override var text = questionText
-    override var label = labelString
-    override var timestamp = 0L//System.currentTimeMillis() / 1000L
-    private val questionTextView = TextView(caller)
-
-    var hashMap = HashMap<CheckBox, String>()
+    override var timestamp = 0L
     override var selectedValues = ArrayList<String>()
-    var timestamps = ArrayList<Long>()
+    private val questionTextView = TextView(caller)
     private val baseView = caller.linearLayout
+    private var hashMap = HashMap<CheckBox, String>()
+    private var timestamps = ArrayList<Long>()
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             questionTextView.text = Html.fromHtml(text)
-        } else questionTextView.text = questionText
+        } else questionTextView.text = text
         baseView.addView(questionTextView)
         for (item in answers) {
             val checkBox = CheckBox(caller)
@@ -36,7 +33,6 @@ class MultipleChoice(
             hashMap[checkBox] = item.key
             listen(checkBox)
             baseView.addView(checkBox)
-
         }
         val separator = View(caller)
         separator.layoutParams = LinearLayout.LayoutParams(

@@ -34,6 +34,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
             val email = preferences.getString("userEmail", null)
             if (email != null) {
                 conUtils.resendVerificationLink(email, this)
+
             }
         }
 

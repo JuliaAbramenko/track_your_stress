@@ -3,7 +3,6 @@ package com.example.trackyourstress_ba.ui.questions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +10,7 @@ import com.example.trackyourstress_ba.R
 import org.json.JSONException
 import org.json.JSONObject
 import android.widget.*
-import com.android.volley.VolleyError
-import com.example.trackyourstress_ba.QuestionElements.*
+import com.example.trackyourstress_ba.questionElements.*
 import com.example.trackyourstress_ba.kotlin.AnswersheetUtils
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
@@ -55,7 +53,6 @@ open class AnswerSheetActivity : AppCompatActivity() {
             if (current.has("headline") && current.getString("headline").isNotEmpty()) {
                 title = current.getString("headline")
                 Headline(title, this)
-                //toolbar.title = title TODO manage Toolbar title
             }
             if (current.has("text") && current.getString("text").isNotEmpty()) {
                 text = current.getString("text")
@@ -70,15 +67,11 @@ open class AnswerSheetActivity : AppCompatActivity() {
 
                 if (current.getString("questiontype") == "TextDate") {
                     val label = current.getString("label")
-                    val dateElement = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    val dateElement =
                         DateElement(question, label, this)
-                    } else {
-                        TODO("VERSION.SDK_INT < N")
-                    }
+
                     guiList.add(dateElement)
                 }
-
-
                 if (current.getString("questiontype") == "Slider") {
                     val sliderMin = current.getJSONObject("values").getString("min").toInt()
                     val sliderMax = current.getJSONObject("values").getString("max").toInt()
@@ -199,21 +192,25 @@ open class AnswerSheetActivity : AppCompatActivity() {
         return elementsWithNecessaryAnswers
     }
 
-    fun submitSuccess(response: JSONObject) {
-        Toast.makeText(this, "Fragebogen abgeschickt!", Toast.LENGTH_LONG).show()
+    fun submitSuccess() {
+        Toast.makeText(this, getString(R.string.quesitionnaire_submitted), Toast.LENGTH_LONG).show()
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 
-    fun submitFail(response: VolleyError) {
-        Toast.makeText(this, "Fragebogen konnte nicht abgeschickt werden!", Toast.LENGTH_LONG)
+    fun submitFail() {
+        Toast.makeText(
+            this,
+            getString(R.string.answersheet_could_not_be_submitted),
+            Toast.LENGTH_LONG
+        )
             .show()
     }
 
     private fun showIncomplete() {
         Toast.makeText(
             this,
-            "Alle Fragen brauchen eine Antwort um gesendet werden zu können!",
+            getString(R.string.answers_missing),
             Toast.LENGTH_LONG
         )
             .show()
