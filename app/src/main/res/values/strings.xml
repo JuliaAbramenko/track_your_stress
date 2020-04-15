@@ -209,4 +209,5 @@ Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universit
     <string name="answersheet_could_not_be_submitted">Fragebogen konnte nicht abgeschickt werden</string>
     <string name="answers_missing">Es fehlen noch Antworten</string>
     <string name="username_needed">Nutzername benötigt</string>
+    <string name="double_click_back">Drücken Sie erneut Zurück um zu beenden</string>
 </resources>

@@ -5,6 +5,7 @@ package com.example.trackyourstress_ba.ui.home
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -42,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -199,14 +201,32 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this@HomeActivity, StartActivity::class.java)
         startActivity(intent)
     }*/
+    private var doubleBackToExitPressedOnce = false
 
+    override fun onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
+        } else if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(
+            this,
+            getString(R.string.double_click_back),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+/*
     override fun onBackPressed() {
         super.onBackPressed()
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         }
         else super.onBackPressed()
-    }
+    }*/
 
     private fun deleteAllViews() {
         root.removeAllViews()

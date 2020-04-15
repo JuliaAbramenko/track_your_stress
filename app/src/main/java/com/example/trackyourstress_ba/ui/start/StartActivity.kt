@@ -16,7 +16,7 @@ import java.util.*
 
 
 class StartActivity : AppCompatActivity() {
-    lateinit var loginButton: Button
+    private lateinit var loginButton: Button
     lateinit var registerButton: Button
     lateinit var sharedPreferences: SharedPreferences
     lateinit var germanFlag: ImageView

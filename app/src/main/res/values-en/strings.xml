@@ -188,4 +188,8 @@
     <string name="time_daily_questionnaire">It\'s time for a daily questionnaire!</string>
     <string name="time_monthly_questionnaire">It\'s time for a weekly questionnaire!</string>
     <string name="time_weekly_questionnaire">It\'s time for a monthly questionnaire!</string>
+    <string name="double_click_back">Please click BACK again to exit</string>
+    <string name="answers_missing">Answers are missing</string>
+    <string name="answersheet_could_not_be_submitted">Answersheet could not be submitted</string>
+    <string name="username_needed">Username needed</string>
 </resources>

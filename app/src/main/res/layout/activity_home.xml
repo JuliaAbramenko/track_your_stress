@@ -74,10 +74,7 @@
                     app:srcCompat="@drawable/logo_uni_nuernberg" />
             </LinearLayout>
         </FrameLayout>
-
-
     </LinearLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -86,6 +83,4 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
-
-
 </androidx.drawerlayout.widget.DrawerLayout>
