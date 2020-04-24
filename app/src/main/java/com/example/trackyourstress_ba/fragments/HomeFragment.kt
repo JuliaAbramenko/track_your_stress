@@ -17,7 +17,7 @@ class HomeFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         this.activity?.title = getString(R.string.home)
-        currentContext = view!!.context
+        currentContext = requireView().context
 
         return view
     }

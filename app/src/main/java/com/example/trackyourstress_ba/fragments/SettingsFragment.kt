@@ -34,10 +34,10 @@ class SettingsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        switchAllNotifications = view!!.findViewById(R.id.switch_all_notifications)
-        switchDaily = view!!.findViewById(R.id.switch_daily_notfications)
-        switchWeekly = view!!.findViewById(R.id.switch_weekly_notifications)
-        switchMonthly = view!!.findViewById(R.id.switch_monthly_notifications)
+        switchAllNotifications = requireView().findViewById(R.id.switch_all_notifications)
+        switchDaily = requireView().findViewById(R.id.switch_daily_notfications)
+        switchWeekly = requireView().findViewById(R.id.switch_weekly_notifications)
+        switchMonthly = requireView().findViewById(R.id.switch_monthly_notifications)
 
         sharedPreferences = currentContext.getSharedPreferences(
             currentContext.packageName, Context.MODE_PRIVATE

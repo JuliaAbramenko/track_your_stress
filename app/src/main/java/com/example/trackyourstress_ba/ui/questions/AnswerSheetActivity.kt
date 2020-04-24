@@ -10,8 +10,8 @@ import com.example.trackyourstress_ba.R
 import org.json.JSONException
 import org.json.JSONObject
 import android.widget.*
-import com.example.trackyourstress_ba.questionElements.*
 import com.example.trackyourstress_ba.kotlin.AnswersheetUtils
+import com.example.trackyourstress_ba.questionElements.*
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
 
@@ -68,7 +68,11 @@ open class AnswerSheetActivity : AppCompatActivity() {
                 if (current.getString("questiontype") == "TextDate") {
                     val label = current.getString("label")
                     val dateElement =
-                        DateElement(question, label, this)
+                        DateElement(
+                            question,
+                            label,
+                            this
+                        )
 
                     guiList.add(dateElement)
                 }

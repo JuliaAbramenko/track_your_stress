@@ -192,4 +192,5 @@
     <string name="answers_missing">Answers are missing</string>
     <string name="answersheet_could_not_be_submitted">Answersheet could not be submitted</string>
     <string name="username_needed">Username needed</string>
+    <string name="quesitionnaire_submitted">Questionnaire submitted</string>
 </resources>

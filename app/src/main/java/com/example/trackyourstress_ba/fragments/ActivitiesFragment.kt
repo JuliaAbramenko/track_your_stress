@@ -32,7 +32,7 @@ class ActivitiesFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_activities, container, false)
         this.activity?.title = getString(R.string.activities)
-        currentContext = view!!.context
+        currentContext = requireView().context
         sharedPreferences = currentContext.getSharedPreferences(
             currentContext.packageName, Context.MODE_PRIVATE
         )

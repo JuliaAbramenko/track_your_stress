@@ -4,6 +4,7 @@ package com.example.trackyourstress_ba.ui.home
 //import com.example.trackyourstress_ba.kotlin.TokenUtils
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -22,6 +23,7 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
 import com.example.trackyourstress_ba.kotlin.*
 import com.google.android.material.navigation.NavigationView
+import java.lang.reflect.Method
 import java.util.concurrent.TimeUnit
 
 
@@ -44,9 +46,14 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
     }
 
-
     override fun onStart() {
         super.onStart()
+/*
+        val dataManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val dataMethod : Method = ConnectivityManager::class.java.getDeclaredMethod("setMobileDataEnabled", Boolean::class.java)
+        dataMethod.isAccessible = true
+        dataMethod.invoke(dataManager, true)
+*/
         sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )
@@ -58,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
             WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork(
                     "NotificationRequest",
-                    ExistingPeriodicWorkPolicy.KEEP, //or .APPEND? or cancel?
+                    ExistingPeriodicWorkPolicy.KEEP,
                     notificationRequest
                 )
             notificationWorkerRunning = true
@@ -74,7 +81,7 @@ class HomeActivity : AppCompatActivity() {
             WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork(
                     "TokenRequest",
-                    ExistingPeriodicWorkPolicy.KEEP, //sure?
+                    ExistingPeriodicWorkPolicy.REPLACE,
                     tokenRequest
                 )
 
@@ -203,6 +210,14 @@ class HomeActivity : AppCompatActivity() {
     }*/
     private var doubleBackToExitPressedOnce = false
 
+
+    override fun onResume() {
+        super.onResume()
+        /*val dataManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val dataMethod : Method = ConnectivityManager::class.java.getDeclaredMethod("setMobileDataEnabled", Boolean::class.java)
+        dataMethod.isAccessible = true
+        dataMethod.invoke(dataManager, true)*/
+    }
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
@@ -219,14 +234,6 @@ class HomeActivity : AppCompatActivity() {
 
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
-/*
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if(drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        }
-        else super.onBackPressed()
-    }*/
 
     private fun deleteAllViews() {
         root.removeAllViews()

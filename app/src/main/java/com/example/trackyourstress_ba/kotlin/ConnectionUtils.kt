@@ -104,9 +104,10 @@ class ConnectionUtils {
                     ) != email
                 ) {
                     preferences.edit().putString("userEmail", email).apply()
+                    caller.nextStep()
                 }
             }, Response.ErrorListener {
-                caller.nextStep()
+                caller.notifyError()
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()

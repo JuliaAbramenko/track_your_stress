@@ -34,7 +34,7 @@ class AboutFragment : Fragment() {
         } else {
             textView.text = text
         }
-        val root = view!!.findViewById<LinearLayout>(R.id.impressum_root)
+        val root = requireView().findViewById<LinearLayout>(R.id.impressum_root)
         root.addView(textView)
     }
 }

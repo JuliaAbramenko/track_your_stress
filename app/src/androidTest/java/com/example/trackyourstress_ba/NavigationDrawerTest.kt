@@ -18,7 +18,7 @@ import org.junit.Test
 class NavigationDrawerTest {
 
     @get:Rule
-    var mActivityRule: IntentsTestRule<HomeActivity> = IntentsTestRule(HomeActivity::class.java)
+    var rule: IntentsTestRule<HomeActivity> = IntentsTestRule(HomeActivity::class.java)
 
     @Test
     fun navigationDrawerClosed() {

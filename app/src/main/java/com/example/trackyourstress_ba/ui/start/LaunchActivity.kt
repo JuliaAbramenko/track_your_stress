@@ -43,6 +43,5 @@ class LaunchActivity : Activity() {
             config.locale = Locale.ENGLISH
             resources.updateConfiguration(config, resources.displayMetrics)
         }
-
     }
 }

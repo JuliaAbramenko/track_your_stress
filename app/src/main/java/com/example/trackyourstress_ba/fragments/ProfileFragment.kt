@@ -58,7 +58,6 @@ class ProfileFragment: Fragment(){
                     getCurrentSexId(),
                     this
                 )
-            profileUpdated()
         }
         changePasswordButton.setOnClickListener {
             callOldPasswordDialog()
@@ -184,6 +183,7 @@ class ProfileFragment: Fragment(){
             "2" -> sexRadioGroup.check(R.id.profile_female)
             "9" -> sexRadioGroup.check(R.id.profile_not_applicable)
         }
+        profileUpdated()
     }
 
     fun updatePasswordReceived() {

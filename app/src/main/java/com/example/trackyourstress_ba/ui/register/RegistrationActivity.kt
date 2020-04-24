@@ -125,4 +125,12 @@ class RegistrationActivity : AppCompatActivity() {
         val intent = Intent(this@RegistrationActivity, RegistrationConfirmationActivity::class.java)
         startActivity(intent)
     }
+
+    fun notifyError() {
+        Toast.makeText(
+            applicationContext,
+            "Der Nutzername is bereits vergeben.",
+            Toast.LENGTH_LONG
+        ).show()
+    }
 }

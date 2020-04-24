@@ -12,7 +12,7 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONObject
 
 open class AnswersheetUtils {
-    var requestQueue: RequestQueue
+    private var requestQueue: RequestQueue
 
     init {
         val cache = NoCache()

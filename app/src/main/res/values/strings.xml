@@ -40,7 +40,7 @@
     <string name="title_questionnaire">Titel</string>
     <string name="running">Laufend</string>
     <string name="repeatable">Wiederholbar</string>
-    <string name="type">Fragetyp</string>
+    <string name="type">Typ</string>
     <string name="do_you_really_want_to_delete_your_profile">Möchten Sie Ihr Profil sicher löschen?</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbruch</string>

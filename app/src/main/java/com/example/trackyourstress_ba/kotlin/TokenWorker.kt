@@ -22,7 +22,6 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     var requestQueue: RequestQueue
     var currentContext: Context
     var sharedPreferences: SharedPreferences
-    var notificationID = 1
 
     init {
         val cache = NoCache()
@@ -39,8 +38,12 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         val oldToken = sharedPreferences.getString("token", "")!!
         refreshToken(oldToken)
-        notificationID++
         return Result.success()
+    }
+
+    override fun onStopped() {
+        super.onStopped()
+        ClearingUtils.logoutUser(applicationContext)
     }
 
     private fun refreshToken(oldToken: String) {
@@ -107,22 +110,22 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                 when {
                     error.networkResponse == null -> {
                         ClearingUtils.logoutUser(currentContext)
-                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 400 -> {
                         Log.w("token refresher", "400 error")
                         ClearingUtils.logoutUser(currentContext)
-                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 409 -> {
                         Log.w("token refresher", "409 error")
                         ClearingUtils.logoutUser(currentContext)
-                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     else -> {
                         Log.w("token refresher", "unknown error")
                         ClearingUtils.logoutUser(currentContext)
-                        ActivityCompat.finishAffinity(currentContext as HomeActivity)
+                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                 }
             })

@@ -25,8 +25,8 @@ import org.json.JSONObject
 
 class QuestionnairesFragment : Fragment() {
 
-    lateinit var questionnaireUtils: QuestionnaireUtils
-    lateinit var associatedQuestionnaires: HashMap<Int, String>
+    private lateinit var questionnaireUtils: QuestionnaireUtils
+    private lateinit var associatedQuestionnaires: HashMap<Int, String>
     private lateinit var tableQuestionnaires: TableLayout
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
@@ -109,7 +109,7 @@ class QuestionnairesFragment : Fragment() {
         isRunning.background = resources.getDrawable(R.drawable.border)
         val isRepeatable = TextView(currentContext)
         isRepeatable.background = resources.getDrawable(R.drawable.border)
-        title.text = titleName.substring(20)
+        title.text = titleName
 
         if (running) {
             isRunning.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check24dp, 0, 0, 0)
@@ -119,7 +119,12 @@ class QuestionnairesFragment : Fragment() {
         if (repeat) {
             isRepeatable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_repeat24dp, 0, 0, 0)
         } else {
-            isRepeatable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross24dp, 0, 0, 0)
+            isRepeatable.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_one_time24dp,
+                0,
+                0,
+                0
+            )
         }
         newRow.addView(title)
         newRow.addView(isRunning)
