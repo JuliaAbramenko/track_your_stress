@@ -10,6 +10,7 @@ import android.os.SystemClock
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.trackyourstress_ba.ui.start.LaunchActivity
 import com.example.trackyourstress_ba.R
@@ -45,6 +46,7 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
                      0
                  ) > date.timeInMillis || !sharedPreferences.contains("nextDailyNotification")
              ) {
+                 Log.w("NotificationWorker", "Daily Notification will be scheduled")
                  createNewDailyNotification()
              }
          }
@@ -188,7 +190,8 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
 
          val notificationIntent = Intent(context, NotificationPublisher::class.java)
          notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
-         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, builder.build())
+         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, builder.build()!!)
+         Log.w("NotificationManager", "Intent set!")
          val pendingIntent = PendingIntent.getBroadcast(
              context,
              notificationId,

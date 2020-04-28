@@ -3,10 +3,8 @@ package com.example.trackyourstress_ba.fragments
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,6 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.QuestionnaireUtils
@@ -39,7 +36,7 @@ class QuestionnairesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_questionnaires, container, false)
         this.activity?.title = getString(R.string.questionnaires)
         currentContext = container!!.context
-        tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table)
+        tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table) //TODO RIGHT?
         sharedPreferences =
             currentContext.getSharedPreferences(currentContext.packageName, Context.MODE_PRIVATE)
         addFirstRow(currentContext)
@@ -153,21 +150,21 @@ class QuestionnairesFragment : Fragment() {
 
     fun allQuestionnairesReceived(response: JSONObject?) {
         var array: JSONArray = response!!.getJSONArray("data")
-        var regQuestionaire: JSONObject? = null
+        var regQuestionnaire: JSONObject? = null
         var regIndex = -1
         for (i in 0 until array.length()) {
             if (array.getJSONObject(i).getJSONObject("attributes").getString("name")
                     .contains("Demography")
             ) {
-                regQuestionaire = array.getJSONObject(i)
+                regQuestionnaire = array.getJSONObject(i)
                 regIndex = i
             }
         }
-        if (regQuestionaire != null && regQuestionaire.getJSONObject("attributes")
+        if (regQuestionnaire != null && regQuestionnaire.getJSONObject("attributes")
                 .getString("is_filled_out") == "false"
         ) {
             array = JSONArray()
-            array.put(regQuestionaire)
+            array.put(regQuestionnaire)
         } else if (regIndex != -1) {
             array.remove(regIndex)
         }

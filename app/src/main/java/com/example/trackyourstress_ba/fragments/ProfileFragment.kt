@@ -44,19 +44,19 @@ class ProfileFragment: Fragment(){
     override fun onStart() {
         super.onStart()
         profileUtils.getProfile(this)
-        editUsername = requireView().findViewById(R.id.edit_name)
-        editEmail = requireView().findViewById(R.id.edit_email)
-        editFirstName = requireView().findViewById(R.id.edit_firstname)
-        editLastName = requireView().findViewById(R.id.edit_lastname)
-        sexRadioGroup = requireView().findViewById(R.id.sex_radio_group)
-        submitButton = requireView().findViewById(R.id.submit_button_update_profile)
-        changePasswordButton = requireView().findViewById(R.id.button_change_password)
+        editUsername = view!!.findViewById(R.id.edit_name)
+        editEmail = view!!.findViewById(R.id.edit_email)
+        editFirstName = view!!.findViewById(R.id.edit_firstname)
+        editLastName = view!!.findViewById(R.id.edit_lastname)
+        sexRadioGroup = view!!.findViewById(R.id.sex_radio_group)
+        submitButton = view!!.findViewById(R.id.submit_button_update_profile)
+        changePasswordButton = view!!.findViewById(R.id.button_change_password)
         submitButton.setOnClickListener {
                 profileUtils.updateProfile(
                     editUsername.text.toString(), editFirstName.text.toString(),
                     editLastName.text.toString(),
-                    getCurrentSexId(),
-                    this
+                    getCurrentSexId(), this,
+                    true
                 )
         }
         changePasswordButton.setOnClickListener {
@@ -159,7 +159,7 @@ class ProfileFragment: Fragment(){
         }
     }
 
-    fun responseReceived(response: JSONObject) {
+    fun responseReceived(response: JSONObject, update: Boolean) {
         val profileJSON = response.getJSONObject("data").getJSONObject("attributes")
         val sharedPrefs = currentContext.getSharedPreferences(
             currentContext.packageName, Context.MODE_PRIVATE
@@ -169,10 +169,10 @@ class ProfileFragment: Fragment(){
         sharedPrefs.edit().putString("firstName", profileJSON.getString("firstname")).apply()
         sharedPrefs.edit().putString("lastName", profileJSON.getString("lastname")).apply()
         sharedPrefs.edit().putString("sex", profileJSON.getString("sex")).apply()
-        fillDataFields(sharedPrefs)
+        fillDataFields(sharedPrefs, update)
     }
 
-    private fun fillDataFields(sharedPrefs: SharedPreferences) {
+    private fun fillDataFields(sharedPrefs: SharedPreferences, update: Boolean) {
         editUsername.setText(sharedPrefs.getString("userName", null))
         editEmail.setText(sharedPrefs.getString("userEmail", null))
         editFirstName.setText(sharedPrefs.getString("firstName", null))
@@ -183,7 +183,7 @@ class ProfileFragment: Fragment(){
             "2" -> sexRadioGroup.check(R.id.profile_female)
             "9" -> sexRadioGroup.check(R.id.profile_not_applicable)
         }
-        profileUpdated()
+        if (update) profileUpdated()
     }
 
     fun updatePasswordReceived() {

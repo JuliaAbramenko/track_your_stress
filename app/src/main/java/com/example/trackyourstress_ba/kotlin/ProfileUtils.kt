@@ -34,7 +34,7 @@ class ProfileUtils(caller: ProfileFragment) {
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
-                caller.responseReceived(response)
+                caller.responseReceived(response, false)
             }, Response.ErrorListener{ error ->
                 if (error.networkResponse == null) caller.notifyNetworkError()
                 else caller.notifyServerError()
@@ -47,7 +47,8 @@ class ProfileUtils(caller: ProfileFragment) {
         firstName: String,
         lastName: String,
         sex: Int,
-        caller: ProfileFragment
+        caller: ProfileFragment,
+        update: Boolean
     ) {
         val jsonObject = JSONObject(
             mapOf(
@@ -68,7 +69,7 @@ class ProfileUtils(caller: ProfileFragment) {
         val request = JsonObjectRequest(
             Request.Method.PATCH, url, jsonObject,
             Response.Listener { response ->
-                caller.responseReceived(response)
+                caller.responseReceived(response, update)
             }, Response.ErrorListener{error ->
                 if (error.networkResponse == null) caller.notifyNetworkError()
                 else caller.notifyServerError()
@@ -113,7 +114,7 @@ class ProfileUtils(caller: ProfileFragment) {
                 Log.e("password updater", "with the current API state you should not get here")
             }, Response.ErrorListener{error ->
                 if (error.networkResponse == null) {
-                    Log.e("password updater", "success")
+                    Log.w("password updater", "success")
                     caller.updatePasswordReceived()
                 } else caller.notifyServerError()
 

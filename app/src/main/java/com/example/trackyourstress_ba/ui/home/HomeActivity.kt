@@ -210,14 +210,6 @@ class HomeActivity : AppCompatActivity() {
     }*/
     private var doubleBackToExitPressedOnce = false
 
-
-    override fun onResume() {
-        super.onResume()
-        /*val dataManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val dataMethod : Method = ConnectivityManager::class.java.getDeclaredMethod("setMobileDataEnabled", Boolean::class.java)
-        dataMethod.isAccessible = true
-        dataMethod.invoke(dataManager, true)*/
-    }
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
