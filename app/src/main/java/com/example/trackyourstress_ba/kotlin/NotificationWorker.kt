@@ -29,9 +29,9 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
 
      override fun doWork(): Result {
          notificationSettings =
-             if (!sharedPreferences.contains("nextDailyNotification") && !sharedPreferences.contains(
-                     "nextWeeklyNotification"
-                 ) && !sharedPreferences.contains("nextMonthlyNotification")
+             if (!sharedPreferences.contains("dailyNotification") && !sharedPreferences.contains(
+                     "weeklyNotification"
+                 ) && !sharedPreferences.contains("monthlyNotification")
              ) {
                  initiateNotificationSettings()
                  getNotificationSettings()
@@ -41,37 +41,21 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
 
          val date = Calendar.getInstance()
          if (notificationSettings[0]) {
-             if (sharedPreferences.getLong(
-                     "nextDailyNotification",
-                     0
-                 ) > date.timeInMillis || !sharedPreferences.contains("nextDailyNotification")
-             ) {
                  Log.w("NotificationWorker", "Daily Notification will be scheduled")
                  createNewDailyNotification()
-             }
          }
 
          val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
          if (isNewWeek && notificationSettings[1]) {
-             if (sharedPreferences.getLong(
-                     "nextWeeklyNotification",
-                     0
-                 ) > date.timeInMillis || !sharedPreferences.contains(("nextWeeklyNotification"))
-             ) {
+             Log.w("NotificationWorker", "Weekly Notification will be scheduled")
                  createNewWeeklyNotification()
-             }
          }
 
          val isNewMonth = date.get(Calendar.DAY_OF_MONTH) == 1
          val daysInMonth = date.getActualMaximum(Calendar.DAY_OF_MONTH)
          if (isNewMonth && notificationSettings[2]) {
-             if (sharedPreferences.getLong(
-                     "nextMonthlyNotification",
-                     0
-                 ) > date.timeInMillis || !sharedPreferences.contains("nextMonthlyNotification")
-             ) {
-                 createNewMonthlyNotification(daysInMonth)
-             }
+             Log.w("NotificationWorker", "Monthly Notification will be scheduled")
+             createNewMonthlyNotification(daysInMonth)
          }
         return Result.success()
     }
@@ -91,9 +75,6 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
              100,
              "10000"
          )
-         sharedPreferences.edit()
-             .putLong("nextDailyNotification", System.currentTimeMillis() + nextDailyNotificationIn)
-             .apply()
      }
 
      private fun createNewWeeklyNotification() {
@@ -105,11 +86,6 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
              101,
              "10001"
          )
-         sharedPreferences.edit().putLong(
-             "nextWeeklyNotification",
-             System.currentTimeMillis() + nextWeeklyNotificationIn
-         )
-             .apply()
      }
 
      private fun createNewMonthlyNotification(daysInMonth: Int) {
@@ -121,11 +97,6 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
              102,
              "10002"
          )
-         sharedPreferences.edit().putLong(
-             "nextMonthlyNotification",
-             System.currentTimeMillis() + nextMonthlyNotificationIn
-         )
-             .apply()
     }
 
     private fun getNotificationSettings(): BooleanArray {
@@ -164,14 +135,12 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
          notificationId: Int,
          channelId: String
      ) {
-
          val notifyIntent = Intent(context, LaunchActivity::class.java).apply {
              flags = Intent.FLAG_ACTIVITY_NEW_TASK
          }
          val notifyPendingIntent = PendingIntent.getActivity(
              context, 1111, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
          )
-
          val futureInMillis = SystemClock.elapsedRealtime() + delay
 
          val builder = NotificationCompat.Builder(currentContext, channelId)
@@ -198,8 +167,6 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
              notificationIntent,
              PendingIntent.FLAG_CANCEL_CURRENT
          )
-
-
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
              val name = "TrackYourStress - NotificationManager"
              val descriptionText = "Notification channel"
