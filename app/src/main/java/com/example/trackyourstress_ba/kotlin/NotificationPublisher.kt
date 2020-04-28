@@ -15,10 +15,37 @@ class NotificationPublisher : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        val sharedPreferences = context.getSharedPreferences(
+            context.packageName, Context.MODE_PRIVATE
+        )
         val notification = intent.getParcelableExtra<Parcelable>(NOTIFICATION) as Notification
         val notificationId = intent.getIntExtra(NOTIFICATION_ID, 0)
-        with(NotificationManagerCompat.from(context)) {
-            notify(notificationId, notification)
+        when {
+            notificationId == 100 && sharedPreferences.getBoolean("dailyNotification", true) -> {
+                with(NotificationManagerCompat.from(context)) {
+                    notify(notificationId, notification)
+                }
+            }
+            notificationId == 101 && !(sharedPreferences.getBoolean(
+                "weeklyNotification",
+                true
+            )) -> {
+                with(NotificationManagerCompat.from(context)) {
+                    notify(notificationId, notification)
+                }
+            }
+            notificationId == 102 && !(sharedPreferences.getBoolean(
+                "monthlyNotification",
+                true
+            )) -> {
+                with(NotificationManagerCompat.from(context)) {
+                    notify(notificationId, notification)
+                }
+            }
         }
+
+        /*with(NotificationManagerCompat.from(context)) {
+            notify(notificationId, notification)
+        }*/
     }
 }
