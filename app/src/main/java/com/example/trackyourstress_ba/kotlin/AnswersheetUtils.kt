@@ -29,7 +29,7 @@ open class AnswersheetUtils {
         caller: AnswerSheetActivity
     ) {
         val answerJSON = ArrayList<JSONObject>()
-        guiList.forEachIndexed { j, item ->
+        guiList.forEach { item ->
             when (item) {
                 is SingleAnswerElement -> {
                     answerJSON.add(

@@ -126,10 +126,28 @@ class RegistrationActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun notifyError() {
+
+    fun abort() {
         Toast.makeText(
             applicationContext,
             "Der Nutzername is bereits vergeben.",
+            Toast.LENGTH_LONG
+        ).show()
+        finish()
+    }
+
+    fun notifyError() {
+        Toast.makeText(
+            applicationContext,
+            "Ein Fehler ist aufgetreten",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun noNetworkConnection() {
+        Toast.makeText(
+            applicationContext,
+            "Kein Internet",
             Toast.LENGTH_LONG
         ).show()
     }

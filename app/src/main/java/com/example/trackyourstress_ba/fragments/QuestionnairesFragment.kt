@@ -145,7 +145,6 @@ class QuestionnairesFragment : Fragment() {
             }
             questionnaireUtils.getQuestionnaireStructure(index, this)
         }
-
     }
 
     fun allQuestionnairesReceived(response: JSONObject?) {

@@ -106,8 +106,12 @@ class ConnectionUtils {
                     preferences.edit().putString("userEmail", email).apply()
                     caller.nextStep()
                 }
-            }, Response.ErrorListener {
-                caller.notifyError()
+            }, Response.ErrorListener { error ->
+                when {
+                    error.networkResponse == null -> caller.noNetworkConnection()
+                    error.networkResponse.statusCode == 422 -> caller.abort()
+                    else -> caller.notifyError()
+                }
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
