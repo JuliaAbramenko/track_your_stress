@@ -1,6 +1,7 @@
 package com.example.trackyourstress_ba.kotlin
 
 import android.os.Build
+import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.BasicNetwork
@@ -110,6 +111,7 @@ open class AnswersheetUtils {
                 if (error.networkResponse == null || error.networkResponse.statusCode == 422) {
                     caller.submitSuccess()
                 } else {
+                    Log.e("AnswersheetActivity", "Answersheet submitting failed")
                     caller.submitFail()
                 }
 

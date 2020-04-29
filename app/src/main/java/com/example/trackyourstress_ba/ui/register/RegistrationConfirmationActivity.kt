@@ -13,10 +13,10 @@ import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
 class RegistrationConfirmationActivity : AppCompatActivity() {
 
-    lateinit var registrationLinkSent: TextView
-    lateinit var backButton: Button
-    lateinit var resendVerificationButton: Button
-    lateinit var conUtils: ConnectionUtils
+    private lateinit var registrationLinkSent: TextView
+    private lateinit var backButton: Button
+    private lateinit var resendVerificationButton: Button
+    private lateinit var conUtils: ConnectionUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

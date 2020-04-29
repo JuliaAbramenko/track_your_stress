@@ -1,5 +1,6 @@
 package com.example.trackyourstress_ba.kotlin
 
+import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.BasicNetwork
@@ -28,7 +29,10 @@ class QuestionnaireUtils {
             Response.Listener { response ->
                 caller.allQuestionnairesReceived(response)
             }, Response.ErrorListener { error ->
-                if (error.networkResponse == null) caller.notifyNetworkError()
+                if (error.networkResponse == null) {
+                    Log.e("QuestionnaireFragment", "Network error occurred")
+                    caller.notifyNetworkError()
+                }
                 else caller.notifyServerError()
             }) {
             override fun getHeaders(): MutableMap<String, String> {

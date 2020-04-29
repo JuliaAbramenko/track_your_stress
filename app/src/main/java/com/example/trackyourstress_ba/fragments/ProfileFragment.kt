@@ -1,36 +1,31 @@
 package com.example.trackyourstress_ba.fragments
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
-import android.text.method.TransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-
+import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ProfileUtils
 import org.json.JSONObject
-import java.lang.Exception
-import android.widget.EditText
-import com.example.trackyourstress_ba.R
 
 
 class ProfileFragment: Fragment(){
 
-    lateinit var editUsername: EditText
-    lateinit var editEmail: EditText
-    lateinit var editFirstName: EditText
-    lateinit var editLastName: EditText
-    lateinit var sexRadioGroup: RadioGroup
-    lateinit var submitButton: Button
-    lateinit var changePasswordButton: Button
-    lateinit var profileUtils: ProfileUtils
+    private lateinit var editUsername: EditText
+    private lateinit var editEmail: EditText
+    private lateinit var editFirstName: EditText
+    private lateinit var editLastName: EditText
+    private lateinit var sexRadioGroup: RadioGroup
+    private lateinit var submitButton: Button
+    private lateinit var changePasswordButton: Button
+    private lateinit var profileUtils: ProfileUtils
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
 

@@ -34,6 +34,7 @@ class ClearingUtils {
             sharedPreferences.edit().remove("userName").apply()
         }
 
+
         fun logoutUser(context: Context) {
             val sharedPreferences = context.getSharedPreferences(
                 context.packageName, Context.MODE_PRIVATE
@@ -64,6 +65,4 @@ class ClearingUtils {
             context.startActivity(intent)
         }
     }
-
-
 }

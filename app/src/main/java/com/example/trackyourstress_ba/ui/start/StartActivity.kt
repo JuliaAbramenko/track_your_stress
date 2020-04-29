@@ -17,10 +17,10 @@ import java.util.*
 
 class StartActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
-    lateinit var registerButton: Button
+    private lateinit var registerButton: Button
     lateinit var sharedPreferences: SharedPreferences
-    lateinit var germanFlag: ImageView
-    lateinit var englishFlag: ImageView
+    private lateinit var germanFlag: ImageView
+    private lateinit var englishFlag: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

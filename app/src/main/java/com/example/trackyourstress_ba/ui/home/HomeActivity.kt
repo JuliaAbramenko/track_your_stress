@@ -1,10 +1,7 @@
 package com.example.trackyourstress_ba.ui.home
 
-//import com.example.trackyourstress_ba.kotlin.TokenReceiver
-//import com.example.trackyourstress_ba.kotlin.TokenUtils
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -21,25 +18,27 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
-import com.example.trackyourstress_ba.kotlin.*
+import com.example.trackyourstress_ba.kotlin.ClearingUtils
+import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.kotlin.NotificationWorker
+import com.example.trackyourstress_ba.kotlin.TokenWorker
 import com.google.android.material.navigation.NavigationView
-import java.lang.reflect.Method
 import java.util.concurrent.TimeUnit
 
 
 class HomeActivity : AppCompatActivity() {
 
-    lateinit var toolbar: Toolbar
-    lateinit var drawer : DrawerLayout
-    lateinit var drawerToggle: ActionBarDrawerToggle
-    lateinit var navView: NavigationView
-    lateinit var conUtils: ConnectionUtils
-    lateinit var usernameText: TextView
-    lateinit var emailText: TextView
-    lateinit var root: LinearLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var drawer: DrawerLayout
+    private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var navView: NavigationView
+    private lateinit var conUtils: ConnectionUtils
+    private lateinit var usernameText: TextView
+    private lateinit var emailText: TextView
+    private lateinit var root: LinearLayout
     lateinit var sharedPreferences: SharedPreferences
-    var tokenWorkerRunning = false
-    var notificationWorkerRunning = false
+    private var tokenWorkerRunning = false
+    private var notificationWorkerRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +47,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-/*
-        val dataManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val dataMethod : Method = ConnectivityManager::class.java.getDeclaredMethod("setMobileDataEnabled", Boolean::class.java)
-        dataMethod.isAccessible = true
-        dataMethod.invoke(dataManager, true)
-*/
         sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )

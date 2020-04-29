@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-<TextView
+
+    <TextView
         android:id="@+id/Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +35,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="@string/Email" />
+        android:text="@string/Email"
+        android:autofillHints="@string/Email" />
 
     <TextView
         android:id="@+id/first_name"
@@ -48,7 +50,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="@string/first_name" />
+        android:text="@string/first_name"
+        android:autofillHints="@string/first_name" />
 
     <TextView
         android:id="@+id/last_name"
@@ -62,7 +65,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="@string/last_name" />
+        android:text="@string/last_name"
+        android:autofillHints="@string/last_name" />
 
     <TextView
         android:id="@+id/sex"
@@ -75,27 +79,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/sex_radio_group"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:autofillHints="@string/gender">
+
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_sex_not_known"
-            android:text="@string/not_known"/>
+            android:text="@string/not_known" />
+
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_male"
-            android:text="@string/male"/>
+            android:text="@string/male" />
+
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_female"
-            android:text="@string/female"/>
+            android:text="@string/female" />
+
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_not_applicable"
-            android:text="@string/not_applicable"/>
+            android:text="@string/not_applicable" />
     </RadioGroup>
 
     <Button
@@ -106,8 +115,7 @@
         android:gravity="center"
         android:layout_margin="8dp"
         android:padding="6dp"
-        android:text="@string/submit">
-    </Button>
+        android:text="@string/submit"></Button>
 
     <Button
         android:id="@+id/button_change_password"
@@ -117,8 +125,6 @@
         android:gravity="center"
         android:layout_margin="4dp"
         android:padding="8dp"
-        android:text="@string/change_password">
-
-    </Button>
+        android:text="@string/change_password"></Button>
 
 </LinearLayout>

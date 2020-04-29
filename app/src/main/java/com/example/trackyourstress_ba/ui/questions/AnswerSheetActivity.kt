@@ -20,11 +20,11 @@ open class AnswerSheetActivity : AppCompatActivity() {
     lateinit var linearLayout: LinearLayout
     lateinit var title: String
     lateinit var text: String
-    lateinit var question: String
-    var questionnaireID = 0
+    private lateinit var question: String
+    private var questionnaireID = 0
     lateinit var sharedPreferences: SharedPreferences
     private lateinit var answersheetUtils: AnswersheetUtils
-    var guiList = ArrayList<AnswerElement>()
+    private var guiList = ArrayList<AnswerElement>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

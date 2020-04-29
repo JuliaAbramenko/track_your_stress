@@ -15,10 +15,10 @@ import java.util.*
 
 class SettingsFragment : Fragment() {
 
-    lateinit var switchAllNotifications: Switch
-    lateinit var switchDaily: Switch
-    lateinit var switchWeekly: Switch
-    lateinit var switchMonthly: Switch
+    private lateinit var switchAllNotifications: Switch
+    private lateinit var switchDaily: Switch
+    private lateinit var switchWeekly: Switch
+    private lateinit var switchMonthly: Switch
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
 
@@ -109,13 +109,13 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        val germanFlag = view!!.findViewById<ImageView>(R.id.germanFlag)
+        val germanFlag = requireView().findViewById<ImageView>(R.id.germanFlag)
         germanFlag.setOnClickListener {
             sharedPreferences.edit().putString("locale", "de").apply()
             setGermanLocale()
             updateText()
         }
-        val englishFlag = view!!.findViewById<ImageView>(R.id.englishFlag)
+        val englishFlag = requireView().findViewById<ImageView>(R.id.englishFlag)
         englishFlag.setOnClickListener {
             sharedPreferences.edit().putString("locale", "en").apply()
             setEnglishLocale()

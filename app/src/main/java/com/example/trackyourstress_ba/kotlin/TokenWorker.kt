@@ -3,7 +3,6 @@ package com.example.trackyourstress_ba.kotlin
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.android.volley.Request
@@ -13,13 +12,11 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
-import com.example.trackyourstress_ba.ui.home.HomeActivity
 import org.json.JSONObject
-import kotlin.system.exitProcess
 
 class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
-    var requestQueue: RequestQueue
+    private var requestQueue: RequestQueue
     var currentContext: Context
     var sharedPreferences: SharedPreferences
 
@@ -61,15 +58,15 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                     }
                     error.networkResponse.statusCode == 400 -> {
                         ClearingUtils.logoutUser(currentContext)
-                        Log.w("token refresher", "400 error on options")
+                        Log.e("token refresher", "400 error on options")
                     }
                     error.networkResponse.statusCode == 409 -> {
                         ClearingUtils.logoutUser(currentContext)
-                        Log.w("token refresher", "409 error on options")
+                        Log.e("token refresher", "409 error on options")
                     }
                     else -> {
                         ClearingUtils.logoutUser(currentContext)
-                        Log.w("token refresher", "unknown error on options")
+                        Log.e("token refresher", "unknown error on options")
                     }
                 }
             })
@@ -102,7 +99,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
         val request = JsonObjectRequest(
             Request.Method.POST, url, json,
             Response.Listener { response ->
-                Log.w("token refresher", "token really refreshed")
+                Log.w("token refresher", "token refreshed successfully")
                 val newToken =
                     response.getJSONObject("data").getJSONObject("attributes").getString("token")
                 sharedPreferences.edit().putString("token", newToken).apply()
@@ -110,20 +107,21 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                 when {
                     error.networkResponse == null -> {
                         ClearingUtils.logoutUser(currentContext)
+                        Log.e("token refresher", "no network connection")
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 400 -> {
-                        Log.w("token refresher", "400 error")
+                        Log.e("token refresher", "400 error")
                         ClearingUtils.logoutUser(currentContext)
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 409 -> {
-                        Log.w("token refresher", "409 error")
+                        Log.e("token refresher", "409 error")
                         ClearingUtils.logoutUser(currentContext)
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     else -> {
-                        Log.w("token refresher", "unknown error")
+                        Log.e("token refresher", "unknown error")
                         ClearingUtils.logoutUser(currentContext)
                         //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }

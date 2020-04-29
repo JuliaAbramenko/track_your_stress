@@ -14,7 +14,7 @@ import org.json.JSONObject
 
 
 class ConnectionUtils {
-    var requestQueue: RequestQueue
+    private var requestQueue: RequestQueue
     init {
         val cache = NoCache()
         val network = BasicNetwork(HurlStack())

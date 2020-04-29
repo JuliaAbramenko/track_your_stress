@@ -1,20 +1,13 @@
 package com.example.trackyourstress_ba
 
-import android.Manifest
-import android.content.Context
-import android.net.wifi.WifiManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import androidx.test.rule.GrantPermissionRule
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import org.hamcrest.CoreMatchers
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 

@@ -18,9 +18,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var editUsername: EditText
     private lateinit var editPassword: EditText
-    lateinit var loginButton: Button
-    lateinit var backButton: Button
-    lateinit var conUtils: ConnectionUtils
+    private lateinit var loginButton: Button
+    private lateinit var backButton: Button
+    private lateinit var conUtils: ConnectionUtils
     lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
