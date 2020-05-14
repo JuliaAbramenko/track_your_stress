@@ -34,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
             sharedPreferences.edit().putString("apiEndpoint", "https://api.trackyourstress.org")
                 .apply()
         }
-        if (!sharedPreferences.contains("currentLanguage")) {
-            sharedPreferences.edit().putString("currentLanguage", "de").apply() //default germanFlag
+        if (!sharedPreferences.contains("locale")) {
+            sharedPreferences.edit().putString("locale", "de").apply() //default germanFlag
         }
 
         editUsername = findViewById(R.id.username)

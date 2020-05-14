@@ -117,9 +117,9 @@ open class AnswersheetUtils {
                 }
             }) {
             override fun getHeaders(): MutableMap<String, String> {
+                val language = caller.sharedPreferences.getString("locale", "de")
                 val header = mutableMapOf<String, String>()
-                header["Accept-language"] =
-                    "de" //TODO locale?? caller.sharedPreferences.getString("locale", null)
+                header["Accept-language"] = language!!
                 return header
             }
         }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.ui.start.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.ui.login.LoginActivity
 
 class RegistrationConfirmationActivity : AppCompatActivity() {
 
@@ -39,7 +40,7 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            val intent = Intent(this@RegistrationConfirmationActivity, StartActivity::class.java)
+            val intent = Intent(this@RegistrationConfirmationActivity, LoginActivity::class.java)
             startActivity(intent)
         }
     }
