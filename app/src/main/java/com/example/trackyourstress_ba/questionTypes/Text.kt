@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.questionElements
+package com.example.trackyourstress_ba.questionTypes
 
 import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity

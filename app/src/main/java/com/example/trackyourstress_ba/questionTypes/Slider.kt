@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.questionElements
+package com.example.trackyourstress_ba.questionTypes
 
 import android.graphics.Color
 import android.os.Build
@@ -45,7 +45,7 @@ class Slider(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seekBar.min = min
         }
-        //TODO??
+        //else it is set to 0 by default
         maxTextView.gravity = Gravity.END
         minTextView.gravity = Gravity.START
         minTextView.text = minText

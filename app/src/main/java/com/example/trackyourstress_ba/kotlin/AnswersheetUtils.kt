@@ -8,7 +8,7 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
-import com.example.trackyourstress_ba.questionElements.*
+import com.example.trackyourstress_ba.questionTypes.*
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONObject
 
@@ -61,7 +61,7 @@ open class AnswersheetUtils {
                 }
                 is MultiAnswerElement -> {
                     val valArray = ArrayList<String>()
-                    item.selectedValues.forEachIndexed { i, value ->
+                    item.selectedValues.forEach { value ->
                         valArray.add(value)
                     }
                     answerJSON.add(
@@ -86,7 +86,7 @@ open class AnswersheetUtils {
         val clientJSON =
             JSONObject(mapOf("device" to clientDevice, "name" to clientName, "os" to clientOS))
         val currentTimestamp = System.currentTimeMillis() / 1000L
-        val language = caller.sharedPreferences.getString("currentLanguage", null)
+        val language = caller.sharedPreferences.getString("locale", null)
         val jsonObject = JSONObject(
             mapOf(
                 "data" to mapOf(
@@ -110,20 +110,20 @@ open class AnswersheetUtils {
             }, Response.ErrorListener { error ->
                 if (error.networkResponse == null || error.networkResponse.statusCode == 422) {
                     caller.submitSuccess()
+                    Log.d("AnswersheetActivity", "json:$jsonObject")
                 } else {
                     Log.e("AnswersheetActivity", "Answersheet submitting failed")
                     caller.submitFail()
                 }
-
             }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = mutableMapOf<String, String>()
-                header["Accept-language"] = "de"
+                header["Accept-language"] =
+                    "de" //TODO locale?? caller.sharedPreferences.getString("locale", null)
                 return header
             }
         }
         print(jsonObject)
         requestQueue.add(request)
-
     }
 }

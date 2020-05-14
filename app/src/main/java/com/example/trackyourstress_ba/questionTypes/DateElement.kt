@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.questionElements
+package com.example.trackyourstress_ba.questionTypes
 
 import android.app.DatePickerDialog
 import android.graphics.Color

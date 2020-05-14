@@ -11,7 +11,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import android.widget.*
 import com.example.trackyourstress_ba.kotlin.AnswersheetUtils
-import com.example.trackyourstress_ba.questionElements.*
+import com.example.trackyourstress_ba.questionTypes.*
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
 
@@ -155,7 +155,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
             }
         }
         val submitButton = Button(this)
-        submitButton.text = "Abschicken"
+        submitButton.text = getString(R.string.submit)
         submitButton.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT

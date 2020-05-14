@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.questionElements
+package com.example.trackyourstress_ba.questionTypes
 
 interface SingleAnswerElement : AnswerElement {
     var timestamp: Long

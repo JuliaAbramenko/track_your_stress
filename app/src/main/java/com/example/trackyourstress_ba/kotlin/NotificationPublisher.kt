@@ -26,26 +26,22 @@ class NotificationPublisher : BroadcastReceiver() {
                     notify(notificationId, notification)
                 }
             }
-            notificationId == 101 && !(sharedPreferences.getBoolean(
+            notificationId == 101 && sharedPreferences.getBoolean(
                 "weeklyNotification",
                 true
-            )) -> {
+            ) -> {
                 with(NotificationManagerCompat.from(context)) {
                     notify(notificationId, notification)
                 }
             }
-            notificationId == 102 && !(sharedPreferences.getBoolean(
+            notificationId == 102 && sharedPreferences.getBoolean(
                 "monthlyNotification",
                 true
-            )) -> {
+            ) -> {
                 with(NotificationManagerCompat.from(context)) {
                     notify(notificationId, notification)
                 }
             }
         }
-
-        /*with(NotificationManagerCompat.from(context)) {
-            notify(notificationId, notification)
-        }*/
     }
 }

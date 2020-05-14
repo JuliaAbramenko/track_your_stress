@@ -58,7 +58,7 @@ class HomeActivity : AppCompatActivity() {
             WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork(
                     "NotificationRequest",
-                    ExistingPeriodicWorkPolicy.KEEP,
+                    ExistingPeriodicWorkPolicy.REPLACE,
                     notificationRequest
                 )
             notificationWorkerRunning = true
@@ -121,7 +121,6 @@ class HomeActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
-
                 R.id.nav_home -> {
                     val transact = supportFragmentManager.beginTransaction()
                     deleteAllViews()
@@ -188,7 +187,7 @@ class HomeActivity : AppCompatActivity() {
                     drawer.closeDrawers()
                     ClearingUtils.clearSharedPreferences(this)
                     ClearingUtils.showLogout(this)
-                    ClearingUtils.returnToLogin(this) //surely in ClearinUtils?
+                    ClearingUtils.returnToLogin(this)
                     true
                 }
 
