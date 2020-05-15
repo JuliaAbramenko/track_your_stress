@@ -54,6 +54,8 @@ class QuestionnairesFragment : Fragment() {
 
     /**
      * Method to add add the title row to the main View.
+     *
+     * @param currentContext: context used in this class extracted from the fragment container
      */
     private fun addFirstRow(currentContext: Context?) {
         val firstRow = TableRow(currentContext)
@@ -84,6 +86,8 @@ class QuestionnairesFragment : Fragment() {
     /**
      * Extract values to be displayed in the table as entries: title, is_active and is_multiple from
      * the JSON response
+     *
+     * @param current: JSONObject part of an JSONArray that is iterated through
      */
     private fun getRelevantValues(current: JSONObject) {
         if (current.getString("is_filled_out") == "false") {
@@ -100,6 +104,10 @@ class QuestionnairesFragment : Fragment() {
     /**
      * Intent start to display the AnswerSheetActivity. Extras that are put are response of the
      * questionnaire structure and questionnaire id.
+     *
+     * @param response: the retrieved questionnaire raw JSON
+     * @param questionnaireID: current questionnaireID with that the questionnaire structure has been
+     * fetched
      */
     fun startAnswerSheetActivity(response: JSONObject, questionnaireID: Int) {
         val intent = Intent(currentContext, AnswerSheetActivity::class.java)
@@ -110,6 +118,11 @@ class QuestionnairesFragment : Fragment() {
 
     /**
      * Function for adding a row with a questionnaire
+     *
+     * @param name extracted actual name of the questionnaire of the raw JSON
+     * @param titleName extracted title of the specific JSONObject used in first column
+     * @param running boolean value extracted of the specific JSONObject used in second column as icon
+     * @param repeat boolean value extracted of the specific JSONObject used in third column as icon
      */
     private fun fillQuestionnaireRow(
         name: String,
@@ -155,6 +168,9 @@ class QuestionnairesFragment : Fragment() {
 
     /**
      * Click listener for each row. Used for assigning a questionnaire id to a row.
+     *
+     * @param row to which TableRow the click listener is attached
+     * @param name of the corresponding questionnaire name behind the TableRow
      */
     private fun listenToClickEvents(row: TableRow, name: String) {
         row.setOnClickListener {
@@ -173,6 +189,8 @@ class QuestionnairesFragment : Fragment() {
      * Method invoked after retrieving the questionnaire overview. Used to identify the state of
      * filled_out of the registration questionnaire as it has to be filled out first before the others
      * should be displayed.
+     *
+     * @param response fetched raw json for all questionnaires
      */
     fun allQuestionnairesReceived(response: JSONObject?) {
         var array: JSONArray = response!!.getJSONArray("data")

@@ -23,7 +23,6 @@ import org.json.JSONObject
  * The class managing the ActivitiesFragment in the navigation drawer
  */
 class ActivitiesFragment : Fragment() {
-
     private lateinit var root: LinearLayout
     lateinit var currentContext: Context
     private lateinit var activitiesUtils: ActivitiesUtils
@@ -60,6 +59,9 @@ class ActivitiesFragment : Fragment() {
 
     /**
      * Invoked function when activities retrieval from the server went successfully. Relevant values to display are extracted.
+     *
+     * @param page for which distinct JSON is fetched
+     * @param response actual fetched response
      */
     fun activitiesReceived(page: Int, response: JSONObject) {
         pages = response.getJSONObject("meta").getJSONObject("pagination").getString("total_pages")
@@ -83,6 +85,9 @@ class ActivitiesFragment : Fragment() {
 
     /**
      * Creation of an entry in the ActivitiesFragment with extracted relevant messages and date.
+     *
+     * @param date extracted date value
+     * @param message extracted message string
      */
     private fun makeActivity(date: String, message: String) {
         val newMessage = TextView(currentContext)
@@ -139,7 +144,9 @@ class ActivitiesFragment : Fragment() {
     }
 
     /**
-     * Back button color adaptions depending on the actual page number.
+     * Back button color adaptions depending on the actual page number with a click listener for page adaptions.
+     *
+     * @param button back Button that is positioned left
      */
     private fun listenBack(button: Button) {
         if (currentPage == 1) {
@@ -168,8 +175,9 @@ class ActivitiesFragment : Fragment() {
     }
 
     /**
-     * Actual button click listener. Again adapting colors on an event. Adjusts the page value correspondingly and retrieves
-     * the selected page by ActivitiesUtils.
+     * Forward button color adaptions depending on the actual page number with a click listener for page adaptions.
+     *
+     * @param button forward Button that is positioned right
      */
     private fun listenForward(button: Button) {
         if (currentPage == pages) {

@@ -99,6 +99,8 @@ class ProfileFragment: Fragment(){
 
     /**
      * Verification if the entered password is correct with another login try
+     *
+     * @param oldPassword input of the textfield that shall be verified
      */
     private fun checkOldPassword(oldPassword: String) {
         profileUtils.repeatLogin(oldPassword, this)
@@ -171,6 +173,8 @@ class ProfileFragment: Fragment(){
 
     /**
      * Assignment from a RadioGroup selection to the gender code used by the platform.
+     *
+     * @return gender code as Int
      */
     private fun getCurrentSexId(): Int {
         return when (sexRadioGroup.checkedRadioButtonId) {
@@ -184,6 +188,10 @@ class ProfileFragment: Fragment(){
 
     /**
      * Extraction of profile values that are displayed to the user when the profile retrieval worked out.
+     *
+     * @param response raw JSON response fetched from the server containing profile information
+     * @param update boolean value telling if this 0 - not an update but only a retrieval for display
+     * reasons OR 1 - update. Used for parameterized further functions
      */
     fun responseReceived(response: JSONObject, update: Boolean) {
         val profileJSON = response.getJSONObject("data").getJSONObject("attributes")
@@ -201,6 +209,10 @@ class ProfileFragment: Fragment(){
     /**
      * Assignment of the extracted values from a successful profile data retrieval to the GUI elements
      * displayed to the user.
+     *
+     * @param sharedPrefs: global SharedPreferences of this package with global variables
+     * @param update boolean value from the previous method - used to check if a Toast for update
+     * notification must be shown
      */
     private fun fillDataFields(sharedPrefs: SharedPreferences, update: Boolean) {
         editUsername.setText(sharedPrefs.getString("userName", null))
@@ -228,7 +240,9 @@ class ProfileFragment: Fragment(){
     }
 
     /**
-     * Prior to a password update, an OPTIONS request has to be sent with the new password.
+     * Prior to a password update, an OPTIONS request has to be sent with the new password. On success,
+     * the next method for POST is called subsequently
+     * @param newPassword the new password to become
      */
     fun updatePasswordOptionsReceived(newPassword: String) {
         profileUtils.updatePassword(newPassword, this)
