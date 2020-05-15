@@ -10,6 +10,11 @@ import java.util.*
 
 
 @Suppress("DEPRECATION")
+/**
+ * Inivisible launcher activity. Used for navigation reasons depending on whether a token exists
+ * whenever the app is started.
+ *
+ */
 class LaunchActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,11 @@ class LaunchActivity : Activity() {
         }
     }
 
+    /**
+     * Adapt the language on SharedPreferences "locale" value when the app has at least started once.
+     *
+     * @param locale language abbreviation from SharedPreferences.
+     */
     private fun checkLocale(locale: String) {
         val config = Configuration(resources.configuration)
         if (locale == "de") {

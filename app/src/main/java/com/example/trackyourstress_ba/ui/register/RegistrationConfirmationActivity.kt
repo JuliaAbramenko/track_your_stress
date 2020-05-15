@@ -12,13 +12,22 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 
+/**
+ * The activity coming after the RegistrationActivity. To get here, the submit button in the
+ * RegistrationActivity has to be used and a registration try performed.
+ */
 class RegistrationConfirmationActivity : AppCompatActivity() {
-
     private lateinit var registrationLinkSent: TextView
     private lateinit var backButton: Button
     private lateinit var resendVerificationButton: Button
     private lateinit var conUtils: ConnectionUtils
 
+    /**
+     * general creation method for the RegisterActivity. Identification of relevant fields and buttons
+     * are made.
+     * Adds click listeners to the buttons and an option to resend a verification link.
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.title = getString(R.string.Registration)
@@ -35,7 +44,6 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
             val email = preferences.getString("userEmail", null)
             if (email != null) {
                 conUtils.resendVerificationLink(email, this)
-
             }
         }
 
@@ -45,6 +53,10 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Displayed toast when a verification link has been resent
+     *
+     */
     fun linkResent() {
         Toast.makeText(
             applicationContext,
@@ -53,6 +65,10 @@ class RegistrationConfirmationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Displayed toast with error when user was not found trying to register.
+     *
+     */
     fun notify400() {
         Toast.makeText(
             applicationContext,

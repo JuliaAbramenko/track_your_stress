@@ -26,8 +26,11 @@ import com.google.android.material.navigation.NavigationView
 import java.util.concurrent.TimeUnit
 
 
+/**
+ * The activity coming after the Login- or RegistrationConfirmationActivity. To get here, the login has
+ * to be performed successfully.
+ */
 class HomeActivity : AppCompatActivity() {
-
     private lateinit var toolbar: Toolbar
     private lateinit var drawer: DrawerLayout
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -40,11 +43,20 @@ class HomeActivity : AppCompatActivity() {
     private var tokenWorkerRunning = false
     private var notificationWorkerRunning = false
 
+    /**
+     * general creation method for the HomeActivity.
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
     }
 
+    /**
+     * Function invoked on display. TokenWorker, NotificationWorker are set up here as well
+     * as the navigation in the NavigationDrawer.
+     *
+     */
     override fun onStart() {
         super.onStart()
         sharedPreferences = this.getSharedPreferences(
@@ -196,12 +208,12 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun returnToLogin() {
-        val intent = Intent(this@HomeActivity, StartActivity::class.java)
-        startActivity(intent)
-    }*/
     private var doubleBackToExitPressedOnce = false
-
+    /**
+     * Modification of onBackPressed(). Adds that the back button of the device has to be pressed twice
+     * in two seconds so the app is transfered into the background.
+     *
+     */
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
@@ -219,10 +231,19 @@ class HomeActivity : AppCompatActivity() {
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
+    /**
+     * Removes all views from the Activity. Is used when a fragment is called for the first time and
+     * must be shown in the same container.
+     *
+     */
     private fun deleteAllViews() {
         root.removeAllViews()
     }
 
+    /**
+     * Displayed toast when an error occurs at logout.
+     *
+     */
     fun notify500() {
         Toast.makeText(
             applicationContext,

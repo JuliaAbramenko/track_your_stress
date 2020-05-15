@@ -14,7 +14,11 @@ import com.example.trackyourstress_ba.ui.login.LoginActivity
 import com.example.trackyourstress_ba.ui.register.RegistrationActivity
 import java.util.*
 
-
+/**
+ * The first Activity to be displayed. Contains options for login and registration.
+ *
+ */
+@Suppress("DEPRECATION")
 class StartActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
@@ -23,6 +27,11 @@ class StartActivity : AppCompatActivity() {
     private lateinit var englishFlag: ImageView
 
 
+    /**
+     *  general creation method for the StartActivity.
+     *  Function to identify relevant Buttons and ImageViews to initiate click listeners.
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
@@ -60,18 +69,30 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Change the app language to German.
+     *
+     */
     private fun setGermanLocale() {
         val config = Configuration(resources.configuration)
         config.locale = Locale.GERMAN
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
+    /**
+     * Change the app language to English
+     *
+     */
     private fun setEnglishLocale() {
         val config = Configuration(resources.configuration)
         config.locale = Locale.ENGLISH
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
+    /**
+     * Function that updates all visible Views so that language changes are seen immediately.
+     *
+     */
     private fun updateText() {
         val textView = findViewById<TextView>(R.id.welcome_text_first_screen)
         textView.text = getString(R.string.welcome_text)

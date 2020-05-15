@@ -14,6 +14,11 @@ import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import org.json.JSONObject
 
+/**
+ * The activity that handles the login. To get here, the login button in the StartActivity has
+ * to be used.
+ *
+ */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var editUsername: EditText
@@ -23,6 +28,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var conUtils: ConnectionUtils
     lateinit var sharedPreferences: SharedPreferences
 
+    /**
+     * general creation method for the LoginActivity. Identification of relevant fields and buttons
+     * are made as well relevant values "apiEndpoint" and "locale" are stored into SharedPreferences
+     * Adds click listeners to the buttons.
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -65,6 +76,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Toast displayed to the user if inputs are not valid
+     *
+     */
     fun notify401() {
         Toast.makeText(
             applicationContext,
@@ -73,6 +88,10 @@ class LoginActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast displayed to the user if the user is not verified
+     *
+     */
     fun notify403() {
         Toast.makeText(
             applicationContext,
@@ -81,6 +100,12 @@ class LoginActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Function invoked when a successful login has been performed by the ConnectionsUtils.
+     *
+     * @param email with which email the login has been performed
+     * @param response JSON with token to extract and save into SharedPreferences
+     */
     fun loginResponseReceived(email: String, response: JSONObject) {
         sharedPreferences.edit().putString("userEmail", email).apply()
         val token = response.getJSONObject("data").getJSONObject("attributes").getString("token")
@@ -89,6 +114,12 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Function that is called when a successful login has been performed, the token saved and profile information
+     * to display in the navigation drawer in the HomeActivity is fetched.
+     *
+     * @param response raw JSON for profile information
+     */
     fun profileResponseReceived(response: JSONObject) {
         val userId = response.getJSONObject("data").getString("id")
         sharedPreferences.edit().putString("userId", userId).apply()
@@ -98,6 +129,10 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    /**
+     * Toast displayed when profile JSON cannot be get
+     *
+     */
     fun notifyMissingData() {
         Toast.makeText(
             applicationContext,
@@ -106,6 +141,10 @@ class LoginActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast displayed when a network error occurs
+     *
+     */
     fun notifyNetworkError() {
         Toast.makeText(
             applicationContext,

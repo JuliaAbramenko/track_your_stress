@@ -14,7 +14,10 @@ import com.example.trackyourstress_ba.kotlin.AnswersheetUtils
 import com.example.trackyourstress_ba.questionTypes.*
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
-
+/**
+ * Activity that is started when a Questionnaire has been selected for filling out.
+ *
+ */
 open class AnswerSheetActivity : AppCompatActivity() {
     lateinit var response: JSONObject
     lateinit var linearLayout: LinearLayout
@@ -26,6 +29,10 @@ open class AnswerSheetActivity : AppCompatActivity() {
     private lateinit var answersheetUtils: AnswersheetUtils
     private var guiList = ArrayList<AnswerElement>()
 
+    /**
+     * general creation method of the AnswerSheetActivity
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answersheet)
@@ -33,6 +40,11 @@ open class AnswerSheetActivity : AppCompatActivity() {
         linearLayout = findViewById(R.id.answersheetMainView)
     }
 
+    /**
+     * Function invoked when activity is displayed. GUI elements of the questionnaire are created
+     * here and added to a list. Button click listeneres are added as well.
+     *
+     */
     override fun onStart() {
         super.onStart()
         sharedPreferences = this.getSharedPreferences(
@@ -172,6 +184,12 @@ open class AnswerSheetActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Checks whether all questions that require an answer have already a selected answer.
+     *
+     * @param reducedGuiList List in which only SingleAnwerElements or MultipleAnswerElements exist
+     * @return whether all questions have an answer registered in a Boolean
+     */
     private fun checkIfAllQuestionsHaveAnswers(reducedGuiList: ArrayList<AnswerElement>): Boolean {
         var result = false
         for (item in reducedGuiList) {
@@ -186,6 +204,13 @@ open class AnswerSheetActivity : AppCompatActivity() {
         return result
     }
 
+    /**
+     * Reducing operation to extract questions that require an answer not text elements.
+     *
+     * @param guiList The list of which SingleAnswerElements or MultipleAnswerElements shall be
+     * extracted
+     * @return an ArrayList<AnswerElement> that do not contain text elements anymore
+     */
     private fun reduceToAnswerElements(guiList: ArrayList<AnswerElement>): ArrayList<AnswerElement> {
         val elementsWithNecessaryAnswers = ArrayList<AnswerElement>()
         for (item in guiList) {
@@ -196,12 +221,20 @@ open class AnswerSheetActivity : AppCompatActivity() {
         return elementsWithNecessaryAnswers
     }
 
+    /**
+     * Played Toast when an answersheet has been submitted successfully.
+     *
+     */
     fun submitSuccess() {
         Toast.makeText(this, getString(R.string.quesitionnaire_submitted), Toast.LENGTH_LONG).show()
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 
+    /**
+     * Played Toast when an answersheet has not been submitted successfully.
+     *
+     */
     fun submitFail() {
         Toast.makeText(
             this,
@@ -211,6 +244,10 @@ open class AnswerSheetActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Displayed Toast when checkIfAllQuestionsHaveAnswers is false
+     *
+     */
     private fun showIncomplete() {
         Toast.makeText(
             this,

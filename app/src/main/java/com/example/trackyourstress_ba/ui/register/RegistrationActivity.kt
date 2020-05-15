@@ -13,8 +13,11 @@ import com.example.trackyourstress_ba.ui.start.StartActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ConnectionUtils
 
+/**
+ * The activity that handles the registration. To get here, the register button in the StartActivity has
+ * to be used.
+ */
 class RegistrationActivity : AppCompatActivity() {
-
     private lateinit var editEmail: EditText
     private lateinit var editPassword: EditText
     private lateinit var editPasswordConfirmation: EditText
@@ -25,6 +28,12 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var backButton: Button
     private lateinit var sharedPreferences: SharedPreferences
 
+    /**
+     * general creation method for the RegisterActivity. Identification of relevant fields and buttons
+     * are made as well relevant values "apiEndpoint" and "locale" are stored into SharedPreferences.
+     * Adds click listeners to the buttons.
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.title = getString(R.string.Registration)
@@ -81,6 +90,10 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Toast displayed when Username field is empty and submit has been clicked
+     *
+     */
     private fun userNameNeeded() {
         Toast.makeText(
             applicationContext,
@@ -89,6 +102,10 @@ class RegistrationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast displayed when entered password are not matching when submit has been clicked
+     *
+     */
     private fun passwordsNotMatching() {
         Toast.makeText(
             applicationContext,
@@ -97,6 +114,10 @@ class RegistrationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast displayed when the password is shorter than 8 characters
+     *
+     */
     private fun passwordTooShort() {
         Toast.makeText(
             applicationContext,
@@ -105,6 +126,10 @@ class RegistrationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast displayed when no email format is recognized. "." and "@" are needed
+     *
+     */
     private fun emailNotValid() {
         Toast.makeText(
             applicationContext,
@@ -113,6 +138,10 @@ class RegistrationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast display when CheckBox with storage requirement has not been selected
+     *
+     */
     private fun needCheck() {
         Toast.makeText(
             applicationContext,
@@ -121,21 +150,33 @@ class RegistrationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Navigation to the next activity - the RegistrationConfirmationActivity
+     *
+     */
     fun nextStep() {
         val intent = Intent(this@RegistrationActivity, RegistrationConfirmationActivity::class.java)
         startActivity(intent)
     }
 
 
+    /**
+     * Toast that is displayed when a 422 HTTP error occurs. Main reason may be that the username is
+     * already taken
+     *
+     */
     fun abort() {
         Toast.makeText(
             applicationContext,
             "Der Nutzername is bereits vergeben.",
             Toast.LENGTH_LONG
         ).show()
-        finish()
     }
 
+    /**
+     * Displayed Toast when an error occurs that is not further handled in this app.
+     *
+     */
     fun notifyError() {
         Toast.makeText(
             applicationContext,
@@ -144,6 +185,10 @@ class RegistrationActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Toast displayed when no network connection is established and the request could not be sent
+     *
+     */
     fun noNetworkConnection() {
         Toast.makeText(
             applicationContext,
