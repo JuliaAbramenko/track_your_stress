@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.kotlin
+package com.example.trackyourstress_ba.Utils
 
 import android.content.Context
 import android.content.SharedPreferences

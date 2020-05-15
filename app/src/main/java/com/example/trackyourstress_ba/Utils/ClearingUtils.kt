@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.kotlin
+package com.example.trackyourstress_ba.Utils
 
 import android.content.Context
 import android.content.Intent
@@ -47,9 +47,13 @@ class ClearingUtils {
             val request = StringRequest(
                 Request.Method.DELETE, url,
                 Response.Listener<String> {
-                    clearSharedPreferences(context)
+                    clearSharedPreferences(
+                        context
+                    )
                 }, Response.ErrorListener {
-                    clearSharedPreferences(context)
+                    clearSharedPreferences(
+                        context
+                    )
                 })
             requestQueue.add(request)
         }

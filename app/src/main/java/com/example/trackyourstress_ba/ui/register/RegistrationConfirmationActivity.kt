@@ -7,9 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.trackyourstress_ba.ui.start.StartActivity
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.Utils.ConnectionUtils
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 
 /**

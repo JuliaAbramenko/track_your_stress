@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.kotlin.ActivitiesUtils
+import com.example.trackyourstress_ba.Utils.ActivitiesUtils
 import org.json.JSONObject
 
 @Suppress("DEPRECATION")

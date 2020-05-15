@@ -12,7 +12,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.kotlin.ProfileUtils
+import com.example.trackyourstress_ba.Utils.ProfileUtils
 import org.json.JSONObject
 
 /**

@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.kotlin
+package com.example.trackyourstress_ba.NotificationManagement
 
 import android.app.*
 import android.content.Context

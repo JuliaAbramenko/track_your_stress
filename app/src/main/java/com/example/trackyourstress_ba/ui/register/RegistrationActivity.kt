@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.ui.start.StartActivity
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.Utils.ConnectionUtils
 
 /**
  * The activity that handles the registration. To get here, the register button in the StartActivity has

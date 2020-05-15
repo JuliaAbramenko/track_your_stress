@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.kotlin
+package com.example.trackyourstress_ba.TokenManagement
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,8 +12,18 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
+import com.example.trackyourstress_ba.Utils.ClearingUtils
 import org.json.JSONObject
 
+/**
+ * Implementation of a Worker. Creates a TokenWorker that will perform its task periodically in the
+ * HomeActivity.
+ *
+ * @constructor
+ *
+ * @param appContext the current context (information about application environment)
+ * @param workerParams Setup parameters for a ListenableWorker
+ */
 class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
     private var requestQueue: RequestQueue
@@ -32,17 +42,35 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
         )
     }
 
+    /**
+     * Actual task that is executed whenever the TokenWorker is waken up
+     *
+     * @return Result object that holds information whether the task succeeded
+     */
     override fun doWork(): Result {
         val oldToken = sharedPreferences.getString("token", "")!!
         refreshToken(oldToken)
         return Result.success()
     }
 
+    /**
+     * Addition to the general onStopped() function. Whenever a token refresh cannot be executed, the user
+     * is logged out and several values from the SharedPreferences are deleted.
+     *
+     */
     override fun onStopped() {
         super.onStopped()
         ClearingUtils.logoutUser(applicationContext)
     }
 
+    /**
+     * First step in the actual token refresh process: An OPTIONS request to the server.
+     * On success finishRefreshToken is invoked.
+     * On failure, the user is logged out by the ClearingUtils.
+     *
+     * @param oldToken essential parameter that is included into the URL for user identification.
+     * Also used for the calculation of the new token
+     */
     private fun refreshToken(oldToken: String) {
         val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
         val url = "$apiEndpoint/api/v1/auth/refresh?token=$oldToken"
@@ -73,6 +101,14 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
         requestQueue.add(request)
     }
 
+    /**
+     * Second step in the actual token refresher process: A POST request to the REST-API.
+     * On success, a new token is stored into the SharedPreferences.
+     * On failure, the user is logged out by the ClearingUtils.
+     *
+     * @param oldToken essential parameter that is included into the URL for user identification.
+     * Also used for the calculation of the new token
+     */
     private fun finishRefreshToken(oldToken: String) {
         val apiEndpoint = sharedPreferences.getString("apiEndpoint", null)
         val url = "$apiEndpoint/api/v1/auth/refresh?token=$oldToken"
@@ -108,22 +144,18 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
                     error.networkResponse == null -> {
                         ClearingUtils.logoutUser(currentContext)
                         Log.e("token refresher", "no network connection")
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 400 -> {
                         Log.e("token refresher", "400 error")
                         ClearingUtils.logoutUser(currentContext)
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     error.networkResponse.statusCode == 409 -> {
                         Log.e("token refresher", "409 error")
                         ClearingUtils.logoutUser(currentContext)
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                     else -> {
                         Log.e("token refresher", "unknown error")
                         ClearingUtils.logoutUser(currentContext)
-                        //ActivityCompat.finishAffinity(currentContext as HomeActivity)
                     }
                 }
             })

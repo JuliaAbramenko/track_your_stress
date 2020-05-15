@@ -47,7 +47,7 @@
         <activity android:name=".ui.start.StartActivity" />
         <activity android:name=".ui.questions.AnswerSheetActivity" />
 
-        <receiver android:name=".kotlin.NotificationPublisher">
+        <receiver android:name=".NotificationManagement.NotificationPublisher">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />

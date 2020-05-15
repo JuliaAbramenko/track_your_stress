@@ -2,8 +2,8 @@ package com.example.trackyourstress_ba
 
 import android.content.Context
 import androidx.test.espresso.intent.rule.IntentsTestRule
-import com.example.trackyourstress_ba.kotlin.ClearingUtils
-import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.Utils.ClearingUtils
+import com.example.trackyourstress_ba.Utils.ConnectionUtils
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import org.junit.Rule
 import org.junit.Test

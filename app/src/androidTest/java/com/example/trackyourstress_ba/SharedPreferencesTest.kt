@@ -5,8 +5,8 @@ import android.content.Intent
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsTestRule
-import com.example.trackyourstress_ba.kotlin.ClearingUtils
-import com.example.trackyourstress_ba.kotlin.ConnectionUtils
+import com.example.trackyourstress_ba.Utils.ClearingUtils
+import com.example.trackyourstress_ba.Utils.ConnectionUtils
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import org.junit.Test
