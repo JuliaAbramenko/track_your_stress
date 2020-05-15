@@ -14,7 +14,16 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import java.util.*
 import java.text.SimpleDateFormat
 
-
+/**
+ * Construction class for a DateElement GUI object. Based of an EditText with a click listener coped
+ * with a native DatePickerDialog
+ *
+ * @property text direct override of the AnswerElement attribute as question text
+ * @property label override of the SingleAnswerElement attribute. Determined from the beginning
+ * @constructor
+ *
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class DateElement(
     override var text: String,
     override var label: String,
@@ -45,6 +54,12 @@ class DateElement(
         baseView.addView(separator)
     }
 
+    /**
+     * Click listener implementation for the EditText that contains the date of birth
+     *
+     * @param editText the actual EditText object that needs a listener
+     * @param caller AnswerSheetActivity as reference to invoke functions from that class
+     */
     private fun listen(editText: EditText, caller: AnswerSheetActivity) {
         editText.setOnClickListener {
             val calendarDate = Calendar.getInstance()
@@ -75,6 +90,13 @@ class DateElement(
         }
     }
 
+    /**
+     * Update function that changes the EditText fetching the date of birth and transforming the
+     * Calendar object retrieved from the DatePickerDialog into the format "yyyy-MM-dd"
+     *
+     * @param editText the EditText that shall be modified
+     * @param myCalendar Calendar object result from the DatePickerDialog
+     */
     private fun updateLabel(editText: EditText, myCalendar: Calendar) {
         val myFormat = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(myFormat, Locale.GERMAN)

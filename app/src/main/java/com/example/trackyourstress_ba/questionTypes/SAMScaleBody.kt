@@ -9,8 +9,17 @@ import android.widget.*
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
+/**
+ * Construction class for a SAMScaleBody GUI element. Based on a RadioGroup
+ *
+ * @property text override of the AnswerElement attribute as question text
+ * @property label override of the SingleAnswerElement attribute. Determined since beginning
+ * @constructor
+ *
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class SAMScaleBody(
-    textOfQuestion: String,
+    override var text: String,
     override var label: String,
     caller: AnswerSheetActivity
 ) :
@@ -22,7 +31,6 @@ class SAMScaleBody(
     )
     private val radioGroup = RadioGroup(caller)
     private val questionTextView = TextView(caller)
-    override var text = textOfQuestion
     private val baseView = caller.linearLayout
     override var selectedValue = ""
     override var timestamp = 0L
@@ -64,6 +72,11 @@ class SAMScaleBody(
 
     }
 
+    /**
+     * Individual click listener for each RadioButton to identify timestamp and selectedValue
+     *
+     * @param radioButton RadioButton that needs a click listener
+     */
     private fun listen(radioButton: RadioButton) {
         radioButton.setOnClickListener {
             timestamp = System.currentTimeMillis() / 1000L

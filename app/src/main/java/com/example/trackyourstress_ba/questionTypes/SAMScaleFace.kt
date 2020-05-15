@@ -9,7 +9,15 @@ import android.widget.*
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-
+/**
+ * Construction class for a SAMScaleFace GUI element. Based on RadioGroups.
+ *
+ * @property text override of the AnswerElement attribute as question text
+ * @property label override of the SingleAnswerElement attribute. Determined since beginning
+ * @constructor
+ *
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class SAMScaleFace(
     override var text: String,
     override var label: String,
@@ -64,6 +72,11 @@ class SAMScaleFace(
 
     }
 
+    /**
+     * Individual click listener for every RadioButton to identify selectedValue and timestamp
+     *
+     * @param radioButton RadioButton that needs a listener
+     */
     private fun listen(radioButton: RadioButton) {
         radioButton.setOnClickListener {
             timestamp = System.currentTimeMillis() / 1000L

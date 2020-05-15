@@ -9,6 +9,14 @@ import android.text.Html
 import android.widget.LinearLayout
 
 
+/**
+ * Construction class for a Text GUI element.
+ *
+ * @property text direct override of the attribute text from AnswerElement as question text
+ * @constructor
+ *
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class Text(override var text: String, caller: AnswerSheetActivity) :
     AnswerElement {
     private val textView = TextView(caller)

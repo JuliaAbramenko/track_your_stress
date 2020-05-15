@@ -11,6 +11,20 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
+/**
+ * Construction class for a Slider GUI element. Based on a SeekBar
+ *
+ * @property text override attribute of AnswerElement as question text. Uses a SeekBar to realize the
+ * actual sliding element
+ * @property label override attribute of SingleAnswerElement as label. Determined from the beginning
+ * @constructor
+ *
+ * @param sliderValues three values are stored there. "min", "man" and "step" values to determine
+ * slider range and step width
+ * @param minText previously extracted text that is set at the minimum side of the SeekBar
+ * @param maxText previously extracted text that is set at the maximum side of the SeekBar
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class Slider(
     override var text: String,
     override var label: String,
@@ -78,14 +92,22 @@ class Slider(
         baseView.addView(separator)
     }
 
+    /**
+     * Indiviual click listener for every SeekBar. Used to determine selectedValue and timestamp
+     * of this element
+     *
+     * @param seekBar which SeekBar shall be listened to
+     */
     private fun listen(seekBar: SeekBar) {
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 selectedValue = i.toString()
                 timestamp = System.currentTimeMillis() / 1000L
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar) {
             }
+
             override fun onStopTrackingTouch(seekBar: SeekBar) {
             }
         })

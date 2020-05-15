@@ -9,6 +9,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
+/**
+ * Construction class for a MultipleChoice GUI element. Based on CheckBoxes
+ *
+ * @property text override of the AnswerElement attribute as question text
+ * @property label override of the SingleAnswerElement attribute. Determined since beginning
+ * @constructor
+ *
+ * @param answers Mapping between keys that correspond to the answer code to the question text
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class MultipleChoice(
     override var text: String,
     override var label: String,
@@ -44,6 +54,12 @@ class MultipleChoice(
         baseView.addView(separator)
     }
 
+    /**
+     * Individual click listener for each CheckBox. Determines the array of selectedValue as well as
+     * the maximum timestamp
+     *
+     * @param checkBox that needs a click listener
+     */
     private fun listen(checkBox: CheckBox) {
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {

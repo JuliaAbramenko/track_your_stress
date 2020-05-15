@@ -10,7 +10,18 @@ import android.view.View
 import android.widget.LinearLayout
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 
-
+/**
+ * Construction class for a SingleChoice GUI element. Based on a RadioGroup
+ *
+ * @property text override of the interface attribute text as question text
+ * @property label override of the interface SingleAnswerElement attribute label (is passed from
+ * the caller and determined from the beginning)
+ * @constructor
+ *
+ * @param answers Map used for mapping between hidden tags of RadioButtons and the corresponding
+ * test displayed on the RadioButton
+ * @param caller AnswerSheetActivity as reference to invoke functions from that class
+ */
 class SingleChoice(
     override var text: String,
     override var label: String,
@@ -48,6 +59,12 @@ class SingleChoice(
         baseView.addView(separator)
     }
 
+    /**
+     * Individual click listener implementation for each radio button to determine relevant values selectedValue and
+     * timestamp.
+     *
+     * @param radioButton which RadioButton shall be listened to
+     */
     private fun listen(radioButton: RadioButton) {
         radioButton.setOnClickListener {
             selectedValue = radioButton.tag.toString()
