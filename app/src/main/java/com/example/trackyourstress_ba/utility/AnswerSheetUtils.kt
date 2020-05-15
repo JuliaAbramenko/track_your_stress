@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.Utils
+package com.example.trackyourstress_ba.utility
 
 import android.os.Build
 import android.util.Log
@@ -12,7 +12,12 @@ import com.example.trackyourstress_ba.questionTypes.*
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONObject
 
-open class AnswersheetUtils {
+/**
+ * Class used by the AnswerSheetActivity to make relevant API calls.
+ * Uses a Volley RequestQueue to enqueue HTTP requests
+ *
+ */
+open class AnswerSheetUtils {
     private var requestQueue: RequestQueue
 
     init {
@@ -23,6 +28,14 @@ open class AnswersheetUtils {
         }
     }
 
+    /**
+     * Assembles the submit request from GUI elements from a list in the AnswerSheetActivity.
+     *
+     * @param guiList List with SingleAnswerElements and MultipleAnswerElements
+     * @param questionnaireID the id of the questionnaire that has been filled out
+     * @param caller the AnswerSheetActivity.  Used to invoke functions of that class and react
+     * corresponding to the server response
+     */
     fun submitAnswersheet(
         guiList: ArrayList<AnswerElement>,
         questionnaireID: Int,

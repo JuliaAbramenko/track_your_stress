@@ -10,7 +10,7 @@ import com.example.trackyourstress_ba.R
 import org.json.JSONException
 import org.json.JSONObject
 import android.widget.*
-import com.example.trackyourstress_ba.Utils.AnswersheetUtils
+import com.example.trackyourstress_ba.utility.AnswerSheetUtils
 import com.example.trackyourstress_ba.questionTypes.*
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 
@@ -26,7 +26,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
     private lateinit var question: String
     private var questionnaireID = 0
     lateinit var sharedPreferences: SharedPreferences
-    private lateinit var answersheetUtils: AnswersheetUtils
+    private lateinit var answerSheetUtils: AnswerSheetUtils
     private var guiList = ArrayList<AnswerElement>()
 
     /**
@@ -53,7 +53,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
         try {
             response = JSONObject(intent.getStringExtra("response")!!)
             questionnaireID = intent.getStringExtra("id")!!.toInt()
-            answersheetUtils = AnswersheetUtils()
+            answerSheetUtils = AnswerSheetUtils()
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -178,7 +178,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
             val reduced = reduceToAnswerElements(guiList)
             val allQuestionsHaveAnswers = checkIfAllQuestionsHaveAnswers(reduced)
             if (allQuestionsHaveAnswers) {
-                answersheetUtils.submitAnswersheet(guiList, questionnaireID, this)
+                answerSheetUtils.submitAnswersheet(guiList, questionnaireID, this)
                 finishActivity(0)
             } else showIncomplete()
         }

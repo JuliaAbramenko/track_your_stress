@@ -23,10 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.register.RegistrationConfirmationActivity" />
+        <activity android:name=".ui.registration.RegistrationConfirmationActivity" />
         <activity android:name=".ui.home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.register.RegistrationActivity" />
+        <activity android:name=".ui.registration.RegistrationActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
@@ -47,7 +47,7 @@
         <activity android:name=".ui.start.StartActivity" />
         <activity android:name=".ui.questions.AnswerSheetActivity" />
 
-        <receiver android:name=".NotificationManagement.NotificationPublisher">
+        <receiver android:name=".notifications.NotificationPublisher">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.TokenManagement
+package com.example.trackyourstress_ba.token
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,7 +12,7 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.NoCache
-import com.example.trackyourstress_ba.Utils.ClearingUtils
+import com.example.trackyourstress_ba.utility.ClearingUtils
 import org.json.JSONObject
 
 /**
@@ -22,7 +22,7 @@ import org.json.JSONObject
  * @constructor
  *
  * @param appContext the current context (information about application environment)
- * @param workerParams Setup parameters for a ListenableWorker
+ * @param workerParams setup parameters for a ListenableWorker
  */
 class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
@@ -43,7 +43,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     /**
-     * Actual task that is executed whenever the TokenWorker is waken up
+     * Actual task that is executed whenever the TokenWorker is triggered
      *
      * @return Result object that holds information whether the task succeeded
      */

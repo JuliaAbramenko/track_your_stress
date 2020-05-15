@@ -18,10 +18,10 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.fragments.*
-import com.example.trackyourstress_ba.Utils.ClearingUtils
-import com.example.trackyourstress_ba.Utils.ConnectionUtils
-import com.example.trackyourstress_ba.NotificationManagement.NotificationWorker
-import com.example.trackyourstress_ba.TokenManagement.TokenWorker
+import com.example.trackyourstress_ba.utility.ClearingUtils
+import com.example.trackyourstress_ba.utility.ConnectionUtils
+import com.example.trackyourstress_ba.notifications.NotificationWorker
+import com.example.trackyourstress_ba.token.TokenWorker
 import com.google.android.material.navigation.NavigationView
 import java.util.concurrent.TimeUnit
 

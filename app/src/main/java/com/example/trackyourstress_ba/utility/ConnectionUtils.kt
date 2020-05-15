@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.Utils
+package com.example.trackyourstress_ba.utility
 
 import android.content.Context
 import android.util.Log
@@ -8,11 +8,15 @@ import com.android.volley.Response
 import com.android.volley.toolbox.*
 import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
-import com.example.trackyourstress_ba.ui.register.RegistrationActivity
-import com.example.trackyourstress_ba.ui.register.RegistrationConfirmationActivity
+import com.example.trackyourstress_ba.ui.registration.RegistrationActivity
+import com.example.trackyourstress_ba.ui.registration.RegistrationConfirmationActivity
 import org.json.JSONObject
 
-
+/**
+ * Class used by LoginActivity, RegistrationActivity, RegistrationConfirmationActivity and HomeActivity
+ * to make relevant API calls. Uses a Volley RequestQueue to enqueue HTTP requests
+ *
+ */
 class ConnectionUtils {
     private var requestQueue: RequestQueue
     init {
@@ -23,6 +27,14 @@ class ConnectionUtils {
         }
     }
 
+    /**
+     * Performs a login with entered credentials to gain access to a token.
+     *
+     * @param email the user's email with which he has created a user account
+     * @param password the user's password
+     * @param caller the LoginActivity. Used to invoke functions from that class and react
+     * correspondingly to the server response.
+     */
     fun loginUser(email: String, password: String, caller: LoginActivity) {
         val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
         val url = "$apiEndpoint/api/v1/auth/login"
@@ -41,7 +53,7 @@ class ConnectionUtils {
             Request.Method.POST, url,jsonObject,
             Response.Listener { response ->
                 caller.loginResponseReceived(email, response)
-            }, Response.ErrorListener{error ->
+            }, Response.ErrorListener{ error ->
                 when {
                     error.networkResponse == null -> caller.notifyNetworkError()
                     error.networkResponse.statusCode == 401 -> caller.notify401()
@@ -52,6 +64,13 @@ class ConnectionUtils {
         requestQueue.add(request)
     }
 
+    /**
+     * Second step after login. API call to retrieve userId and userName from the server to display
+     * in the NavigationDrawer when forwarding to the HomeActivity.
+     *
+     * @param caller the LoginActivity. Used to invoke functions from that class and react
+     * correspondingly to the server response.
+     */
     fun getProfileData(caller: LoginActivity) {
         val apiEndpoint = caller.sharedPreferences.getString("apiEndpoint", null)
         val token = caller.sharedPreferences.getString("token", null)
@@ -66,6 +85,16 @@ class ConnectionUtils {
         requestQueue.add(profileRequest)
     }
 
+    /**
+     * Used by the RegistrationActivity. API call to register a user to the platform.
+     *
+     * @param email the user's email that will be used
+     * @param password  the user's password he came up with
+     * @param password_confirmation the same password. Must match with the previous field
+     * @param username the userName the user wishes to have
+     * @param caller the RegistrationActivity. Used to invoke functions from that class and react
+     * correspondingly to the server response.
+     */
     fun registerUser(
         email: String,
         password: String,
@@ -122,6 +151,14 @@ class ConnectionUtils {
         requestQueue.add(request)
     }
 
+    /**
+     * Function used by the RegistrationConfirmationActivity. Used to send another verification link
+     * after registration to the previously entered email in the RegistrationActivity.
+     *
+     * @param email the email to which the link shall be resent
+     * @param caller the RegistrationConfirmationActivity. Used to invoke functions from that
+     * class and react correspondingly to the server response.
+     */
     fun resendVerificationLink(email: String, caller: RegistrationConfirmationActivity) {
         Log.e("resend verification", "called")
         val sharedPrefs = caller.getSharedPreferences(
@@ -147,6 +184,13 @@ class ConnectionUtils {
         requestQueue.add(request)
     }
 
+    /**
+     * Function used by the HomeActivity. A logout is performed when the LogoutFragment is selected.
+     * The token is deleted from the SharedPreferences
+     *
+     * @param caller the HomeActivity. Used to invoke functions from that class and react
+     * correspondingly to the server response.
+     */
     fun logoutUser(caller: HomeActivity) {
         val sharedPreferences = caller.getSharedPreferences(
             caller.packageName, Context.MODE_PRIVATE

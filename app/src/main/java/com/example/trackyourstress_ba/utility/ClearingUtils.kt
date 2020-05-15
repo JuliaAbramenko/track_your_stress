@@ -1,4 +1,4 @@
-package com.example.trackyourstress_ba.Utils
+package com.example.trackyourstress_ba.utility
 
 import android.content.Context
 import android.content.Intent
@@ -12,8 +12,12 @@ import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.NoCache
 import com.android.volley.toolbox.StringRequest
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.ui.start.StartActivity as StartActivity1
+import com.example.trackyourstress_ba.ui.start.StartActivity
 
+/**
+ * Class used to logout the user cleanly when errors occur.
+ *
+ */
 class ClearingUtils {
 
     companion object {
@@ -26,6 +30,13 @@ class ClearingUtils {
                 start()
             }
         }
+
+        /**
+         * Clears the user specific values "token", "userId" and "userName" from the SharedPreferences.
+         * Notification settings remain.
+         *
+         * @param context information about the current activity
+         */
         fun clearSharedPreferences(context: Context) {
             val sharedPreferences = context.getSharedPreferences(
                 context.packageName, Context.MODE_PRIVATE
@@ -36,6 +47,12 @@ class ClearingUtils {
         }
 
 
+        /**
+         * On error while refreshing the token, the user is logged out and the SharedPreferences are
+         * adapted
+         *
+         * @param context information about the current activity
+         */
         fun logoutUser(context: Context) {
             Log.e("ClearingUtils", "Sudden logout")
             val sharedPreferences = context.getSharedPreferences(
@@ -58,6 +75,11 @@ class ClearingUtils {
             requestQueue.add(request)
         }
 
+        /**
+         * Displayed Toast whenever a logout is performed correctly
+         *
+         * @param context information about the current environment
+         */
         fun showLogout(context: Context) {
             Toast.makeText(
                 context,
@@ -66,8 +88,13 @@ class ClearingUtils {
             ).show()
         }
 
+        /**
+         * Forced navigation back to the StartActivity when needed.
+         *
+         * @param context information about the current environment
+         */
         fun returnToLogin(context: Context) {
-            val intent = Intent(context, StartActivity1::class.java)
+            val intent = Intent(context, StartActivity::class.java)
             context.startActivity(intent)
         }
     }

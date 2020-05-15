@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.ui.login.LoginActivity
-import com.example.trackyourstress_ba.ui.register.RegistrationActivity
+import com.example.trackyourstress_ba.ui.registration.RegistrationActivity
 import java.util.*
 
 /**

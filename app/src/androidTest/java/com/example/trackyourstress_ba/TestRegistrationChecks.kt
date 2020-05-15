@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.rule.ActivityTestRule
-import com.example.trackyourstress_ba.ui.register.RegistrationActivity
+import com.example.trackyourstress_ba.ui.registration.RegistrationActivity
 import org.hamcrest.CoreMatchers
 import org.junit.Rule
 import org.junit.Test

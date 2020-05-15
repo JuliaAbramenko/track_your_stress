@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
-import com.example.trackyourstress_ba.Utils.ActivitiesUtils
+import com.example.trackyourstress_ba.utility.ActivitiesUtils
 import org.json.JSONObject
 
 @Suppress("DEPRECATION")
