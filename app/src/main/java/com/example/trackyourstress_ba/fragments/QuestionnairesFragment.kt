@@ -19,7 +19,9 @@ import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONArray
 import org.json.JSONObject
 
-
+/**
+ * The class managing the QuestionnairesFragment in the navigation drawer
+ */
 class QuestionnairesFragment : Fragment() {
 
     private lateinit var questionnaireUtils: QuestionnaireUtils
@@ -28,6 +30,9 @@ class QuestionnairesFragment : Fragment() {
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
 
+    /**
+     * general creation method for the QuestionnairesFragment. Is called before it is displayed.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +41,7 @@ class QuestionnairesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_questionnaires, container, false)
         this.activity?.title = getString(R.string.questionnaires)
         currentContext = container!!.context
-        tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table) //TODO RIGHT?
+        tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table)
         sharedPreferences =
             currentContext.getSharedPreferences(currentContext.packageName, Context.MODE_PRIVATE)
         addFirstRow(currentContext)
@@ -47,6 +52,9 @@ class QuestionnairesFragment : Fragment() {
         return view
     }
 
+    /**
+     * Method to add add the title row to the main View.
+     */
     private fun addFirstRow(currentContext: Context?) {
         val firstRow = TableRow(currentContext)
         val textTitle = TextView(currentContext)
@@ -73,6 +81,10 @@ class QuestionnairesFragment : Fragment() {
         tableQuestionnaires.addView(firstRow, 0)
     }
 
+    /**
+     * Extract values to be displayed in the table as entries: title, is_active and is_multiple from
+     * the JSON response
+     */
     private fun getRelevantValues(current: JSONObject) {
         if (current.getString("is_filled_out") == "false") {
             val name = current["name"].toString()
@@ -85,6 +97,10 @@ class QuestionnairesFragment : Fragment() {
         }
     }
 
+    /**
+     * Intent start to display the AnswerSheetActivity. Extras that are put are response of the
+     * questionnaire structure and questionnaire id.
+     */
     fun startAnswerSheetActivity(response: JSONObject, questionnaireID: Int) {
         val intent = Intent(currentContext, AnswerSheetActivity::class.java)
         intent.putExtra("response", response.toString())
@@ -92,6 +108,9 @@ class QuestionnairesFragment : Fragment() {
         startActivity(intent)
     }
 
+    /**
+     * Function for adding a row with a questionnaire
+     */
     private fun fillQuestionnaireRow(
         name: String,
         titleName: String,
@@ -134,6 +153,9 @@ class QuestionnairesFragment : Fragment() {
         listenToClickEvents(newRow, name)
     }
 
+    /**
+     * Click listener for each row. Used for assigning a questionnaire id to a row.
+     */
     private fun listenToClickEvents(row: TableRow, name: String) {
         row.setOnClickListener {
             var index = -1
@@ -147,6 +169,11 @@ class QuestionnairesFragment : Fragment() {
         }
     }
 
+    /**
+     * Method invoked after retrieving the questionnaire overview. Used to identify the state of
+     * filled_out of the registration questionnaire as it has to be filled out first before the others
+     * should be displayed.
+     */
     fun allQuestionnairesReceived(response: JSONObject?) {
         var array: JSONArray = response!!.getJSONArray("data")
         var regQuestionnaire: JSONObject? = null
@@ -176,6 +203,9 @@ class QuestionnairesFragment : Fragment() {
         }
     }
 
+    /**
+     * Toast display to the user if a network error occurs when calling the ProfileFragment.
+     */
     fun notifyNetworkError() {
         Toast.makeText(
             currentContext,
@@ -184,6 +214,9 @@ class QuestionnairesFragment : Fragment() {
         ).show()
     }
 
+    /**
+     * Toast display to the user if a server error occurs while retrieving profile information.
+     */
     fun notifyServerError() {
         Toast.makeText(
             currentContext,

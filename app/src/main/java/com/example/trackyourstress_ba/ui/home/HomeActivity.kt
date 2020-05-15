@@ -115,7 +115,7 @@ class HomeActivity : AppCompatActivity() {
         val notificationsFragment = SettingsFragment()
         val activitiesFragment = ActivitiesFragment()
         val questionnairesFragment = QuestionnairesFragment()
-        val impressumFragment = ImpressumFragment()
+        val impressumFragment = ImprintFragment()
         val aboutFragment = AboutFragment()
 
 

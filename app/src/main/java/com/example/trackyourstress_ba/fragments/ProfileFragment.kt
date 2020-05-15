@@ -15,9 +15,10 @@ import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.kotlin.ProfileUtils
 import org.json.JSONObject
 
-
+/**
+ * The class managing the ProfileFragment in the navigation drawer
+ */
 class ProfileFragment: Fragment(){
-
     private lateinit var editUsername: EditText
     private lateinit var editEmail: EditText
     private lateinit var editFirstName: EditText
@@ -29,6 +30,9 @@ class ProfileFragment: Fragment(){
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
 
+    /**
+     * general creation method for the ProfileFragment. Is called before it is displayed.
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         currentContext = container!!.context
         profileUtils = ProfileUtils(this)
@@ -36,6 +40,10 @@ class ProfileFragment: Fragment(){
         return inflater.inflate(R.layout.fragment_profile,container,false)
     }
 
+    /**
+     * Called at the actual display of the View. Text fields that are changeable are located. Also sets up  Button click listeners
+     * for profile updates and password change options.
+     */
     override fun onStart() {
         super.onStart()
         profileUtils.getProfile(this)
@@ -47,18 +55,22 @@ class ProfileFragment: Fragment(){
         submitButton = view!!.findViewById(R.id.submit_button_update_profile)
         changePasswordButton = view!!.findViewById(R.id.button_change_password)
         submitButton.setOnClickListener {
-                profileUtils.updateProfile(
-                    editUsername.text.toString(), editFirstName.text.toString(),
-                    editLastName.text.toString(),
-                    getCurrentSexId(), this,
-                    true
-                )
+            profileUtils.updateProfile(
+                editUsername.text.toString(), editFirstName.text.toString(),
+                editLastName.text.toString(),
+                getCurrentSexId(), this,
+                true
+            )
         }
         changePasswordButton.setOnClickListener {
             callOldPasswordDialog()
         }
     }
 
+    /**
+     * Initial Dialog creation that is displayed when the user clicks the changePasswordButton. Old password needed before a login
+     * can be retried.
+     */
     fun callOldPasswordDialog() {
         val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
         val oldPassword = EditText(currentContext)
@@ -85,14 +97,24 @@ class ProfileFragment: Fragment(){
         alert.show()
     }
 
+    /**
+     * Verification if the entered password is correct with another login try
+     */
     private fun checkOldPassword(oldPassword: String) {
         profileUtils.repeatLogin(oldPassword, this)
     }
 
+    /**
+     * Message display that a profile update has been successful.
+     */
     private fun profileUpdated() {
         Toast.makeText(context, getString(R.string.profile_updated), Toast.LENGTH_LONG).show()
     }
 
+    /**
+     * Next Dialog displayed when the login retry has been successful.
+     * Here, the new password can be entered and confirmed.
+     */
     fun callNewPasswordDialog() {
         val alert = AlertDialog.Builder(currentContext, R.style.AlertDialogTheme)
         val newPassword = EditText(currentContext)
@@ -136,6 +158,9 @@ class ProfileFragment: Fragment(){
         alert.show()
     }
 
+    /**
+     * Toast display to the user if both entered password for the password change do not match.
+     */
     private fun showNotMatching() {
         Toast.makeText(
             currentContext,
@@ -144,6 +169,9 @@ class ProfileFragment: Fragment(){
         ).show()
     }
 
+    /**
+     * Assignment from a RadioGroup selection to the gender code used by the platform.
+     */
     private fun getCurrentSexId(): Int {
         return when (sexRadioGroup.checkedRadioButtonId) {
             R.id.profile_sex_not_known -> 0
@@ -154,6 +182,9 @@ class ProfileFragment: Fragment(){
         }
     }
 
+    /**
+     * Extraction of profile values that are displayed to the user when the profile retrieval worked out.
+     */
     fun responseReceived(response: JSONObject, update: Boolean) {
         val profileJSON = response.getJSONObject("data").getJSONObject("attributes")
         val sharedPrefs = currentContext.getSharedPreferences(
@@ -167,6 +198,10 @@ class ProfileFragment: Fragment(){
         fillDataFields(sharedPrefs, update)
     }
 
+    /**
+     * Assignment of the extracted values from a successful profile data retrieval to the GUI elements
+     * displayed to the user.
+     */
     private fun fillDataFields(sharedPrefs: SharedPreferences, update: Boolean) {
         editUsername.setText(sharedPrefs.getString("userName", null))
         editEmail.setText(sharedPrefs.getString("userEmail", null))
@@ -181,6 +216,9 @@ class ProfileFragment: Fragment(){
         if (update) profileUpdated()
     }
 
+    /**
+     * Toast displayed to the user when password change has been successful.
+     */
     fun updatePasswordReceived() {
         Toast.makeText(
             currentContext,
@@ -189,10 +227,17 @@ class ProfileFragment: Fragment(){
         ).show()
     }
 
+    /**
+     * Prior to a password update, an OPTIONS request has to be sent with the new password.
+     */
     fun updatePasswordOptionsReceived(newPassword: String) {
         profileUtils.updatePassword(newPassword, this)
     }
 
+    /**
+     * If a login retry fails, the second Dialog is not displayed, but the first again and the user
+     * is notified that the password he entered has been wrong, requiring a retry.
+     */
     fun abortPasswordChange() {
         Toast.makeText(
             currentContext,
@@ -201,6 +246,9 @@ class ProfileFragment: Fragment(){
         ).show()
     }
 
+    /**
+     * Taost display to the user if a network error has occured when clicking on one of the buttons.
+     */
     fun notifyNetworkError() {
         Toast.makeText(
             currentContext,
@@ -209,6 +257,10 @@ class ProfileFragment: Fragment(){
         ).show()
     }
 
+    /**
+     * Toast display to the user if a server error has occured when clicking on the buttons or profile
+     * value retrieving has failed.
+     */
     fun notifyServerError() {
         Toast.makeText(
             currentContext,

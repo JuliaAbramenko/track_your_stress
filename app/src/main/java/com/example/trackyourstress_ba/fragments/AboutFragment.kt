@@ -12,8 +12,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 
+/**
+ * The class managing the AboutFragment in the navigation drawer
+ */
 class AboutFragment : Fragment() {
     lateinit var currentContext: Context
+    /**
+     * general creation method for the AboutFragment. Is called before it is displayed.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,6 +31,10 @@ class AboutFragment : Fragment() {
         return view
     }
 
+    /**
+     * Called at the actual display of the View. As no associated layout xml file exists, only a TextView with a String in HTML format is
+     * displayed from the underlying language resource file.
+     */
     override fun onStart() {
         super.onStart()
         val textView = TextView(currentContext)

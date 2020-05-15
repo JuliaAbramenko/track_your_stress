@@ -13,6 +13,10 @@ import com.example.trackyourstress_ba.R
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
+/**
+ * The class managing the SettingsFragment in the navigation drawer
+ */
+@Suppress("DEPRECATION")
 class SettingsFragment : Fragment() {
 
     private lateinit var switchAllNotifications: Switch
@@ -22,6 +26,9 @@ class SettingsFragment : Fragment() {
     lateinit var currentContext: Context
     lateinit var sharedPreferences: SharedPreferences
 
+    /**
+     * general creation method for the SettingsFragment. Is called before it is displayed.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +39,10 @@ class SettingsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
+    /**
+     * Called at the actual display of the View. There is an underlying layout xml "fragment_settings" where it is defined. All switches and flag ImageViews
+     * have click listeners registered.
+     */
     override fun onStart() {
         super.onStart()
         switchAllNotifications = requireView().findViewById(R.id.switch_all_notifications)
@@ -123,18 +134,27 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    /**
+     * Setting of the app language to German
+     */
     private fun setGermanLocale() {
         val config = Configuration(resources.configuration)
         config.locale = Locale.GERMAN
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
+    /**
+     * Setting of the app language to English
+     */
     private fun setEnglishLocale() {
         val config = Configuration(resources.configuration)
         config.locale = Locale.ENGLISH
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
+    /**
+     * Method for updating the visible fields of the Fragment and Toolbar so that language changes are seen immediately.
+     */
     private fun updateText() {
         switchAllNotifications.text = getString(R.string.turn_on_all_notifications)
         switchDaily.text = getString(R.string.turn_on_daily_notifications)
@@ -146,9 +166,11 @@ class SettingsFragment : Fragment() {
         languageTextView.text = getString(R.string.language_settings)
         this.activity?.title = getString(R.string.settings)
         updateNavigationDrawer()
-
     }
 
+    /**
+     * Method for updating the text in the navigation drawer to display language changes immediately.
+     */
     private fun updateNavigationDrawer() {
         val navView = this.activity?.nav_view
         navView?.menu?.getItem(0)?.title = getString(R.string.home)
@@ -161,26 +183,44 @@ class SettingsFragment : Fragment() {
         navView?.menu?.getItem(5)?.subMenu?.getItem(1)?.title = getString(R.string.about_us)
     }
 
+    /**
+     * Change of "dailyNotification" in SharedPreferences to true
+     */
     private fun dailyTrue() {
         sharedPreferences.edit().putBoolean("dailyNotification", true).apply()
     }
 
+    /**
+     * Change of "dailyNotification" in SharedPreferences to false
+     */
     private fun dailyFalse() {
         sharedPreferences.edit().putBoolean("dailyNotification", false).apply()
     }
 
+    /**
+     * Change of "weeklyNotification" in SharedPreferences to true
+     */
     private fun weeklyTrue() {
         sharedPreferences.edit().putBoolean("weeklyNotification", true).apply()
     }
 
+    /**
+     * Change of "weeklyNotification" in SharedPreferences to false
+     */
     private fun weeklyFalse() {
         sharedPreferences.edit().putBoolean("weeklyNotification", false).apply()
     }
 
+    /**
+     * Change of "monthlyNotification" in SharedPreferences to true
+     */
     private fun monthlyTrue() {
         sharedPreferences.edit().putBoolean("monthlyNotification", true).apply()
     }
 
+    /**
+     * Change of "monthlyNotification" in SharedPreferences to false
+     */
     private fun monthlyFalse() {
         sharedPreferences.edit().putBoolean("monthlyNotification", false).apply()
     }

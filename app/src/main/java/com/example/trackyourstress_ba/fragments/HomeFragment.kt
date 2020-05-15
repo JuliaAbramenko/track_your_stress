@@ -8,8 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 
+/**
+ * The class managing the HomeFragment in the navigation drawer. Same as the HomeActivity GUI but called
+ * from the Navigation Drawer not after Login.
+ */
 class HomeFragment : Fragment() {
     lateinit var currentContext: Context
+    /**
+     * general creation method for the HomeFragment. Is called before it is displayed.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
