@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 
@@ -29,5 +30,12 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    override fun onStart() {
+        super.onStart()
+        this.activity?.title = getString(R.string.home)
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.home)
+
+    }
 
 }

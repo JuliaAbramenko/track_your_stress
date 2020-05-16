@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import kotlinx.android.synthetic.main.activity_home.*
@@ -45,6 +46,9 @@ class SettingsFragment : Fragment() {
      */
     override fun onStart() {
         super.onStart()
+        //this.activity?.actionBar!!.title = getString(R.string.settings)
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.settings)
         switchAllNotifications = requireView().findViewById(R.id.switch_all_notifications)
         switchDaily = requireView().findViewById(R.id.switch_daily_notfications)
         switchWeekly = requireView().findViewById(R.id.switch_weekly_notifications)
@@ -164,7 +168,8 @@ class SettingsFragment : Fragment() {
         notificationTextView.text = getString(R.string.manage_notifications)
         val languageTextView = view!!.findViewById<TextView>(R.id.manage_language)
         languageTextView.text = getString(R.string.language_settings)
-        this.activity?.title = getString(R.string.settings)
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.settings)
         updateNavigationDrawer()
     }
 

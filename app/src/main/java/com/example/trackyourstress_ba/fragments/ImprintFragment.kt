@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 
@@ -37,15 +39,19 @@ class ImprintFragment : Fragment() {
      */
     override fun onStart() {
         super.onStart()
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.imprint)
         val textView = TextView(currentContext)
-        val text = currentContext.getString(R.string.impressum_text)
+        val textHTML = currentContext.getString(R.string.impressum_text)
+        val text = currentContext.getString(R.string.impressum_text_raw)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.text = Html.fromHtml(text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+            textView.text = Html.fromHtml(textHTML, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
         } else {
             textView.text = text
         }
         val root = requireView().findViewById<LinearLayout>(R.id.impressum_root)
         root.addView(textView)
     }
+
 }
 

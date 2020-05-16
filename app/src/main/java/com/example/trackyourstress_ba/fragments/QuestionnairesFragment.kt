@@ -12,6 +12,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.utility.QuestionnaireUtils
@@ -39,7 +40,6 @@ class QuestionnairesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_questionnaires, container, false)
-        this.activity?.title = getString(R.string.questionnaires)
         currentContext = container!!.context
         tableQuestionnaires = view!!.findViewById(R.id.questionnaire_table)
         sharedPreferences =
@@ -48,8 +48,13 @@ class QuestionnairesFragment : Fragment() {
         associatedQuestionnaires = HashMap()
         questionnaireUtils = QuestionnaireUtils()
         questionnaireUtils.getMyQuestionnaires(this)
-
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.questionnaires)
     }
 
     /**

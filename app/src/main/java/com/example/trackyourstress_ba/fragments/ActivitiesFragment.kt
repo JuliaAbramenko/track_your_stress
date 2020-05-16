@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -52,6 +53,8 @@ class ActivitiesFragment : Fragment() {
      */
     override fun onStart() {
         super.onStart()
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.activities)
         activitiesUtils = ActivitiesUtils()
         activitiesUtils.getActivities(1, this)
     }

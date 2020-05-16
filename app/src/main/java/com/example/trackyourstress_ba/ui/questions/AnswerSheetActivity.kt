@@ -36,7 +36,8 @@ open class AnswerSheetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answersheet)
-        this.title = getString(R.string.questionnaires)
+        this.supportActionBar!!.title = getString(R.string.questionnaires)
+        //this.title = getString(R.string.questionnaires)
         linearLayout = findViewById(R.id.answersheetMainView)
     }
 
@@ -47,6 +48,7 @@ open class AnswerSheetActivity : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
+        this.title = getString(R.string.questionnaires)
         sharedPreferences = this.getSharedPreferences(
             this.packageName, Context.MODE_PRIVATE
         )

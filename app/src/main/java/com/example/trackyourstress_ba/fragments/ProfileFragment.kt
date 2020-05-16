@@ -5,11 +5,13 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.trackyourstress_ba.R
 import com.example.trackyourstress_ba.utility.ProfileUtils
@@ -46,6 +48,8 @@ class ProfileFragment: Fragment(){
      */
     override fun onStart() {
         super.onStart()
+        val activity = this.activity as AppCompatActivity
+        activity.supportActionBar?.title = getString(R.string.profile)
         profileUtils.getProfile(this)
         editUsername = view!!.findViewById(R.id.edit_name)
         editEmail = view!!.findViewById(R.id.edit_email)
@@ -66,6 +70,7 @@ class ProfileFragment: Fragment(){
             callOldPasswordDialog()
         }
     }
+
 
     /**
      * Initial Dialog creation that is displayed when the user clicks the changePasswordButton. Old password needed before a login

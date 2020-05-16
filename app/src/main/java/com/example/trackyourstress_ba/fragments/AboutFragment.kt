@@ -37,6 +37,7 @@ class AboutFragment : Fragment() {
      */
     override fun onStart() {
         super.onStart()
+        this.activity?.title = getString(R.string.about_us)
         val textView = TextView(currentContext)
         val text = currentContext.getString(R.string.about_text)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
