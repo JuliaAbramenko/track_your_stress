@@ -1,68 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/nicePadding"
+    android:orientation="vertical"
+    android:adjustViewBounds="true"
+    android:visibility="visible"
     tools:context=".ui.start.StartActivity">
 
     <ImageView
         android:id="@+id/Welcome_Logo"
-        android:layout_width="235dp"
-        android:layout_height="268dp"
+        android:layout_width="213dp"
+        android:layout_height="222dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/TrackYourStressLogo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.074"
-        app:srcCompat="@mipmap/logo_trackyourstress_round" />
+        android:src="@mipmap/logo_trackyourstress" />
 
     <TextView
         android:id="@+id/welcome_text_first_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sc"
+        android:layout_gravity="center"
+        android:padding="16dp"
         android:text="@string/welcome_text"
         android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.556" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
-        android:text="@string/Login_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.707" />
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:text="@string/Login_text" />
 
     <Button
         android:id="@+id/register_button"
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
-        android:text="@string/Register_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.817" />
+        android:layout_gravity="center"
+        android:text="@string/Register_text" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="24dp">
+        android:layout_height="131dp">
 
         <ImageView
             android:id="@+id/britainFlag"
@@ -92,4 +78,4 @@
             app:srcCompat="@drawable/flag_germany" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

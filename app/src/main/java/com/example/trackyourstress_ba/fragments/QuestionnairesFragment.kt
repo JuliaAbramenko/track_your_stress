@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import com.example.trackyourstress_ba.utility.QuestionnaireUtils
 import com.example.trackyourstress_ba.ui.questions.AnswerSheetActivity
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.math.sqrt
 
 /**
  * The class managing the QuestionnairesFragment in the navigation drawer
@@ -76,7 +79,7 @@ class QuestionnairesFragment : Fragment() {
         firstRow.layoutParams =
             TableLayout.LayoutParams(
                 TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT
+                TableLayout.LayoutParams.MATCH_PARENT
             )
         textTitle.text = getString(R.string.title_questionnaire)
         testRunning.text = getString(R.string.running)
@@ -86,6 +89,21 @@ class QuestionnairesFragment : Fragment() {
         firstRow.addView(testRunning)
         firstRow.addView(testRepeatable)
         tableQuestionnaires.addView(firstRow, 0)
+    }
+
+    /**
+     * Calculates the screen diagonal by retrieving the screen pixel size
+     *
+     * @return a Boolean whether the display has a diagonal of less than 5 inches
+     */
+    private fun checkIfSmaller5Inches(): Boolean {
+        val dm = DisplayMetrics()
+        this.activity?.windowManager!!.defaultDisplay.getMetrics(dm)
+        val x = Math.pow((dm.widthPixels / dm.xdpi).toDouble(), 2.0)
+        val y = Math.pow((dm.heightPixels / dm.ydpi).toDouble(), 2.0)
+        val screenInches = sqrt(x + y)
+        Log.d("Inch calculation:", screenInches.toString())
+        return screenInches < 5
     }
 
     /**
@@ -135,9 +153,13 @@ class QuestionnairesFragment : Fragment() {
         running: Boolean,
         repeat: Boolean
     ) {
-        val newRow = TableRow(currentContext)
 
+        val newRow = TableRow(currentContext)
         val title = TextView(currentContext)
+        val isSmaller5Inches = checkIfSmaller5Inches()
+        if (isSmaller5Inches) {
+            title.textSize = 13F
+        }
         title.background = resources.getDrawable(R.drawable.border)
         val isRunning = TextView(currentContext)
         isRunning.background = resources.getDrawable(R.drawable.border)
@@ -165,7 +187,7 @@ class QuestionnairesFragment : Fragment() {
         newRow.addView(isRepeatable)
         newRow.layoutParams = TableLayout.LayoutParams(
             TableLayout.LayoutParams.MATCH_PARENT,
-            TableLayout.LayoutParams.WRAP_CONTENT
+            TableLayout.LayoutParams.MATCH_PARENT
         )
         tableQuestionnaires.addView(newRow)
         listenToClickEvents(newRow, name)

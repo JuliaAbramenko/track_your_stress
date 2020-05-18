@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +41,8 @@ class ImprintFragment : Fragment() {
         val activity = this.activity as AppCompatActivity
         activity.supportActionBar?.title = getString(R.string.imprint)
         val textView = TextView(currentContext)
-        val textHTML = currentContext.getString(R.string.impressum_text)
-        val text = currentContext.getString(R.string.impressum_text_raw)
+        val textHTML = currentContext.getString(R.string.imprint_text)
+        val text = currentContext.getString(R.string.imprint_text_raw)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.text = Html.fromHtml(textHTML, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
         } else {
