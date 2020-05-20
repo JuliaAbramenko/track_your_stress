@@ -70,34 +70,34 @@ class SettingsFragment : Fragment() {
             if (isChecked) {
                 switchDaily.isChecked = true
                 switchDaily.text = getString(R.string.daily_notifications_on)
-                dailyTrue()
+                setDaily(true)
                 switchWeekly.isChecked = true
                 switchWeekly.text = getString(R.string.weekly_notfications_on)
-                weeklyTrue()
+                setWeekly(true)
                 switchMonthly.isChecked = true
                 switchMonthly.text = getString(R.string.monthly_notifications_on)
-                monthlyTrue()
+                setMonthly(true)
 
             } else {
                 switchDaily.isChecked = false
                 switchDaily.text = getString(R.string.daily_notifications_off)
-                dailyFalse()
+                setDaily(false)
                 switchWeekly.isChecked = false
                 switchWeekly.text = getString(R.string.weekly_notifications_off)
-                weeklyFalse()
+                setWeekly(false)
                 switchMonthly.isChecked = false
                 switchMonthly.text = getString(R.string.monthly_notifications_off)
-                monthlyFalse()
+                setMonthly(false)
             }
         }
 
         switchDaily.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 switchDaily.text = getString(R.string.daily_notifications_on)
-                dailyTrue()
+                setDaily(true)
             } else {
                 switchDaily.text = getString(R.string.daily_notifications_off)
-                dailyFalse()
+                setDaily(false)
                 switchAllNotifications.isChecked = false
             }
         }
@@ -105,10 +105,10 @@ class SettingsFragment : Fragment() {
         switchWeekly.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 switchWeekly.text = getString(R.string.weekly_notfications_on)
-                weeklyTrue()
+                setWeekly(true)
             } else {
                 switchWeekly.text = getString(R.string.weekly_notifications_off)
-                weeklyFalse()
+                setWeekly(false)
                 switchAllNotifications.isChecked = false
             }
         }
@@ -116,10 +116,10 @@ class SettingsFragment : Fragment() {
         switchMonthly.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 switchMonthly.text = getString(R.string.monthly_notifications_on)
-                monthlyTrue()
+                setMonthly(true)
             } else {
                 switchMonthly.text = getString(R.string.monthly_notifications_off)
-                monthlyFalse()
+                setMonthly(false)
                 switchAllNotifications.isChecked = false
             }
         }
@@ -189,44 +189,24 @@ class SettingsFragment : Fragment() {
     }
 
     /**
-     * Change of "dailyNotification" in SharedPreferences to true
+     * Change of "dailyNotification" in SharedPreferences via argument
      */
-    private fun dailyTrue() {
-        sharedPreferences.edit().putBoolean("dailyNotification", true).apply()
+    private fun setDaily(value: Boolean) {
+        sharedPreferences.edit().putBoolean("dailyNotification", value).apply()
     }
 
     /**
-     * Change of "dailyNotification" in SharedPreferences to false
+     * Change of "weeklyNotification" in SharedPreferences via argument
      */
-    private fun dailyFalse() {
-        sharedPreferences.edit().putBoolean("dailyNotification", false).apply()
+    private fun setWeekly(value: Boolean) {
+        sharedPreferences.edit().putBoolean("weeklyNotification", value).apply()
     }
 
     /**
-     * Change of "weeklyNotification" in SharedPreferences to true
+     * Change of "monthlyNotification" in SharedPreferences via argument
      */
-    private fun weeklyTrue() {
-        sharedPreferences.edit().putBoolean("weeklyNotification", true).apply()
+    private fun setMonthly(value: Boolean) {
+        sharedPreferences.edit().putBoolean("monthlyNotification", value).apply()
     }
 
-    /**
-     * Change of "weeklyNotification" in SharedPreferences to false
-     */
-    private fun weeklyFalse() {
-        sharedPreferences.edit().putBoolean("weeklyNotification", false).apply()
-    }
-
-    /**
-     * Change of "monthlyNotification" in SharedPreferences to true
-     */
-    private fun monthlyTrue() {
-        sharedPreferences.edit().putBoolean("monthlyNotification", true).apply()
-    }
-
-    /**
-     * Change of "monthlyNotification" in SharedPreferences to false
-     */
-    private fun monthlyFalse() {
-        sharedPreferences.edit().putBoolean("monthlyNotification", false).apply()
-    }
 }
