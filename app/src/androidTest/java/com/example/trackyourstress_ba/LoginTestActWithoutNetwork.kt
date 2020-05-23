@@ -18,6 +18,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * This test class works on all API versions lesser than 29.
+ * See https://developer.android.com/reference/android/net/wifi/WifiManager.html#setWifiEnabled(boolean)
+ * for further information. Delete comments when testing on devices with API version lesser than 29.
+ * Or execute this class manually with disabled wifi.
+ *
+ */
+/*@Suppress("DEPRECATION")
 class LoginTestActWithoutNetwork {
 
     @get:Rule
@@ -63,4 +71,4 @@ class LoginTestActWithoutNetwork {
         val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
         wifiManager.isWifiEnabled = true
     }
-}
+} */
