@@ -22,13 +22,25 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Test class for the SettingsFragment
+ *
+ */
 class SettingsTests {
 
+    /**
+     * Definition of the Activity to be tested: LoginActivity
+     */
     @get:Rule
     var mActivityRule: IntentsTestRule<LoginActivity> = IntentsTestRule(
         LoginActivity::class.java
     )
 
+    /**
+     * Login performance and selection of the SettingsFragment in the NavigationDrawer before
+     * every test execution
+     *
+     */
     @Before
     fun init() {
         Espresso.onView(ViewMatchers.withId(R.id.username))
@@ -52,6 +64,11 @@ class SettingsTests {
         )
     }
 
+    /**
+     * Tests whether the two flags for language (german and english)
+     * are displayed in the SettingsFragment
+     *
+     */
     @Test
     fun checkFlagsExistInSettingsFragment() {
         Espresso.onView(ViewMatchers.withId(R.id.germanFlag))
@@ -60,6 +77,11 @@ class SettingsTests {
             .check(matches(ViewMatchers.isDisplayed()))
     }
 
+    /**
+     * Verifies whether language changes are applied on the TextView "manage_notification_textview"
+     * when the english flag is selected
+     *
+     */
     @Test
     fun textIsUpdatedWhenEnglishFlagClicked() {
         Espresso.onView(ViewMatchers.withId(R.id.englishFlag)).perform(ViewActions.click())
@@ -70,6 +92,10 @@ class SettingsTests {
         )
     }
 
+    /**
+     * Verifies whether language changes are applied on the TextView "manage_notification_textview"
+     * when the german flag is selected
+     */
     @Test
     fun textIsUpdatedWhenGermanFlagClicked() {
         Espresso.onView(ViewMatchers.withId(R.id.germanFlag)).perform(ViewActions.click())
@@ -80,6 +106,12 @@ class SettingsTests {
         )
     }
 
+    /**
+     * Verifies whether the SharedPreferences entries "dailyNotification", "weeklyNotification" and
+     * "monthlyNotification" are updated when the switch for all notification
+     * types is deactivated
+     *
+     */
     @Test
     fun checkIfSharedPreferencesAreUpdatedAfterSwitchChange() {
         Espresso.onView(ViewMatchers.withId(R.id.switch_all_notifications))
@@ -95,6 +127,11 @@ class SettingsTests {
             .perform(ViewActions.click())
     }
 
+    /**
+     * Extracts the SharedPreferences entries for notification types and verifies whether the switch
+     * states are the same as the values stored in the SharedPreferences
+     *
+     */
     @Test
     fun checkWhetherNotificationTypesAreCorrect() {
         val sharedPreferences = mActivityRule.activity.getSharedPreferences(
@@ -136,6 +173,11 @@ class SettingsTests {
 
     }
 
+    /**
+     * Small check to verify if the toolbar title is correctly set when the SettingsFragment
+     * is selected
+     *
+     */
     @Test
     fun toolbarCorrect() {
         val activity = mActivityRule.activity

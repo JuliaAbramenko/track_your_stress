@@ -11,8 +11,16 @@ import com.example.trackyourstress_ba.ui.home.HomeActivity
 import com.example.trackyourstress_ba.ui.login.LoginActivity
 import org.junit.Test
 
+/**
+ * General Test Class for SharedPreferences tests
+ *
+ */
 class SharedPreferencesTest {
 
+    /**
+     * Verifies whether a token is stored in the SharedPreferences after a login
+     *
+     */
     @Test
     fun containsToken() {
         val loginActivityTest: IntentsTestRule<LoginActivity> =
@@ -29,6 +37,11 @@ class SharedPreferencesTest {
         assert(sharedPreferences.contains("token"))
     }
 
+    /**
+     * Verifies whether the userName is stored in the SharedPreferences after a login. Needed for
+     * the NavigationDrawer menu header
+     *
+     */
     @Test
     fun containsUserName() {
         val loginActivityTest: IntentsTestRule<LoginActivity> =
@@ -45,6 +58,11 @@ class SharedPreferencesTest {
         assert(sharedPreferences.contains("userName"))
     }
 
+    /**
+     * Verifies that, if a login has been performed with valid credentials and the HomeActivity has
+     * been started, the token is deleted from the SharedPreferences on logout execution
+     *
+     */
     @Test
     fun tokenAfterLogout() {
         val loginActivityTest: IntentsTestRule<LoginActivity> =

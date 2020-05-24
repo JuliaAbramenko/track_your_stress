@@ -11,13 +11,19 @@ import org.hamcrest.CoreMatchers
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Test class for the LoginActivity with network connection. Can only be run if network connection
+ * is provided
+ *
+ */
 class LoginTestActWithNetwork {
     @get:Rule
     var activityTestRule: ActivityTestRule<LoginActivity> =
         ActivityTestRule(LoginActivity::class.java)
 
     /**
-     * test 1 and 2 require Internet Access to run properly
+     * Tests whether the Toast telling the user that the credentials are invalid is displayed.
+     * Tries a login request with invalid credentials and gets an 401 HTTP error.
      */
     @Test
     fun testFailedLogin401() {
@@ -40,6 +46,11 @@ class LoginTestActWithNetwork {
         )
     }
 
+    /**
+     * Test for verifying that an email that is not registered at the platform cannot be used to
+     * login. Tries a login request with invalid credentials and gets an 401 HTTP error.
+     *
+     */
     @Test
     fun test2FailedLogin401() {
         Espresso.onView(ViewMatchers.withId(R.id.username))
@@ -61,6 +72,11 @@ class LoginTestActWithNetwork {
         )
     }
 
+    /**
+     * Test that does not require API requests. Only verifies that a password has a length of
+     * at least 8 characters to be able to try to perform a login request
+     *
+     */
     @Test
     fun testPasswordTooShort() {
         Espresso.onView(ViewMatchers.withId(R.id.username))

@@ -12,11 +12,23 @@ import org.hamcrest.CoreMatchers
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Test class for registration checks in the RegistrationActivity
+ *
+ */
 class TestRegistrationChecks {
+    /**
+     * Definition of the rule for the activity to be tested: the RegistrationActivity
+     */
     @get:Rule
     var activityTestRule: ActivityTestRule<RegistrationActivity> =
         ActivityTestRule(RegistrationActivity::class.java)
 
+    /**
+     * Test to verify whether the Toast informing the user that a domain is missing in his address
+     * is displayed when the entered email has no "@" and at least one "."
+     *
+     */
     @Test
     fun checkDomain() {
         val activity = activityTestRule.activity
@@ -34,6 +46,11 @@ class TestRegistrationChecks {
         )
     }
 
+    /**
+     * Test to verify whether the Toast informing the user that the password is too short is displayed
+     * when a password with lesser than 8 characters is entered
+     *
+     */
     @Test
     fun checkPasswordTooShort() {
         val activity = activityTestRule.activity
@@ -55,6 +72,11 @@ class TestRegistrationChecks {
         )
     }
 
+    /**
+     * Test to verify whether the Toast informing the user that the both entered passwords are not
+     * matching
+     *
+     */
     @Test
     fun checkPasswordMatching() {
         val activity = activityTestRule.activity
@@ -80,6 +102,11 @@ class TestRegistrationChecks {
         )
     }
 
+    /**
+     * Test to verify whether the Toast informing the user that the CheckBox with the
+     * data storage condition has not been selected
+     *
+     */
     @Test
     fun ifCheckBoxChecked() {
         val activity = activityTestRule.activity
@@ -109,6 +136,10 @@ class TestRegistrationChecks {
         )
     }
 
+    /**
+     * Test to check whether a Toast appears that informs the user that the username field is empty
+     *
+     */
     @Test
     fun checkUsername() {
         val activity = activityTestRule.activity

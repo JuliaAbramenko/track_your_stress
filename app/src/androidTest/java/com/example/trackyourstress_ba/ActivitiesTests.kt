@@ -16,13 +16,26 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Test class for the ActivitiesFragment
+ *
+ */
 class ActivitiesTests {
 
+    /**
+     * Testings starts at LoginActivity because a login has to be performed. Only this way, this Fragment
+     * can be displayed correctly and has visible functionality
+     */
     @get:Rule
     var activityRule: IntentsTestRule<LoginActivity> = IntentsTestRule(
         LoginActivity::class.java
     )
 
+    /**
+     * Initialization method to perform the login and select the ActivitiesFragment from the
+     * NavigationDrawer
+     *
+     */
     @Before
     fun init() {
         Espresso.onView(withId(R.id.username))
@@ -41,6 +54,12 @@ class ActivitiesTests {
         Thread.sleep(500)
     }
 
+    /**
+     * Verifies if the buttons that are only displayed if at least two pages exist (confirmed
+     * on 24.05.2020 for the given test account), are clickable and performs navigation forward
+     * once and back once
+     *
+     */
     @Test
     fun pressForwardAndBackClickableTest() {
         Espresso.onView(withText("Continue")).check(matches(isClickable()))
@@ -50,6 +69,11 @@ class ActivitiesTests {
         Espresso.onView(withText("Back")).perform(click())
     }
 
+    /**
+     * Verifies if the buttons are displayed. Confirmed on 24.05.2020 for the given test account
+     * that those exist
+     *
+     */
     @Test
     fun checkIfButtonsAreDisplayed() {
         Espresso.onView(withText("Continue")).check(matches(isDisplayed()))

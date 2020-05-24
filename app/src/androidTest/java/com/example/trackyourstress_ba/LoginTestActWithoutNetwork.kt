@@ -19,24 +19,38 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
+ * Test class for the LoginActivity that has no internet connection
+ *
  * This test class works on all API versions lesser than 29.
  * See https://developer.android.com/reference/android/net/wifi/WifiManager.html#setWifiEnabled(boolean)
  * for further information. Delete comments when testing on devices with API version lesser than 29.
  * Or execute this class manually with disabled wifi.
  *
+ *
  */
-/*@Suppress("DEPRECATION")
+/*
+@Suppress("DEPRECATION")
 class LoginTestActWithoutNetwork {
 
+    /**
+     * The activity to be tested: LoginActivity
+     */
     @get:Rule
     var activityTestRule: ActivityTestRule<LoginActivity> =
         ActivityTestRule(LoginActivity::class.java)
 
+    /**
+     * Grants a permission rule that allows to change the state of the device WiFi
+     */
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(
         Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE
     )
 
+    /**
+     * Disables the WiFi before text execution
+     *
+     */
     @Before
     fun init() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -44,6 +58,11 @@ class LoginTestActWithoutNetwork {
         wifiManager.isWifiEnabled = false
     }
 
+    /**
+     * Actual test. Given valid credentials, it is verified whether the Toast informing the user
+     * about missing network connection, appears when trying to login
+     *
+     */
     @Test
     fun testWithoutNetwork() {
         Espresso.onView(ViewMatchers.withId(R.id.username))
@@ -65,10 +84,16 @@ class LoginTestActWithoutNetwork {
         )
     }
 
+    /**
+     * Finishing method of the class. Sets the WiFi enabling to true and provides internet connection
+     * for further tests
+     *
+     */
     @After
     fun end() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
         wifiManager.isWifiEnabled = true
     }
-} */
+}
+*/

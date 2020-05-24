@@ -13,13 +13,25 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Test class for all Toolbar titles inside the HomeActivity
+ *
+ */
 class ToolbarTests {
 
+    /**
+     * Definition of the rule for the activity to be tested: the LoginActivity. This is a requirement
+     * as, without login, the fragments do not function properly.
+     */
     @get:Rule
     var mActivityRule: IntentsTestRule<LoginActivity> = IntentsTestRule(
         LoginActivity::class.java
     )
 
+    /**
+     * Login performed at the beginning of each test
+     *
+     */
     @Before
     fun init() {
         Espresso.onView(ViewMatchers.withId(R.id.username))
@@ -34,6 +46,11 @@ class ToolbarTests {
     }
 
 
+    /**
+     * Verifies whether the title of the HomeFragment is set correctly after checking that the base
+     * view of the Fragment is displayed
+     *
+     */
     @Test
     fun homeTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -50,6 +67,11 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "Home")
     }
 
+    /**
+     * Verifies whether the title of the ProfileFragment is set correctly after checking that the base
+     * view of the Fragment is displayed
+     *
+     */
     @Test
     fun profileTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -66,6 +88,11 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "Profile")
     }
 
+    /**
+     * Verifies whether the title of the ActivitiesFragment is set correctly after checking that the base
+     * view of the Fragment is displayed
+     *
+     */
     @Test
     fun activitiesTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -82,6 +109,11 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "Activities")
     }
 
+    /**
+     * Verifies whether the title of the QuestionnairesFragment is set correctly after checking that the base
+     * view of the Fragment is displayed
+     *
+     */
     @Test
     fun questionnairesTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -98,6 +130,11 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "Questionnaires")
     }
 
+    /**
+     * Verifies whether the title of the SettingsFragment is set correctly after checking that the base
+     * view of the Fragment is displayed
+     *
+     */
     @Test
     fun settingsTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -114,6 +151,10 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "Settings")
     }
 
+    /**
+     * Verifies whether the title of the ImprintFragment is set correctly
+     *
+     */
     @Test
     fun imprintTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -125,6 +166,11 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "Imprint")
     }
 
+
+    /**
+     * Verifies whether the title of the Fragment for 'About us' is set correctly
+     *
+     */
     @Test
     fun aboutUsTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
@@ -136,6 +182,10 @@ class ToolbarTests {
         assert(activityCompat.supportActionBar?.title == "About us")
     }
 
+    /**
+     * Check whether the title is set to "TrackYourStress" again, when a logout is executed
+     *
+     */
     @Test
     fun logoutTitleCorrect() {
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open())
