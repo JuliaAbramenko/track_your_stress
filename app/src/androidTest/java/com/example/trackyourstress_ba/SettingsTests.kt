@@ -46,7 +46,7 @@ class SettingsTests {
             .perform(NavigationViewActions.navigateTo(R.id.nav_notifications))
         Thread.sleep(500)
         Espresso.onView(ViewMatchers.withId(R.id.settingsBase)).check(
-            ViewAssertions.matches(
+            matches(
                 ViewMatchers.isDisplayed()
             )
         )
@@ -55,16 +55,16 @@ class SettingsTests {
     @Test
     fun checkFlagsExistInSettingsFragment() {
         Espresso.onView(ViewMatchers.withId(R.id.germanFlag))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            .check(matches(ViewMatchers.isDisplayed()))
         Espresso.onView(ViewMatchers.withId(R.id.englishFlag))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            .check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun textIsUpdatedWhenEnglishFlagClicked() {
         Espresso.onView(ViewMatchers.withId(R.id.englishFlag)).perform(ViewActions.click())
         Espresso.onView(ViewMatchers.withId(R.id.manage_notifications_textview)).check(
-            ViewAssertions.matches(
+            matches(
                 (ViewMatchers.withText(CoreMatchers.containsString("notifications")))
             )
         )
@@ -74,7 +74,7 @@ class SettingsTests {
     fun textIsUpdatedWhenGermanFlagClicked() {
         Espresso.onView(ViewMatchers.withId(R.id.germanFlag)).perform(ViewActions.click())
         Espresso.onView(ViewMatchers.withId(R.id.manage_notifications_textview)).check(
-            ViewAssertions.matches(
+            matches(
                 (ViewMatchers.withText(CoreMatchers.containsString("Benachrichtigungen")))
             )
         )
