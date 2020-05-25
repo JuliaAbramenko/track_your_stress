@@ -81,7 +81,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
             }, Response.ErrorListener { error ->
                 when {
                     error.networkResponse == null -> {
-                        Log.w("token refresher", "options succeeded")
+                        Log.d("token refresher", "options succeeded")
                         finishRefreshToken(oldToken)
                     }
                     error.networkResponse.statusCode == 400 -> {
@@ -135,7 +135,7 @@ class TokenWorker(appContext: Context, workerParams: WorkerParameters) :
         val request = JsonObjectRequest(
             Request.Method.POST, url, json,
             Response.Listener { response ->
-                Log.w("token refresher", "token refreshed successfully")
+                Log.d("token refresher", "token refreshed successfully")
                 val newToken =
                     response.getJSONObject("data").getJSONObject("attributes").getString("token")
                 sharedPreferences.edit().putString("token", newToken).apply()

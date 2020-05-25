@@ -123,9 +123,9 @@ open class AnswerSheetUtils {
             }, Response.ErrorListener { error ->
                 if (error.networkResponse == null || error.networkResponse.statusCode == 422) {
                     caller.submitSuccess()
-                    Log.d("AnswersheetActivity", "json:$jsonObject")
+                    Log.d("AnswerSheetActivity", "json:$jsonObject")
                 } else {
-                    Log.e("AnswersheetActivity", "Answersheet submitting failed")
+                    Log.e("AnswerSheetActivity", "Answersheet submitting failed")
                     caller.submitFail()
                 }
             }) {

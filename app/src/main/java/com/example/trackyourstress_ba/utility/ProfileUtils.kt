@@ -157,7 +157,7 @@ class ProfileUtils(caller: ProfileFragment) {
                 Log.e("password updater", "with the current API state you should not get here")
             }, Response.ErrorListener{ error ->
                 if (error.networkResponse == null) {
-                    Log.w("password updater", "success")
+                    Log.d("password updater", "success")
                     caller.updatePasswordReceived()
                 } else caller.notifyServerError()
 

@@ -115,7 +115,6 @@ class ConnectionUtils {
                 )
             )
         )
-        Log.w("registration", jsonObject.toString())
         val sharedPrefs = caller.getSharedPreferences(
             caller.packageName, Context.MODE_PRIVATE
         )
@@ -160,7 +159,7 @@ class ConnectionUtils {
      * class and react correspondingly to the server response.
      */
     fun resendVerificationLink(email: String, caller: RegistrationConfirmationActivity) {
-        Log.e("resend verification", "called")
+        Log.d("resend verification", "called")
         val sharedPrefs = caller.getSharedPreferences(
             caller.packageName, Context.MODE_PRIVATE
         )

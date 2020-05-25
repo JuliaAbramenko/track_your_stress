@@ -254,7 +254,7 @@ class QuestionnairesFragment : Fragment() {
     fun notifyNetworkError() {
         Toast.makeText(
             currentContext,
-            R.string.profile_not_loaded,
+            R.string.network_error,
             Toast.LENGTH_LONG
         ).show()
     }

@@ -55,20 +55,20 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
 
         val date = Calendar.getInstance()
         if (notificationSettings[0]) {
-            Log.w("NotificationWorker", "Daily Notification will be scheduled")
+            Log.d("NotificationWorker", "Daily Notification will be scheduled")
             createNewDailyNotification()
         }
 
         val isNewWeek = date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
         if (isNewWeek && notificationSettings[1]) {
-            Log.w("NotificationWorker", "Weekly Notification will be scheduled")
+            Log.d("NotificationWorker", "Weekly Notification will be scheduled")
             createNewWeeklyNotification()
         }
 
         val isNewMonth = date.get(Calendar.DAY_OF_MONTH) == 1
         val daysInMonth = date.getActualMaximum(Calendar.DAY_OF_MONTH)
         if (isNewMonth && notificationSettings[2]) {
-            Log.w("NotificationWorker", "Monthly Notification will be scheduled")
+            Log.d("NotificationWorker", "Monthly Notification will be scheduled")
             createNewMonthlyNotification(daysInMonth)
         }
         return Result.success()
@@ -231,7 +231,7 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
         val notificationIntent = Intent(context, NotificationPublisher::class.java)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, builder.build()!!)
-        Log.w("NotificationManager", "Intent set!")
+        Log.d("NotificationManager", "Intent set!")
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             notificationId,
