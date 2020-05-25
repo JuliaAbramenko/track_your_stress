@@ -71,13 +71,13 @@ class StartActivity : AppCompatActivity() {
         germanFlag = findViewById(R.id.germanyFlag)
         germanFlag.setOnClickListener {
             sharedPreferences.edit().putString("locale", "de").apply()
-            setGermanLocale()
+            setLocale(Locale.GERMAN)
             updateText()
         }
         englishFlag = findViewById(R.id.britainFlag)
         englishFlag.setOnClickListener {
             sharedPreferences.edit().putString("locale", "en").apply()
-            setEnglishLocale()
+            setLocale(Locale.ENGLISH)
             updateText()
         }
     }
@@ -99,22 +99,12 @@ class StartActivity : AppCompatActivity() {
     }
 
     /**
-     * Change the app language to German.
+     * Change the app language to the specified locale
      *
      */
-    private fun setGermanLocale() {
+    private fun setLocale(locale: Locale) {
         val config = Configuration(resources.configuration)
-        config.locale = Locale.GERMAN
-        resources.updateConfiguration(config, resources.displayMetrics)
-    }
-
-    /**
-     * Change the app language to English
-     *
-     */
-    private fun setEnglishLocale() {
-        val config = Configuration(resources.configuration)
-        config.locale = Locale.ENGLISH
+        config.locale = locale
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
