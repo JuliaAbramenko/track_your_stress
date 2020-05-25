@@ -7,5 +7,3 @@ Tinnitus Research Initiative <br>
 Foundation <br>
 Universitätsstrasse 84<br>
 93053 Regensburg<br> </p>
-
-<p>The result APK file can be downloaded here: <a href="https://gitlab.com/JuliaAbramenko/bachelor-thesis---trackyourstress/-/raw/master/app/build/outputs/apk/release/TrackYourStress_App.apk?inline=false">Download APK</a> </p>
