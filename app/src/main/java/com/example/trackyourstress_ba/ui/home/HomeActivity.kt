@@ -239,4 +239,12 @@ class HomeActivity : AppCompatActivity() {
     private fun deleteAllViews() {
         root.removeAllViews()
     }
+
+    fun notify500() {
+        Toast.makeText(
+            this,
+            getString(R.string.server_error_occured),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }
