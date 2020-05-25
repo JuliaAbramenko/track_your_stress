@@ -42,11 +42,10 @@ class ImprintFragment : Fragment() {
         activity.supportActionBar?.title = getString(R.string.imprint)
         val textView = TextView(currentContext)
         val textHTML = currentContext.getString(R.string.imprint_text)
-        val text = currentContext.getString(R.string.imprint_text_raw)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.text = Html.fromHtml(textHTML, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
         } else {
-            textView.text = text
+            textView.text = Html.fromHtml(textHTML)
         }
         val root = requireView().findViewById<LinearLayout>(R.id.impressum_root)
         root.addView(textView)

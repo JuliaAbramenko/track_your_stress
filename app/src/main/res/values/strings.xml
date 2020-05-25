@@ -56,82 +56,6 @@
     <string name="home" translatable="false">Home</string>
     <string name="home_text">Mit TrackYourStress können Sie Ihre individuellen Schwankungen des Stress-Levels mittels einer Smartphone App erfassen. Mit Hilfe ihres Smartphones können Sie die Schwankungen Ihres Stress-Levels systematisch erfassen und herausfinden womit diese zusammenhängen.</string>
     <string name="confirmSaveData">Ich bin einverstanden, dass die App TrackYourStress Daten auf meinem Gerät speichert</string>
-    <string name="imprint_text_raw">
-    Impressum
-\n\nHerausgeber
-
-\nTinnitus Research Initiative
-\nFoundation
-\Universitätsstrasse 84
-\n93053 Regensburg
-\nphone: +49 941 941 2096
-\nfax: +49 941 941 2925
-\ne-mail: foundation@tinnitusresearch.org
-\nUmsatzsteueridentifikationsnummer DE133714227
-\n
-\nDie Stiftung Tinnitus Research Initiative ist mit Urkunde vom 01.02.2010 Nr. B 1.1-1222.184-1 gemäß §§ 80, 81 des Bürgerlichen Gesetzbuches eine rechtsfähige Stiftung des bürgerlichen Rechts mit Sitz in Regensburg. Aufgrund ihrer Satzungsbestimmungen und den entsprechenden stiftungsrechtlichen Vorschriften (Art. 10 Abs. 1 BayStG) der staatlichen Stiftungsaufsicht, Regierung der Oberpfalz. Die Körperschaft dient ausschließlich und unmittelbar steuerbegünstigten Zwecken.
-\Vertretungsberechtigt ist der Stiftungsvorstand:
-
-\Dr. med. Berthold Langguth, Regensburg, Deutschland (Vorsitzender)
-\nProf. Ana Belén Elgoyhen, Buenos Aires, Argentinen
-\nProf. Dirk De Ridder, Antwerpen, Belgien
-\n\nZuständige Aufsichtsbehörde:
-
-\nRegierung der Oberpfalz
-\nEmmeramsplatz 8
-\n93047 Regensburg
-\nDeutschland
-\n\nInhalt
-
-\nVerantwortlich im Sinne des §5 TMG:
-\nDr. Winfried Schlee
-\nTinnitus Research Initiative
-\nFoundation
-\nUniversitätsstrasse 84
-\n93053 Regensburg
-\nphone: +49 941 941 2096
-\ne-mail: winfried.schlee@tinnitusresearch.org
-\n\nKonzeption und technische Umsetzung
-\n
-\nJulia Abramenko
-\nInstitut für Datenbanken und Informationssysteme der Universität Ulm
-\nemail: Julia.Abramenko@uni-ulm.de
-\n
-\nPascal Damasch
-\nInstitut für Datenbanken und Informationssysteme der Universität Ulm
-\nemail: Pascal.Damasch@uni-ulm.de
-\n
-\nJochen Herrmann
-\nInstitut für Datenbanken und Informationssysteme der Universität Ulm
-\nemail: Jochen.Herrmann@uni-ulm.de
-\n
-\nRüdiger Pryss
-\nInstitut für Datenbanken und Informationssysteme der Universität Ulm
-\nemail: Rüdiger.Pryss@uni-ulm.de
-\n\nHaftungsausschluss
-
-\nMit Trackyourstress.com wird ein Service zur Messung der individuellen Tinnitusbelastung angeboten. Sie haben die Möglichkeiten Ihre Daten einzusehen und mit ihrem behandelnden Arzt oder Therapeuten zu besprechen. Eine Garantie für die Richtigkeit und juristische Verwertbarkeit der Daten kann weder von Seiten der Tinnitus Research Initiative noch von Mitarbeitern des Trackyourtinnitus Projektes gegeben werden.
-Trackyourstress.com ist kein Medizinprodukt
-
-\nWir möchten ausdrücklich darauf hinweisen, dass wir mit Trackyourstress.com kein Medizinprodukt bereitstellen. Eine Behandlung von Stress ist nicht intendiert.
-\n
-\Eine Verschlechterung des Stresses ist nicht zu erwarten. Sollten Sie dennoch negative Veränderungen bemerken, beenden sie bitte unverzüglich die Teilnahme und suchen Ihren Arzt oder Therapeuten auf.
-Haftungsausschluss bei Links zu externen Inhalten
-\n
-\nWir sind als Inhaltsanbieter für die eigenen Inhalte, die sie zur Nutzung bereithält, nach den allgemeinen Gesetzen verantwortlich. Von diesen eigenen Inhalten sind Querverweise auf die von anderen Anbietern bereitgehaltenen Inhalte zu unterscheiden. Diese fremden Inhalte stammen weder von uns, noch haben wir die Möglichkeit, den Inhalt von Seiten Dritter zu beeinflussen.
-\n
-\nDie Inhalte fremder Seiten, spiegeln nicht unsere Meinung wider, sondern dienen lediglich der Information und der Darstellung von Zusammenhängen.
-\n\nDatenschutz
-\nWir sind uns bewusst, dass wir mit dem Service von Trackyourstress.com hochsensible Daten speichern und verwenden daher die höchsten Standards des Datenschutzes um die Sicherheit und Diskretion ihrer Daten zu gewährleisten.
-\n
-\nIhre Daten werden vollständig anonymisiert verarbeitet und gespeichert. Ein Rückschluss auf ihre Identität ist zu keinem Zeitpunkt möglich. Wir werden sie nie nach Ihrem vollständigen Namen, Ihrer Telefonnummer, Ihrer Adresse oder anderen Kontaktdaten fragen. Die IP-Adresse Ihres Computers wird nicht gespeichert und jeder Datenaustausch über das Internet ist mit SSL-Verschlüsselung gesichert.
-\n
-\nDas Angeben einer Email-Adresse ist nicht notwendig, wird aber ausdrücklich empfohlen. Die Email-Adresse wird nur zur Wiederherstellung des Passwortes verwendet, wenn Sie ihre Zugangsdaten vergessen haben.
-\n
-\nWenn sie ihre Email-Adresse nicht angeben wollen, können sie dennoch den kompletten Service von Trackyourstress.com uneingeschränkt verwenden.
-\n
-\nDie wissenschaftlichen Erkenntnisse aus diesem Forschungsprojekt können in wissenschaftlichen Fachzeitschriften veröffentlich werden. Dabei wird es jedoch nicht möglich sein, Ihre persönlichen Informationen zu identifizieren.
-    </string>
     <string name="imprint_text"><![CDATA[
     <h2>Impressum</h2>
     <h3>Herausgeber</h3>
@@ -242,39 +166,6 @@ Prof. Dr. Manfred Reichert (Institut für Datenbanken und Informationssysteme, U
 Dr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)<br> </p>
 
 <p>Wenn Sie Fragen, Feedback oder Anregungen zu dem Projekt haben, kontaktieren sie uns bitte unter <a href="info@trackyourstress.org."</a> </p>]]>
-    </string>
-
-    <string name="about_text_raw">
-        Über uns
-\n
-\nUnter Stress versteht man die Antwort des Organismus auf eine Anforderung. Unterschiedliche Menschen können auf ein und dieselbe Anforderung unterschiedliche Stressreaktionen zeigen. Aber auch eine Person kann auf ein und dieselbe Anforderung in unterschiedlichen Situationen / Kontexten eine unterschiedliche Stressreaktion zeigen. Welche Stressreaktion auf eine Anforderung folgt, hängt z. B. von den Bewältigungsmechanismen einer Person ab. Diese Bewältigungsmechanismen werden auch als Coping bezeichnet.
-\n
-\nMit diesem Forschungsprojekt wollen wir eine Möglichkeit bieten, die individuellen Schwankungen von Stress und Coping mittels einer Smartphone App zu erfassen. Mit Hilfe ihres Smartphones können sie diese Schwankungen systematisch messen und herausfinden wie diese mit Ihrem Tagesablauf und Aktivitäten zusammenhängen. Über die Internetseite können sie den Verlauf ihrer eigenen Daten einsehen und gegebenenfalls mit ihrem behandelten Arzt oder Therapeuten besprechen.
-\nMit Ihrer Teilnahme unterstützen sie unser Forschungsprojekt, die Schwankungen von Stress und Coping besser zu verstehen.
-\nTrackYourStress eignet sich nicht zur Therapie von Stress
-\n
-\nWir möchten ausdrücklich darauf hinweisen, dass wir mit TrackYourStress kein Medizinprodukt bereitstellen. TrackYourStress bietet eine gute Möglichkeit den Verlauf des Stress zu messen und festzustellen unter welchen Bedingungen der Stress stärker oder schwächer ist.
-\n
-\nEine Verschlechterung des Stress ist nicht zu erwarten. Sollten Sie dennoch negative Veränderungen bemerken, beenden sie bitte unverzüglich die Teilnahme und suchen Ihren Arzt oder Therapeuten auf.
-\nÜber das Team
-\nTrackYourStress ist ein Kooperationsprojekt zwischen folgenden Personen und Universitäten:
-\nProf. Dr. Thomas Probst (Department für Psychotherapie und Biopsychosoziale Gesundheit, Donau-Universität Krems, Österreich)
-\nProf. Dr. Dennis John (Evangelische Hochschule Nürnberg)
-\nB.Sc. Pascal Damasch (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nB.Sc. Michael Schrempp (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nM.Sc. Johannes Schobel (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nPD Dr. Winfried Schlee (Klinik für Psychiatrie und Psychotherapie, Universitätsklinikum Regensburg, Deutschland)
-\nB.Sc. Teresa O\'Rourke (Department für Psychotherapie und Biopsychosoziale Gesundheit, Donau-Universität Krems, Österreich)
-\nM.Sc. Robin Kraft (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nB.Sc. Julian Haug (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nB.Sc. Fabian Haug (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nM.Sc. Viktoria Elsässer (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nProf. Dr. Berthold Langguth (Klinik für Psychiatrie und Psychotherapie, Universitätsklinikum Regensburg, Deutschland)
-\nProf. Dr. Myra Spiliopoulou (Knowledge Management and Discovery Lab, Otto-von-Guericke-Universität Magdeburg, Deutschland)
-\nProf. Dr. Manfred Reichert (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-\nDr. Rüdiger Pryss (Institut für Datenbanken und Informationssysteme, Universität Ulm, Deutschland)
-
-Wenn Sie Fragen, Feedback oder Anregungen zu dem Projekt haben, kontaktieren sie uns bitte unter info@trackyourstress.org.
     </string>
     <string name="Back">Zurück</string>
     <string name="notify401"> Zugangsdaten ungültig. Bitte überprüfen Sie Ihre Eingaben </string>

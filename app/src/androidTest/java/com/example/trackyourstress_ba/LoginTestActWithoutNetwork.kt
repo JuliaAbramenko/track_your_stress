@@ -29,6 +29,7 @@ import org.junit.Test
  *
  *
  */
+
 /*
 @Suppress("DEPRECATION")
 class LoginTestActWithoutNetwork {

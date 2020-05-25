@@ -40,11 +40,10 @@ class AboutFragment : Fragment() {
         this.activity?.title = getString(R.string.about_us)
         val textView = TextView(currentContext)
         val textHTML = currentContext.getString(R.string.about_text)
-        val text = currentContext.getString(R.string.about_text_raw)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.text = Html.fromHtml(textHTML, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
         } else {
-            textView.text = text
+            textView.text = Html.fromHtml(textHTML)
         }
         val root = requireView().findViewById<LinearLayout>(R.id.impressum_root)
         root.addView(textView)
