@@ -239,17 +239,4 @@ class HomeActivity : AppCompatActivity() {
     private fun deleteAllViews() {
         root.removeAllViews()
     }
-
-    /**
-     * Displayed toast when an error occurs at logout.
-     *
-     */
-    fun notify500() {
-        Toast.makeText(
-            applicationContext,
-            getString(R.string.error_logout),
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
 }
