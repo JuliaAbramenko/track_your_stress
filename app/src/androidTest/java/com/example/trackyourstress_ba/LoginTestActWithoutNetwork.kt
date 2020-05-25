@@ -21,7 +21,8 @@ import org.junit.Test
 /**
  * Test class for the LoginActivity that has no internet connection
  *
- * This test class works on all API versions lesser than 29.
+ * This test class works on all API versions lesser than 29. Currently there is no replacement for the
+ * functionality that was deprecated.
  * See https://developer.android.com/reference/android/net/wifi/WifiManager.html#setWifiEnabled(boolean)
  * for further information. Delete comments when testing on devices with API version lesser than 29.
  * Or execute this class manually with disabled wifi.

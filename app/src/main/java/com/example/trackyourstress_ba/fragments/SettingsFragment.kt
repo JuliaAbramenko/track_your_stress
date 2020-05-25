@@ -127,32 +127,22 @@ class SettingsFragment : Fragment() {
         val germanFlag = requireView().findViewById<ImageView>(R.id.germanFlag)
         germanFlag.setOnClickListener {
             sharedPreferences.edit().putString("locale", "de").apply()
-            setGermanLocale()
+            setLocale(Locale.GERMAN)
             updateText()
         }
         val englishFlag = requireView().findViewById<ImageView>(R.id.englishFlag)
         englishFlag.setOnClickListener {
             sharedPreferences.edit().putString("locale", "en").apply()
-            setEnglishLocale()
+            setLocale(Locale.ENGLISH)
             updateText()
         }
     }
-
     /**
-     * Setting of the app language to German
+     * Setting of the app language to the specified locale
      */
-    private fun setGermanLocale() {
+    private fun setLocale(locale: Locale) {
         val config = Configuration(resources.configuration)
-        config.locale = Locale.GERMAN
-        resources.updateConfiguration(config, resources.displayMetrics)
-    }
-
-    /**
-     * Setting of the app language to English
-     */
-    private fun setEnglishLocale() {
-        val config = Configuration(resources.configuration)
-        config.locale = Locale.ENGLISH
+        config.locale = locale
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 

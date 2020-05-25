@@ -39,9 +39,10 @@ class AboutFragment : Fragment() {
         super.onStart()
         this.activity?.title = getString(R.string.about_us)
         val textView = TextView(currentContext)
-        val text = currentContext.getString(R.string.about_text)
+        val textHTML = currentContext.getString(R.string.about_text)
+        val text = currentContext.getString(R.string.about_text_raw)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.text = Html.fromHtml(text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+            textView.text = Html.fromHtml(textHTML, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
         } else {
             textView.text = text
         }
